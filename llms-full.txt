@@ -604,7 +604,7 @@ ZPI-3 | Feld 3 | Zusatzinfo nur lokal gültig |
 Worauf Sie achten sollten
 
 Ereignisgrund: EVN-4 trägt im Beispiel ADRCHG. Das ist ein frei gewählter Code des Beispiels, der den Grund der Änderung nennt. Welche Codes ein System verwendet, steht in dessen Schnittstellenbeschreibung.
-Alles oder nur das Geänderte? Viele Systeme senden bei A08 den vollständigen aktuellen Stand der Segmente, nicht nur die Änderung. Das ist eine Vereinbarung, der Standard erzwingt es nicht. Nach der Konvention des Standards heißt ein leeres Feld „keine Information“, der Nullwert "" dagegen „Wert löschen“. Ob der Empfänger das so umsetzt, muss die Schnittstellenbeschreibung klären.
+Alles oder nur das Geänderte? Ob nur das Geänderte oder der volle Stand kommt, legt die Schnittstellenbeschreibung fest. Nach der Konvention des Standards heißt ein leeres Feld „keine Information“, der Nullwert "" dagegen „Wert löschen“. Ob der Empfänger das so umsetzt, muss die Schnittstellenbeschreibung klären.
 Mehrere Namen: PID-5 hat im Beispiel zwei Wiederholungen: den Rechtsnamen (Namensart L) und eine Schreibvariante als Alias (A). Wer nur die erste Wiederholung liest, übersieht den Alias.
 Escape-Sequenz: Die Straße steht als Teststraße 12 \T\ 14. \T\ ist die Maskierung des Zeichens &. Würde dort ein nacktes & stehen, entstünden zusätzliche Subkomponenten.
 Z-Segment: ZPI am Ende ist eine lokale Erweiterung. Der Viewer zeigt es an, kann aber seine Felder nicht benennen.
@@ -946,7 +946,7 @@ URL: https://freimoser.github.io/hl7v2-viewer/hl7-segmente/pid/
 
 # PID – Patientenidentifikation: Felder und Stolperstellen
 
-PID enthält die Stammdaten eines Patienten: Kennungen, Name, Geburtsdatum, Geschlecht, Adresse und Kontakt. Es ist das Segment mit den meisten personenbezogenen Daten. Geben Sie Nachrichten nur anonymisiert weiter, der Viewer bietet dafür eine Hilfe.
+PID enthält die Stammdaten eines Patienten: Kennungen, Name, Geburtsdatum, Geschlecht, Adresse und Kontakt. Es enthält personenbezogene Daten wie Name und Geburtsdatum. Geben Sie Nachrichten nur anonymisiert weiter, der Viewer bietet dafür eine Hilfe.
 
 Beispielzeile
 
@@ -968,7 +968,7 @@ PID-6 | Geburtsname der Mutter | XPN | Name der Mutter bei Geburt, wird zur Iden
 PID-7 | Geburtsdatum | DTM | Meist JJJJMMTT, kann auch eine Uhrzeit enthalten. |
 PID-8 | Geschlecht | IS | Code für das Geschlecht. Welche Werte gelten, regelt das Schnittstellenprofil. |
 PID-9 | Alias-Name | XPN | Weitere Namen des Patienten. |
-PID-10 | Rasse | CE | Im deutschen Umfeld meist leer. |
+PID-10 | Rasse | CE | Wird je nach Schnittstelle nicht gefüllt. |
 PID-11 | Adresse | XAD | Straße ^ Zusatz ^ Ort ^ Region ^ PLZ ^ Land ^ Adressart. |
 PID-12 | Landkreis (veraltet) | IS | Veraltetes Feld. |
 PID-13 | Telefon privat | XTN | Telefon- oder E-Mail-Angaben für den privaten Bereich. |
@@ -1105,7 +1105,7 @@ OBR-32 | Hauptbefundender | NDL | Verantwortliche Person für das Ergebnis. |
 
 Stolpersteine
 
-OBR-2 und OBR-3: Auftragsnummer des Anfordernden und des Ausführenden, jeweils Nummer ^ Namensraum. Im Auftrag ist die zweite meist leer, im Befund sind beide gefüllt.
+OBR-2 und OBR-3: Auftragsnummer des Anfordernden und des Ausführenden, jeweils Nummer ^ Namensraum. Im Auftrag ist die zweite Nummer typischerweise noch leer, weil der Ausführende sie erst vergibt.
 OBR-4 Leistung: Code ^ Text ^ Codesystem der angeforderten bzw. durchgeführten Untersuchung. Ein lokaler Code (im Beispiel LOKAL) versteht nur das Absendersystem.
 OBR-7 und OBR-22: OBR-7 ist der Zeitpunkt der Entnahme bzw. Beobachtung, OBR-22 der Zeitpunkt des Berichts bzw. der letzten Statusänderung. Das sind zwei verschiedene Zeiten.
 OBR-25 Ergebnisstatus: F endgültig, P vorläufig, C korrigiert. Der Status der einzelnen Werte steht in OBX-11.
@@ -1415,11 +1415,11 @@ Ihre Nachrichten
 
 Text, den Sie einfügen, und Dateien, die Sie öffnen, werden nur im Arbeitsspeicher Ihres Browsers verarbeitet. Es findet keine Übertragung statt. Das erzwingt die Seite technisch: Die Content-Security-Policy der Seiten enthält connect-src 'none', der Browser blockiert damit jede Netzwerkverbindung, die ein Skript aufbauen wollte. Exporte (JSON, CSV, anonymisierter Text) erzeugt Ihr Browser lokal als Download. Prüfen können Sie das in den Entwicklerwerkzeugen Ihres Browsers im Reiter „Netzwerk“.
 
-Wenn Sie echte Patientendaten prüfen, entscheiden Sie selbst, ob das nach den Regeln Ihrer Einrichtung zulässig ist. Der Viewer bietet eine Anonymisierung an. Sie ist eine Hilfe und garantiert nicht, dass in Freitexten keine Hinweise auf Personen stehen bleiben.
+Der Viewer bietet eine Anonymisierung an. Sie ist eine Hilfe und garantiert nicht, dass in Freitexten keine Hinweise auf Personen stehen bleiben.
 
 Hosting
 
-Die Seite wird über GitHub Pages (GitHub Inc.) ausgeliefert. Beim Aufruf verarbeitet GitHub technisch notwendige Verbindungsdaten wie IP-Adresse, Zeitpunkt und angeforderte Datei, um die Seite bereitzustellen und abzusichern (Art. 6 Abs. 1 lit. f DSGVO). Wir haben darauf keinen Einfluss und erhalten diese Daten nicht. Details: Datenschutzerklärung von GitHub.
+Die Seite wird über GitHub Pages (GitHub Inc.) ausgeliefert. Beim Aufruf verarbeitet GitHub technisch notwendige Verbindungsdaten wie IP-Adresse, Zeitpunkt und angeforderte Datei, um die Seite bereitzustellen und abzusichern. Wir erhalten diese Daten nicht. Details: Datenschutzerklärung von GitHub.
 
 Cookies und Speicher
 
@@ -1433,8 +1433,8 @@ Search Console und Bing Webmaster Tools
 
 Die Seite enthält Bestätigungs-Meta-Tags für diese Dienste. Dabei werden keine Daten von Besucherinnen und Besuchern übertragen.
 
-Ihre Rechte
+Gespeicherte Daten
 
-Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch sowie das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren. Da wir keine personenbezogenen Daten von Ihnen speichern, laufen diese Rechte gegenüber uns meist ins Leere; gegenüber dem Hoster gelten sie nach dessen Datenschutzerklärung.
+Wir speichern keine personenbezogenen Daten von Ihnen; für das Hosting gilt die Datenschutzerklärung des Hosters (GitHub Pages).
 
 Zum Viewer

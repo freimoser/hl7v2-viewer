@@ -79,7 +79,7 @@ const pid = segPage({
   title: "HL7 PID-Segment: Felder PID-3, PID-5, PID-7 erklärt",
   h1: "PID – Patientenidentifikation: Felder und Stolperstellen",
   description: "Das PID-Segment trägt die Patientenstammdaten einer HL7-v2-Nachricht: Kennungen PID-3, Name PID-5, Geburtsdatum, Geschlecht, Adresse und Telefon.",
-  lead: "<strong>PID enthält die Stammdaten eines Patienten: Kennungen, Name, Geburtsdatum, Geschlecht, Adresse und Kontakt.</strong> Es ist das Segment mit den meisten personenbezogenen Daten. Geben Sie Nachrichten nur anonymisiert weiter, der Viewer bietet dafür eine <a href=\"" + url("") + "#anonymisieren\">Hilfe</a>.",
+  lead: "<strong>PID enthält die Stammdaten eines Patienten: Kennungen, Name, Geburtsdatum, Geschlecht, Adresse und Kontakt.</strong> Es enthält personenbezogene Daten wie Name und Geburtsdatum. Geben Sie Nachrichten nur anonymisiert weiter, der Viewer bietet dafür eine <a href=\"" + url("") + "#anonymisieren\">Hilfe</a>.",
   bullets: [
     "<strong>PID-3 Kennungen:</strong> Das Feld ist wiederholbar (<code>~</code>) und vom Typ CX: Kennung (.1), vergebende Stelle (.4), Art (.5, zum Beispiel <code>MR</code>). Eine Kennung ohne Stelle ist nicht eindeutig. Ältere Nachrichten nutzen daneben PID-2 und PID-4, prüfen Sie, wo Ihr Absender die Kennung ablegt.",
     "<strong>PID-5 Name:</strong> Typ XPN: Nachname, Vorname, weitere Vornamen, Suffix, Präfix, Titel, Namensart (<code>L</code> Rechtsname, <code>A</code> Alias). Mehrere Namen stehen als Wiederholungen. In neueren Versionen ist die erste Komponente selbst aus Subkomponenten (<code>&amp;</code>) aufgebaut, zum Beispiel bei Namenszusätzen.",
@@ -123,7 +123,7 @@ const obr = segPage({
   description: "Das OBR-Segment beschreibt in HL7-v2-Aufträgen und -Befunden die Untersuchung: Auftragsnummern, Leistungscode OBR-4, Zeitpunkte und Ergebnisstatus OBR-25.",
   lead: "<strong>OBR beschreibt eine Untersuchung: welche, für welchen Auftrag, wann und mit welchem Status.</strong> In ORM-Nachrichten steht es im Auftrag, in ORU-Nachrichten kündigt es die Ergebnisse (OBX) an, die darauf folgen.",
   bullets: [
-    "<strong>OBR-2 und OBR-3:</strong> Auftragsnummer des Anfordernden und des Ausführenden, jeweils Nummer ^ Namensraum. Im Auftrag ist die zweite meist leer, im Befund sind beide gefüllt.",
+    "<strong>OBR-2 und OBR-3:</strong> Auftragsnummer des Anfordernden und des Ausführenden, jeweils Nummer ^ Namensraum. Im Auftrag ist die zweite Nummer typischerweise noch leer, weil der Ausführende sie erst vergibt.",
     "<strong>OBR-4 Leistung:</strong> Code ^ Text ^ Codesystem der angeforderten bzw. durchgeführten Untersuchung. Ein lokaler Code (im Beispiel <code>LOKAL</code>) versteht nur das Absendersystem.",
     "<strong>OBR-7 und OBR-22:</strong> OBR-7 ist der Zeitpunkt der Entnahme bzw. Beobachtung, OBR-22 der Zeitpunkt des Berichts bzw. der letzten Statusänderung. Das sind zwei verschiedene Zeiten.",
     "<strong>OBR-25 Ergebnisstatus:</strong> <code>F</code> endgültig, <code>P</code> vorläufig, <code>C</code> korrigiert. Der Status der einzelnen Werte steht in OBX-11.",

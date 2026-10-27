@@ -49,7 +49,7 @@ export const SEGMENTS = {
     7: ["Geburtsdatum", "DTM", "Meist JJJJMMTT, kann auch eine Uhrzeit enthalten.", K],
     8: ["Geschlecht", "IS", "Code für das Geschlecht. Welche Werte gelten, regelt das Schnittstellenprofil.", Object.assign(C({ M: "männlich", F: "weiblich", O: "anderes", U: "unbekannt", A: "mehrdeutig", N: "nicht zutreffend" }), K)],
     9: ["Alias-Name", "XPN", "Weitere Namen des Patienten."],
-    10: ["Rasse", "CE", "Im deutschen Umfeld meist leer."],
+    10: ["Rasse", "CE", "Wird je nach Schnittstelle nicht gefüllt."],
     11: ["Adresse", "XAD", "Straße ^ Zusatz ^ Ort ^ Region ^ PLZ ^ Land ^ Adressart.", K],
     12: ["Landkreis (veraltet)", "IS", "Veraltetes Feld."],
     13: ["Telefon privat", "XTN", "Telefon- oder E-Mail-Angaben für den privaten Bereich.", K],
