@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { parseAll, normalizeInput, unescapeText, getValue, DEFAULT_ENC, serialize } from "../src/assets/js/core/parser.js";
+import { parseAll, normalizeInput, unescapeText, getValue, DEFAULT_ENC, serialize, fileNote } from "../src/assets/js/core/parser.js";
 import { checkMessage, checkDateValue } from "../src/assets/js/core/validate.js";
 import { EXAMPLES, ALL_EXAMPLES } from "../src/assets/js/core/examples.js";
 import { anonymize } from "../src/assets/js/core/anonymize.js";
@@ -269,4 +269,21 @@ test("Wörterbuch: bekannte, unbekannte und lokale Felder", () => {
   assert.equal(fieldInfo("PID", 99).known, false);
   assert.equal(segmentInfo("XYZ").known, false);
   for (const [id, s] of Object.entries(SEGMENTS)) for (const [n, f] of Object.entries(s.fields)) assert.ok(f[0] && f[1] && f[2], `${id}-${n}`);
+});
+
+test("leere Datei (0 Byte): klare Meldung statt nur Name und Größe", () => {
+  assert.equal(fileNote("empty.hl7", 0), "empty.hl7: Die Datei ist leer.");
+  assert.equal(fileNote("a.hl7", 2048), "a.hl7 (2.0 KB)");
+  assert.equal(fileNote("a.hl7", 2048, "Hinweis."), "a.hl7 (2.0 KB). Hinweis.");
+});
+
+test("MLLP-Rahmen wird nur gemeldet, wenn danach HL7-Text mit MSH folgt", () => {
+  const framed = "\x0b" + M + "\rPID|1||123\r\x1c\r";
+  const ok = normalizeInput(framed);
+  assert.ok(ok.hadMllp);
+  assert.ok(ok.notes.some((n) => n.code === "mllp"));
+  assert.ok(ok.lines[0].startsWith("MSH"));
+  const bin = normalizeInput("PK\x03\x04\x0b\x00\x1c\xff binaer \x0b\x1c");
+  assert.equal(bin.hadMllp, false);
+  assert.ok(!bin.notes.some((n) => n.code === "mllp"));
 });

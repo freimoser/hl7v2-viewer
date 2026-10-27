@@ -28,7 +28,7 @@ ${tools()}`,
 const datenschutz = {
   path: "datenschutz/",
   title: "Datenschutz: HL7-v2-Viewer ohne Upload und Tracking",
-  description: "Datenschutz beim HL7-v2-Viewer: Nachrichten werden nur lokal im Browser verarbeitet. Keine Cookies, kein Tracking, kein Upload, kein Drittdienst im Code.",
+  description: "Datenschutz beim HL7-v2-Viewer: Nachrichten werden nur lokal im Browser verarbeitet. Keine Cookies, kein Tracking, kein Upload, Hosting über GitHub Pages.",
   h1: "Datenschutz",
   crumb: "Datenschutz",
   keywords: "HL7 Viewer Datenschutz, HL7 online ohne Upload",
@@ -40,11 +40,11 @@ const datenschutz = {
 <p>Text, den Sie einfügen, und Dateien, die Sie öffnen, werden nur im Arbeitsspeicher Ihres Browsers verarbeitet. Es findet keine Übertragung statt. Das erzwingt die Seite technisch: Die Content-Security-Policy der Seiten enthält <code>connect-src 'none'</code>, der Browser blockiert damit jede Netzwerkverbindung, die ein Skript aufbauen wollte. Exporte (JSON, CSV, anonymisierter Text) erzeugt Ihr Browser lokal als Download. Prüfen können Sie das in den Entwicklerwerkzeugen Ihres Browsers im Reiter „Netzwerk“.</p>
 <p>Der Viewer bietet eine Anonymisierung an. Sie ist eine Hilfe und garantiert nicht, dass in Freitexten keine Hinweise auf Personen stehen bleiben.</p>
 <h2 id="hosting">Hosting</h2>
-<p><strong>Hosting:</strong> Diese Seite wird über GitHub Pages ausgeliefert. Beim Aufruf verarbeitet der Hoster technisch bedingt die IP-Adresse der Besucher. Wir erhalten diese Daten nicht und speichern keine personenbezogenen Daten von Ihnen. Näheres steht in der <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">Datenschutzerklärung von GitHub</a>.</p>
+<p>Diese Seite wird über GitHub Pages ausgeliefert. Beim Aufruf verarbeitet der Hoster technisch bedingt die IP-Adresse der Besucher. Wir erhalten diese Daten nicht und speichern keine personenbezogenen Daten von Ihnen. Näheres steht in der <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">Datenschutzerklärung von GitHub</a>.</p>
 <h2 id="speicher">Cookies und Speicher</h2>
 <p>Die Seite setzt keine Cookies und nutzt weder Local Storage noch Session Storage. Ein Service Worker legt ausschließlich die Dateien dieser Website im Cache Ihres Browsers ab, damit der Viewer auch offline startet. Nachrichten werden dort nicht gespeichert. Sie löschen diesen Cache in den Website-Einstellungen Ihres Browsers.</p>
-<h2 id="extern">Keine externen Dienste</h2>
-<p>Es gibt keine Reichweitenmessung, keine Schriften, Skripte oder Bilder von Dritten und keine Einbindung sozialer Netzwerke. Links zu anderen Seiten (zum Beispiel zur Impressumsseite oder zu den Quellen) laden erst beim Anklicken.</p>
+<h2 id="extern">Keine externen Ressourcen</h2>
+<p>Der Viewer selbst lädt keine externen Ressourcen: keine Reichweitenmessung, keine Schriften, Skripte oder Bilder von Dritten und keine Einbindung sozialer Netzwerke. Links zu anderen Seiten (zum Beispiel zur Impressumsseite oder zu den Quellen) laden erst beim Anklicken.</p>
 <h2 id="verifizierung">Search Console und Bing Webmaster Tools</h2>
 <p>Die Seite enthält Bestätigungs-Meta-Tags für diese Dienste. Dabei werden keine Daten von Besucherinnen und Besuchern übertragen.</p>
 <p><a href="${url("")}">Zum Viewer</a></p>`,

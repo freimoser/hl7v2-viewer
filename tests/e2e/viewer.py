@@ -91,6 +91,11 @@ with sync_playwright() as p:
             # Tap-Tooltip
             pg3.keyboard.press("Escape")
         pg3.close()
+    # Leere Datei (0 Byte)
+    pg4 = b.new_page(); pg4.goto(BASE); pg4.wait_for_selector("#file", state="attached")
+    pg4.set_input_files("#file", files=[{"name": "empty.hl7", "mimeType": "text/plain", "buffer": b""}]); pg4.wait_for_timeout(500)
+    ok("Die Datei ist leer." in pg4.inner_text("#file-note"), "leere Datei: Hinweis 'Die Datei ist leer.'")
+    pg4.close()
     b.close()
 print("FAILS:", fails)
 sys.exit(1 if fails else 0)

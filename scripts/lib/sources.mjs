@@ -11,6 +11,8 @@ export const SOURCES = [
     used: "MLLP überträgt Nachrichten über TCP, ergänzt Anfangs- und Endzeichen, weil TCP ein Bytestrom ist, und bringt keine eigene Verschlüsselung mit." },
   { topic: "Organisation", doc: "HL7 Deutschland: Startseite", publisher: "HL7 Deutschland e. V.", url: "https://www.hl7.de/",
     used: "Beleg, dass HL7 v2.x, CDA, V3 und FHIR zur HL7-Standardfamilie gehören (Verweis auf die deutsche Nutzerorganisation)." },
+  { topic: "Feldpositionen (Nachschlagewerk)", doc: "HAPI HL7v2, Generated Structures v2.5.1: Klasse PID (Javadoc)", publisher: "HAPI-HL7v2-Projekt (hapifhir.github.io)", url: "https://hapifhir.github.io/hapi-hl7v2/v251/apidocs/ca/uhn/hl7v2/model/v251/segment/PID.html",
+    used: "Listet die Felder PID-1 bis PID-39 der Version 2.5.1 mit Feldname, Datentyp und Kennzeichnung als optional oder wiederholbar. Dient hier nur als Nachschlagewerk für Feldpositionen und Feldnamen; Texte daraus sind nicht übernommen. Eine Aussage zur Lizenz wird nicht getroffen." },
 ];
 export const OWN = [
   "Feldlisten, Segmentnamen, Prüfhinweise und Erklärtexte sind eigene Formulierungen und kein Auszug aus einer HL7-Spezifikation. Soweit sie nicht auf den oben genannten Quellen beruhen, gilt: Aus der Praxis bekannt, nicht aus einer geöffneten Quelle belegt.",

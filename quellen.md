@@ -11,6 +11,7 @@ Abrufdatum aller Quellen: **27.10.2026**. Es sind nur Seiten aufgeführt, die ta
 | Praxis | „HL7“ (deutsche Wikipedia) | Wikipedia-Autoren (CC BY-SA) | https://de.wikipedia.org/wiki/Health_Level_7 | Version 2 ist textbasiert, nicht „Plug and Play“: Transportschichten wie MLLP und Parser sind verfügbar, die Verarbeitung von Nachrichten, Segmenten und Feldern ist applikationsspezifisch. |
 | Transport | „Minimal Lower Layer Protocol“ (englische Wikipedia) | Wikipedia-Autoren (CC BY-SA) | https://en.wikipedia.org/wiki/Minimal_Lower_Layer_Protocol | MLLP überträgt Nachrichten über TCP, ergänzt Anfangs- und Endzeichen, weil TCP ein Bytestrom ist, und bringt keine eigene Verschlüsselung mit. |
 | Organisation | HL7 Deutschland: Startseite | HL7 Deutschland e. V. | https://www.hl7.de/ | Beleg, dass HL7 v2.x, CDA, V3 und FHIR zur HL7-Standardfamilie gehören (Verweis auf die deutsche Nutzerorganisation). |
+| Feldpositionen (Nachschlagewerk) | HAPI HL7v2, Generated Structures v2.5.1: Klasse PID (Javadoc) | HAPI-HL7v2-Projekt (hapifhir.github.io) | https://hapifhir.github.io/hapi-hl7v2/v251/apidocs/ca/uhn/hl7v2/model/v251/segment/PID.html | Listet die Felder PID-1 bis PID-39 der Version 2.5.1 mit Feldname, Datentyp und Kennzeichnung als optional oder wiederholbar. Dient hier nur als Nachschlagewerk für Feldpositionen und Feldnamen; Texte daraus sind nicht übernommen. Eine Aussage zur Lizenz wird nicht getroffen. |
 
 ## Eigene Arbeit
 

@@ -170,11 +170,11 @@ Nein. Die Auswertung läuft im Browser, und die Seite verbietet über eine Conte
 
 Weitere Werkzeuge
 Andere Formate aus dem Praxis- und Laboralltag, ebenfalls lokal im Browser:
-LDT- und BDT-Dateien aus Labor und Praxis lesen – Labordaten (LDT) und Praxisdaten (BDT)
-GDT-Dateien zwischen Praxissoftware und Geräten ansehen – Gerätedaten im GDT-Format
-DICOM-Bilder und Radiologie-CDs im Browser öffnen – Bilddaten aus MRT, CT und Röntgen
-FHIR-Daten ansehen – FHIR-Ressourcen als JSON lesbar anzeigen
-CDA-Arztbriefe lesen – Arztbriefe als CDA-XML lesbar anzeigen
+LDT-Laborbefunde und BDT-Praxisdaten ansehen – Dateien aus Labor und Praxisverwaltung lesbar machen
+GDT-Gerätedateien prüfen – Austauschdateien zwischen Praxissoftware und Messgeräten
+DICOM-Aufnahmen von CD im Browser öffnen – Bilddaten aus der Radiologie ohne Installation
+FHIR-Ressourcen neben HL7 v2 lesen – JSON-Daten der neueren HL7-Familie lesbar anzeigen
+CDA-Arztbriefe als XML öffnen – klinische Dokumente lesbar darstellen
 
 ---
 
@@ -437,11 +437,11 @@ Für die Übermittlung von Beobachtungsergebnissen ohne vorherige Abfrage, zum B
 
 Weitere Werkzeuge
 Andere Formate aus dem Praxis- und Laboralltag, ebenfalls lokal im Browser:
-LDT- und BDT-Dateien aus Labor und Praxis lesen – Labordaten (LDT) und Praxisdaten (BDT)
-GDT-Dateien zwischen Praxissoftware und Geräten ansehen – Gerätedaten im GDT-Format
-DICOM-Bilder und Radiologie-CDs im Browser öffnen – Bilddaten aus MRT, CT und Röntgen
-FHIR-Daten ansehen – FHIR-Ressourcen als JSON lesbar anzeigen
-CDA-Arztbriefe lesen – Arztbriefe als CDA-XML lesbar anzeigen
+LDT-Laborbefunde und BDT-Praxisdaten ansehen – Dateien aus Labor und Praxisverwaltung lesbar machen
+GDT-Gerätedateien prüfen – Austauschdateien zwischen Praxissoftware und Messgeräten
+DICOM-Aufnahmen von CD im Browser öffnen – Bilddaten aus der Radiologie ohne Installation
+FHIR-Ressourcen neben HL7 v2 lesen – JSON-Daten der neueren HL7-Familie lesbar anzeigen
+CDA-Arztbriefe als XML öffnen – klinische Dokumente lesbar darstellen
 
 ---
 
@@ -1370,6 +1370,9 @@ Wikipedia-Autoren (CC BY-SA) | MLLP überträgt Nachrichten über TCP, ergänzt 
 Organisation | HL7 Deutschland: Startseite
 HL7 Deutschland e. V. | Beleg, dass HL7 v2.x, CDA, V3 und FHIR zur HL7-Standardfamilie gehören (Verweis auf die deutsche Nutzerorganisation). |
 
+Feldpositionen (Nachschlagewerk) | HAPI HL7v2, Generated Structures v2.5.1: Klasse PID (Javadoc)
+HAPI-HL7v2-Projekt (hapifhir.github.io) | Listet die Felder PID-1 bis PID-39 der Version 2.5.1 mit Feldname, Datentyp und Kennzeichnung als optional oder wiederholbar. Dient hier nur als Nachschlagewerk für Feldpositionen und Feldnamen; Texte daraus sind nicht übernommen. Eine Aussage zur Lizenz wird nicht getroffen. |
+
 Eigene Arbeit
 
 Feldlisten, Segmentnamen, Prüfhinweise und Erklärtexte sind eigene Formulierungen und kein Auszug aus einer HL7-Spezifikation. Soweit sie nicht auf den oben genannten Quellen beruhen, gilt: Aus der Praxis bekannt, nicht aus einer geöffneten Quelle belegt.
@@ -1393,11 +1396,11 @@ Zum Viewer
 
 Weitere Werkzeuge
 Andere Formate aus dem Praxis- und Laboralltag, ebenfalls lokal im Browser:
-LDT- und BDT-Dateien aus Labor und Praxis lesen – Labordaten (LDT) und Praxisdaten (BDT)
-GDT-Dateien zwischen Praxissoftware und Geräten ansehen – Gerätedaten im GDT-Format
-DICOM-Bilder und Radiologie-CDs im Browser öffnen – Bilddaten aus MRT, CT und Röntgen
-FHIR-Daten ansehen – FHIR-Ressourcen als JSON lesbar anzeigen
-CDA-Arztbriefe lesen – Arztbriefe als CDA-XML lesbar anzeigen
+LDT-Laborbefunde und BDT-Praxisdaten ansehen – Dateien aus Labor und Praxisverwaltung lesbar machen
+GDT-Gerätedateien prüfen – Austauschdateien zwischen Praxissoftware und Messgeräten
+DICOM-Aufnahmen von CD im Browser öffnen – Bilddaten aus der Radiologie ohne Installation
+FHIR-Ressourcen neben HL7 v2 lesen – JSON-Daten der neueren HL7-Familie lesbar anzeigen
+CDA-Arztbriefe als XML öffnen – klinische Dokumente lesbar darstellen
 
 ---
 
@@ -1419,15 +1422,15 @@ Der Viewer bietet eine Anonymisierung an. Sie ist eine Hilfe und garantiert nich
 
 Hosting
 
-Hosting: Diese Seite wird über GitHub Pages ausgeliefert. Beim Aufruf verarbeitet der Hoster technisch bedingt die IP-Adresse der Besucher. Wir erhalten diese Daten nicht und speichern keine personenbezogenen Daten von Ihnen. Näheres steht in der Datenschutzerklärung von GitHub.
+Diese Seite wird über GitHub Pages ausgeliefert. Beim Aufruf verarbeitet der Hoster technisch bedingt die IP-Adresse der Besucher. Wir erhalten diese Daten nicht und speichern keine personenbezogenen Daten von Ihnen. Näheres steht in der Datenschutzerklärung von GitHub.
 
 Cookies und Speicher
 
 Die Seite setzt keine Cookies und nutzt weder Local Storage noch Session Storage. Ein Service Worker legt ausschließlich die Dateien dieser Website im Cache Ihres Browsers ab, damit der Viewer auch offline startet. Nachrichten werden dort nicht gespeichert. Sie löschen diesen Cache in den Website-Einstellungen Ihres Browsers.
 
-Keine externen Dienste
+Keine externen Ressourcen
 
-Es gibt keine Reichweitenmessung, keine Schriften, Skripte oder Bilder von Dritten und keine Einbindung sozialer Netzwerke. Links zu anderen Seiten (zum Beispiel zur Impressumsseite oder zu den Quellen) laden erst beim Anklicken.
+Der Viewer selbst lädt keine externen Ressourcen: keine Reichweitenmessung, keine Schriften, Skripte oder Bilder von Dritten und keine Einbindung sozialer Netzwerke. Links zu anderen Seiten (zum Beispiel zur Impressumsseite oder zu den Quellen) laden erst beim Anklicken.
 
 Search Console und Bing Webmaster Tools
 

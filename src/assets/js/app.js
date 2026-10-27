@@ -1,4 +1,4 @@
-import { parseAll, serialize } from "./core/parser.js";
+import { parseAll, serialize, fileNote } from "./core/parser.js";
 import { checkMessage } from "./core/validate.js";
 import { fieldInfo, segmentInfo, componentName, codeMeaning, DATATYPES } from "./core/dict.js";
 import { describeType } from "./core/messages.js";
@@ -248,7 +248,7 @@ function applyBytes() {
   const { text, note } = decode(state.bytes, $("charset").value);
   inp.value = text.replace(/\r\n|\r/g, "\n").replace(/\x0b|\x1c/g, (c) => c);
   const keep = state.bytes;
-  update().then(() => { state.bytes = keep; $("file-note").textContent = `${state.fileName} (${(keep.length / 1024).toFixed(1)} KB)${note ? ". " + note : ""}`; });
+  update().then(() => { state.bytes = keep; $("file-note").textContent = fileNote(state.fileName, keep.length, note); if (!keep.length) $("status").textContent = "Die Datei ist leer."; });
 }
 $("file").addEventListener("change", (e) => loadFile(e.target.files[0]));
 $("charset").addEventListener("change", applyBytes);

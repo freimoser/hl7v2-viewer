@@ -13,8 +13,10 @@ export function normalizeInput(input) {
   const notes = [];
   let t = String(input ?? "");
   if (t.charCodeAt(0) === 0xfeff) t = t.slice(1);
-  const mllpStart = (t.match(/\x0b/g) || []).length;
-  const mllpEnd = (t.match(/\x1c/g) || []).length;
+  let mllpStart = (t.match(/\x0b/g) || []).length;
+  let mllpEnd = (t.match(/\x1c/g) || []).length;
+  // Nur als MLLP-Rahmen behandeln, wenn der Inhalt danach wie HL7-Text beginnt (MSH); Binärdateien enthalten die Bytes zufällig.
+  if ((mllpStart || mllpEnd) && !/(^|[\s\]:>\x0b\x1c])MSH[^A-Za-z0-9\s]/m.test(t)) { mllpStart = 0; mllpEnd = 0; }
   if (mllpStart || mllpEnd) {
     t = t.replace(/\x0b/g, "").replace(/\x1c\r?/g, "\r");
     notes.push({ level: "info", code: "mllp", text: `MLLP-Rahmen erkannt und entfernt (${mllpStart} Startzeichen, ${mllpEnd} Endzeichen). Das sind Übertragungszeichen und gehören nicht zur Nachricht.` });
@@ -201,4 +203,10 @@ export function parseAll(input, { limit = Infinity } = {}) {
 export function serialize(msg, { mllp = false } = {}) {
   const body = msg.segments.map((s) => s.raw).join("\r") + "\r";
   return mllp ? "\x0b" + body + "\x1c\r" : body;
+}
+
+/** Text unter der Dateiauswahl: Name und Größe, bei 0 Byte ein klarer Hinweis. */
+export function fileNote(name, byteLength, note = "") {
+  if (!byteLength) return `${name}: Die Datei ist leer.`;
+  return `${name} (${(byteLength / 1024).toFixed(1)} KB)${note ? ". " + note : ""}`;
 }

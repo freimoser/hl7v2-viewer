@@ -111,11 +111,11 @@ export function about() {
 
 /** Genau ein Block pro Seite, nur auf ausgewählten Seiten. Anker beschreiben das Ziel, nicht den Tool-Namen. */
 const ANCHOR = {
-  ldt: ["LDT- und BDT-Dateien aus Labor und Praxis lesen", "Labordaten (LDT) und Praxisdaten (BDT)"],
-  gdt: ["GDT-Dateien zwischen Praxissoftware und Geräten ansehen", "Gerätedaten im GDT-Format"],
-  dicom: ["DICOM-Bilder und Radiologie-CDs im Browser öffnen", "Bilddaten aus MRT, CT und Röntgen"],
-  fhir: ["FHIR-Daten ansehen", "FHIR-Ressourcen als JSON lesbar anzeigen"],
-  cda: ["CDA-Arztbriefe lesen", "Arztbriefe als CDA-XML lesbar anzeigen"],
+  ldt: ["LDT-Laborbefunde und BDT-Praxisdaten ansehen", "Dateien aus Labor und Praxisverwaltung lesbar machen"],
+  gdt: ["GDT-Gerätedateien prüfen", "Austauschdateien zwischen Praxissoftware und Messgeräten"],
+  dicom: ["DICOM-Aufnahmen von CD im Browser öffnen", "Bilddaten aus der Radiologie ohne Installation"],
+  fhir: ["FHIR-Ressourcen neben HL7 v2 lesen", "JSON-Daten der neueren HL7-Familie lesbar anzeigen"],
+  cda: ["CDA-Arztbriefe als XML öffnen", "klinische Dokumente lesbar darstellen"],
 };
 export function tools() {
   if (!SITE.siblings.length) return "";
