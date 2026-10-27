@@ -111,15 +111,15 @@ export function about() {
 
 /** Genau ein Block pro Seite, nur auf ausgewählten Seiten. Anker beschreiben das Ziel, nicht den Tool-Namen. */
 const ANCHOR = {
-  ldt: ["LDT-Laborbefunde und BDT-Praxisdaten ansehen", "Dateien aus Labor und Praxisverwaltung lesbar machen"],
-  gdt: ["GDT-Gerätedateien prüfen", "Austauschdateien zwischen Praxissoftware und Messgeräten"],
-  dicom: ["DICOM-Aufnahmen von CD im Browser öffnen", "Bilddaten aus der Radiologie ohne Installation"],
-  fhir: ["FHIR-Ressourcen neben HL7 v2 lesen", "JSON-Daten der neueren HL7-Familie lesbar anzeigen"],
-  cda: ["CDA-Arztbriefe als XML öffnen", "klinische Dokumente lesbar darstellen"],
+  ldt: [["LDT-Laborbefunde und BDT-Praxisdaten ansehen", "Dateien aus Labor und Praxisverwaltung lesbar machen"], ["Laborbefunde im LDT-Format Zeile für Zeile lesen", "auch BDT-Dateien aus der Praxisverwaltung"], ["LDT- und BDT-Dateien im Browser prüfen", "Labor- und Praxisdaten ohne Zusatzsoftware"]],
+  gdt: [["GDT-Gerätedateien prüfen", "Austauschdateien zwischen Praxissoftware und Messgeräten"], ["GDT-Austauschdateien von Messgeräten öffnen", "Dateien zwischen Praxissoftware und Messgerät"], ["Datei zwischen Praxissoftware und Gerät als GDT lesen", "ohne Installation"]],
+  dicom: [["DICOM-Aufnahmen von CD im Browser öffnen", "Bilddaten aus der Radiologie ohne Installation"], ["Radiologie-CD ansehen: DICOM-Dateien lesen", "Dateien von der Radiologie-CD"], ["DICOM-Header und Bilder lokal betrachten", "lokal im Browser"]],
+  fhir: [["FHIR-Ressourcen neben HL7 v2 lesen", "JSON-Daten der neueren HL7-Familie lesbar anzeigen"], ["FHIR-Daten als lesbare Ressourcen ansehen", "der neuere Standard der HL7-Familie"], ["Moderne Schnittstellen: FHIR-JSON im Browser öffnen", "Daten der neueren HL7-Familie"]],
+  cda: [["CDA-Arztbriefe als XML öffnen", "klinische Dokumente lesbar darstellen"], ["Arztbriefe im CDA-Format verständlich anzeigen", "klinische Dokumente im XML-Format"], ["Klinische Dokumente aus CDA-XML lesen", "lokal und ohne Upload"]],
 };
-export function tools() {
+export function tools(v = 0) {
   if (!SITE.siblings.length) return "";
-  return `<section class="xlink" id="weitere-werkzeuge"><h2>Weitere Werkzeuge</h2><p>Andere Formate aus dem Praxis- und Laboralltag, ebenfalls lokal im Browser:</p><ul class="tl">${SITE.siblings.map((s) => { const a = ANCHOR[s.key] || [s.name, s.desc]; return `<li><a href="${s.url}">${esc(a[0])}</a>${a[1] ? ` – ${esc(a[1])}` : ""}</li>`; }).join("")}</ul></section>`;
+  return `<section class="xlink" id="weitere-werkzeuge"><h2>Weitere Werkzeuge</h2><p>Andere Formate aus dem Praxis- und Laboralltag, ebenfalls lokal im Browser:</p><ul class="tl">${SITE.siblings.map((s) => { const a = (ANCHOR[s.key] || [[s.name, s.desc]])[v] || ANCHOR[s.key][0]; return `<li><a href="${s.url}">${esc(a[0])}</a>${a[1] ? ` – ${esc(a[1])}` : ""}</li>`; }).join("")}</ul></section>`;
 }
 
 function footer() {

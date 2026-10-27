@@ -42,7 +42,7 @@ ${GROUP_ORDER.map((g) => `<h2 id="${g.toLowerCase()}">${g} – ${esc(TYPE_GROUPS
 <p>Die dritte Komponente von MSH-9 benennt die Segmentstruktur. Viele Ereignisse einer Gruppe teilen sie: A01 und A04 sind im Beispiel beide <code>ADT_A01</code>. Daher sehen sich Nachrichten verschiedener Ereignisse oft ähnlich, und die Bedeutung steckt im Ereigniscode, im Inhalt von PV1 und im Kontext. Verlassen Sie sich nicht auf die Struktur allein.</p>
 <h2 id="faq-typen">Kurz beantwortet</h2>
 ${faqHtml(faqTypen)}
-${tools()}`,
+${tools(1)}`,
 };
 
 function ackText() {

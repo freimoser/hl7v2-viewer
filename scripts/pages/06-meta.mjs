@@ -22,7 +22,7 @@ ${SOURCES.map((s) => `<tr><td>${esc(s.topic)}</td><td><a href="${s.url}" rel="no
 <h2 id="marken">Marken</h2>
 <p>${esc(DISCLAIMER)}</p>
 <p><a href="${url("")}">Zum Viewer</a></p>
-${tools()}`,
+${tools(2)}`,
 };
 
 const datenschutz = {

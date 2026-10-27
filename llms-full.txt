@@ -437,11 +437,11 @@ Für die Übermittlung von Beobachtungsergebnissen ohne vorherige Abfrage, zum B
 
 Weitere Werkzeuge
 Andere Formate aus dem Praxis- und Laboralltag, ebenfalls lokal im Browser:
-LDT-Laborbefunde und BDT-Praxisdaten ansehen – Dateien aus Labor und Praxisverwaltung lesbar machen
-GDT-Gerätedateien prüfen – Austauschdateien zwischen Praxissoftware und Messgeräten
-DICOM-Aufnahmen von CD im Browser öffnen – Bilddaten aus der Radiologie ohne Installation
-FHIR-Ressourcen neben HL7 v2 lesen – JSON-Daten der neueren HL7-Familie lesbar anzeigen
-CDA-Arztbriefe als XML öffnen – klinische Dokumente lesbar darstellen
+Laborbefunde im LDT-Format Zeile für Zeile lesen – auch BDT-Dateien aus der Praxisverwaltung
+GDT-Austauschdateien von Messgeräten öffnen – Dateien zwischen Praxissoftware und Messgerät
+Radiologie-CD ansehen: DICOM-Dateien lesen – Dateien von der Radiologie-CD
+FHIR-Daten als lesbare Ressourcen ansehen – der neuere Standard der HL7-Familie
+Arztbriefe im CDA-Format verständlich anzeigen – klinische Dokumente im XML-Format
 
 ---
 
@@ -1396,11 +1396,11 @@ Zum Viewer
 
 Weitere Werkzeuge
 Andere Formate aus dem Praxis- und Laboralltag, ebenfalls lokal im Browser:
-LDT-Laborbefunde und BDT-Praxisdaten ansehen – Dateien aus Labor und Praxisverwaltung lesbar machen
-GDT-Gerätedateien prüfen – Austauschdateien zwischen Praxissoftware und Messgeräten
-DICOM-Aufnahmen von CD im Browser öffnen – Bilddaten aus der Radiologie ohne Installation
-FHIR-Ressourcen neben HL7 v2 lesen – JSON-Daten der neueren HL7-Familie lesbar anzeigen
-CDA-Arztbriefe als XML öffnen – klinische Dokumente lesbar darstellen
+LDT- und BDT-Dateien im Browser prüfen – Labor- und Praxisdaten ohne Zusatzsoftware
+Datei zwischen Praxissoftware und Gerät als GDT lesen – ohne Installation
+DICOM-Header und Bilder lokal betrachten – lokal im Browser
+Moderne Schnittstellen: FHIR-JSON im Browser öffnen – Daten der neueren HL7-Familie
+Klinische Dokumente aus CDA-XML lesen – lokal und ohne Upload
 
 ---
 

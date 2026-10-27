@@ -287,3 +287,12 @@ test("MLLP-Rahmen wird nur gemeldet, wenn danach HL7-Text mit MSH folgt", () => 
   assert.equal(bin.hadMllp, false);
   assert.ok(!bin.notes.some((n) => n.code === "mllp"));
 });
+
+test("Zeilenvorschub-Hinweis nur bei HL7-Inhalt (MSH), nicht bei Binärdaten oder MLLP ohne MSH", () => {
+  const hl7 = normalizeInput(M + "\nPID|1||123\n");
+  assert.ok(hl7.notes.some((n) => n.code === "lf-breaks"));
+  const noMsh = normalizeInput("\x0bhallo\nwelt\nnoch eine Zeile\n\x1c\r");
+  assert.ok(!noMsh.notes.some((n) => n.code === "lf-breaks"));
+  const bin = normalizeInput("PK\x03\x04\x00\xff\nabc\ndef\nghi");
+  assert.ok(!bin.notes.some((n) => n.code === "lf-breaks"));
+});

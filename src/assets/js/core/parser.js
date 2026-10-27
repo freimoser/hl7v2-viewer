@@ -30,7 +30,7 @@ export function normalizeInput(input) {
   const hadCR = /\r(?!\n)/.test(t);
   const hadLF = /\n/.test(t);
   let lines = t.split(/\r\n|\r|\n/);
-  if (hadLF && !hadCR && lines.filter((l) => l.trim()).length > 1) {
+  if (hadLF && !hadCR && lines.filter((l) => l.trim()).length > 1 && /(^|[\s\]:>])MSH[^A-Za-z0-9\s]/m.test(t)) {
     notes.push({ level: "info", code: "lf-breaks", text: "Die Segmente waren mit Zeilenvorschub (\\n) statt mit Wagenrücklauf (\\r) getrennt, wie es beim Kopieren aus Mails und Logs üblich ist. Der Viewer liest beides; für Systeme, die \\r erwarten, bietet die reparierte Fassung den korrekten Umbruch." });
   }
   // Präfix vor MSH (Log-Zeitstempel)
