@@ -1,0 +1,19 @@
+{
+  "name": "hl7v2-viewer",
+  "version": "1.0.0",
+  "description": "Viewer und Parser für HL7-v2-Nachrichten im Browser, ohne Upload",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test tests/",
+    "build": "node scripts/build.mjs",
+    "serve": "node scripts/serve.mjs",
+    "check": "node scripts/check.mjs",
+    "sync": "node scripts/sync.mjs",
+    "verify": "node --test tests/ && node scripts/build.mjs && node scripts/check.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

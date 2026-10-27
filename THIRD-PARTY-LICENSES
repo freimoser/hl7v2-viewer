@@ -1,0 +1,14 @@
+Drittanbieter-Lizenzen
+======================
+
+Der HL7-v2-Viewer enthält keinen Code, keine Schriften und keine Bilder von Dritten.
+
+- Parser, Feldliste, Prüfhinweise, Anonymisierung, Export, Oberfläche und Build-Skripte: eigener Code (MIT, siehe LICENSE).
+- Es werden keine npm-Pakete, keine Bibliotheken und kein CDN verwendet. Der Build nutzt nur Node.js (Standardbibliothek).
+- Schrift: Systemschriften des Geräts, keine Webfonts.
+- Icons, Favicon und das Vorschaubild (og-image.png) sind eigene Grafiken.
+- Alle Beispielnachrichten sind frei erfunden.
+
+Die Quellen für Aussagen im Text stehen in quellen.md. Texte von Wikipedia sind dort nur als Beleg verlinkt, nicht übernommen.
+
+HL7® und FHIR® sind eingetragene Marken von Health Level Seven International. Dieses Projekt ist unabhängig und wird von HL7 International weder bereitgestellt noch empfohlen.
