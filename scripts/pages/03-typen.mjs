@@ -6,7 +6,7 @@ import { TYPE_GROUPS, TRIGGERS } from "../../src/assets/js/core/messages.js";
 const base = "hl7-nachrichtentypen/";
 const EX = { "ADT^A01": "adt-a01", "ADT^A04": "adt-a04", "ADT^A08": "adt-a08", "ORU^R01": "oru-r01", "ORM^O01": "orm-o01", "MDM^T02": "mdm-t02", "SIU^S12": "siu-s12" };
 const DETAIL = { "ADT^A01": "adt-a01/", "ADT^A08": "adt-a08/", "ORU^R01": "oru-r01/", "ORM^O01": "orm-o01/" };
-const ORM_NOTE = `<p>Zur Einordnung: Neuere Versionen nutzen für Aufträge üblicherweise die spezialisierten Nachrichten <code>OML</code> (Laborauftrag) und <code>OMG</code> (allgemeiner klinischer Auftrag). ORM^O01 ist in älteren Schnittstellen üblich und weit verbreitet. Welche Variante gilt, steht in der Schnittstellenbeschreibung.</p>`;
+const ORM_NOTE = `<p>Zur Einordnung: Neuere Versionen nutzen für Aufträge üblicherweise die spezialisierten Nachrichten <code>OML</code> (Laborauftrag) und <code>OMG</code> (allgemeiner klinischer Auftrag). ORM^O01 ist in älteren Schnittstellen üblich. Welche Variante gilt, steht in der Schnittstellenbeschreibung.</p>`;
 const GROUP_ORDER = ["ADT", "ORM", "ORR", "OML", "OMG", "ORU", "MDM", "SIU", "DFT", "BAR", "VXU", "ACK"];
 
 const groupTable = (code) => {
@@ -22,7 +22,7 @@ const groupTable = (code) => {
 const faqTypen = [
   ["Was steht in MSH-9?", "Der Nachrichtentyp in drei Komponenten: Nachrichtencode (zum Beispiel ADT), Auslöseereignis (A01) und Nachrichtenstruktur (ADT_A01). Mehrere Auslöseereignisse teilen sich häufig eine Struktur: Im Beispiel dieser Seite hat auch die ambulante Registrierung ADT^A04 die Struktur ADT_A01. Ältere Nachrichten lassen die dritte Komponente oft weg."],
   ["Wie unterscheiden sich ADT^A01 und ADT^A04?", `A01 meldet eine stationäre Aufnahme, A04 die Registrierung zu einem Besuch, etwa ambulant. Der Aufbau ist ähnlich. Unterschiede zeigen sich vor allem in PV1-2 (Patientenklasse: <code>I</code> stationär, <code>O</code> ambulant). Beide Beispiele finden Sie im <a href="${url("")}#beispiel=adt-a04">Viewer</a>.`],
-  ["Wofür steht ORU^R01?", "Für die Übermittlung von Beobachtungsergebnissen ohne vorherige Abfrage, in der Praxis meist Laborbefunde. OBR beschreibt die Untersuchung, jedes OBX liefert einen Einzelwert."],
+  ["Wofür steht ORU^R01?", "Für die Übermittlung von Beobachtungsergebnissen ohne vorherige Abfrage, zum Beispiel Laborbefunde. OBR beschreibt die Untersuchung, jedes OBX liefert einen Einzelwert."],
 ];
 
 const overview = {
@@ -124,8 +124,8 @@ const oru = typePage({
   id: "oru-r01", key: "ORU^R01",
   title: "HL7 ORU^R01 Beispiel: Laborbefund mit OBR und OBX",
   h1: "HL7 ORU^R01: Laborbefund-Nachricht mit Beispiel",
-  description: "ORU^R01 überträgt Ergebnisse, meist Laborbefunde. Beispiel mit OBR und OBX, OBX-2, OBX-8 und OBX-11 sowie Kommentar (NTE) Feld für Feld erklärt.",
-  lead: "<strong>ORU^R01 überträgt Beobachtungsergebnisse, in der Praxis meist Laborbefunde, vom ausführenden System an den Empfänger, ohne dass dafür eine eigene Abfrage nötig ist.</strong> OBR beschreibt die Untersuchung, jedes OBX liefert einen Einzelwert.",
+  description: "ORU^R01 überträgt Ergebnisse, zum Beispiel Laborbefunde. Beispiel mit OBR und OBX, OBX-2, OBX-8 und OBX-11 sowie Kommentar (NTE) Feld für Feld erklärt.",
+  lead: "<strong>ORU^R01 überträgt Beobachtungsergebnisse, zum Beispiel Laborbefunde, vom ausführenden System an den Empfänger, ohne dass dafür eine eigene Abfrage nötig ist.</strong> OBR beschreibt die Untersuchung, jedes OBX liefert einen Einzelwert.",
   bullets: [
     "<strong>Gruppierung:</strong> Jedes OBX gehört zum davor stehenden OBR. Beginnt ein neues OBR, beginnt eine neue Untersuchung. Ein NTE gehört zum Segment direkt davor, im Beispiel zum letzten OBX.",
     "<strong>OBX-2 Werttyp:</strong> Er bestimmt, wie OBX-5 zu lesen ist. Im Beispiel <code>NM</code> (Zahl) und <code>ST</code> (Text). Weitere Typen sind unter anderem <code>TX</code> (Freitext), <code>CWE</code> (codiert) und <code>ED</code> (eingebettetes Dokument).",
@@ -149,7 +149,7 @@ const orm = typePage({
   title: "HL7 ORM^O01 Beispiel: Auftrag mit ORC und OBR",
   h1: "HL7 ORM^O01: Auftragsnachricht mit Beispiel",
   description: "ORM^O01 überträgt einen Auftrag, etwa eine Laboranforderung. Beispiel mit ORC und OBR, Steuercode ORC-1 und Auftragsnummern Feld für Feld erklärt.",
-  lead: "<strong>ORM^O01 überträgt einen Auftrag, zum Beispiel eine Laboranforderung, vom anfordernden an das ausführende System.</strong> ORC steuert den Auftrag, OBR beschreibt die angeforderte Untersuchung. Der Typ ist weiterhin verbreitet, auch wenn neuere Versionen mit OML^O21 und OMG^O19 spezialisierte Auftragsnachrichten bieten.",
+  lead: "<strong>ORM^O01 überträgt einen Auftrag, zum Beispiel eine Laboranforderung, vom anfordernden an das ausführende System.</strong> ORC steuert den Auftrag, OBR beschreibt die angeforderte Untersuchung. Der Typ ist in älteren Schnittstellen üblich, neuere Versionen bieten mit OML^O21 und OMG^O19 spezialisierte Auftragsnachrichten.",
   bullets: [
     "<strong>ORC-1 Steuercode:</strong> <code>NW</code> neuer Auftrag, <code>CA</code> Stornierung anfordern, <code>DC</code> Auftrag abbrechen, <code>XO</code> Änderung. Er entscheidet, was der Empfänger mit der Nachricht tun soll. Weitere Codes existieren, der Viewer erklärt eine Auswahl.",
     "<strong>Auftragsnummern:</strong> ORC-2 ist die Nummer des Anfordernden (<code>PL-5501</code>), ORC-3 die des Ausführenden. Im Auftrag ist ORC-3 leer, weil das Labor sie erst vergibt. Im späteren ORU sind beide gefüllt.",

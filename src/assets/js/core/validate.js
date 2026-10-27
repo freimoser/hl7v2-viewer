@@ -81,7 +81,7 @@ export function checkMessage(msg) {
   // OBX-Werttyp
   for (const s of msg.segments.filter((x) => x.id === "OBX")) {
     const vt = fieldText(s.fields[2]); const val = fieldText(s.fields[5]);
-    if (vt === "NM" && val && !/^[+-]?(\d+\.?\d*|\.\d+)$/.test(val)) add("warn", "obx-nm", `OBX-5 „${val}“ ist als Zahl (NM) gekennzeichnet, aber keine reine Zahl. Ein Dezimalkomma statt Punkt ist die häufigste Ursache.`, { seg: "OBX", field: 5, line: s.line });
+    if (vt === "NM" && val && !/^[+-]?(\d+\.?\d*|\.\d+)$/.test(val)) add("warn", "obx-nm", `OBX-5 „${val}“ ist als Zahl (NM) gekennzeichnet, aber keine reine Zahl. Ein Dezimalkomma statt Punkt ist eine mögliche Ursache.`, { seg: "OBX", field: 5, line: s.line });
     if (vt === "DT" || vt === "TS") { const p = checkDateValue(val); if (p) add("warn", "obx-date", `OBX-5 „${val}“ ${p}.`, { seg: "OBX", field: 5, line: s.line }); }
   }
 

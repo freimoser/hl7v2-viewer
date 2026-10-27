@@ -272,7 +272,7 @@ Sequenz | Bedeutung |
 
 \Xhh…\ | Zeichen als Hexadezimalwert |
 
-Im Änderungs-Beispiel steht die Straße als Teststraße 12 \T\ 14. Gemeint ist „Teststraße 12 & 14“. Der Viewer zeigt den entschlüsselten Text und behält den Originaltext im Rohtext bei. Ein unmaskiertes & oder | im Freitext erzeugt dagegen zusätzliche Subkomponenten oder Felder. Das ist eine häufige Fehlerquelle, siehe Häufige Fehler.
+Im Änderungs-Beispiel steht die Straße als Teststraße 12 \T\ 14. Gemeint ist „Teststraße 12 & 14“. Der Viewer zeigt den entschlüsselten Text und behält den Originaltext im Rohtext bei. Ein unmaskiertes & oder | im Freitext erzeugt dagegen zusätzliche Subkomponenten oder Felder. Das ist eine mögliche Fehlerquelle, siehe Häufige Fehler.
 
 Datentypen in Kürze
 
@@ -310,7 +310,7 @@ ZPI|1|KARTE-0815|Zusatzinfo nur lokal gültig
 
 Zeilenende und MLLP
 
-Segmente enden mit einem Wagenrücklauf (CR, Hex 0D). Viele Texteditoren, Mails und Logs machen daraus einen Zeilenvorschub (LF) oder CRLF. Der Viewer liest alle drei. Über TCP/IP werden Nachrichten häufig mit dem MLLP-Rahmen übertragen: Ein Startzeichen (Hex 0B) steht vor der Nachricht, danach folgen die Zeichen Hex 1C und 0D. Diese Zeichen gehören nicht zur Nachricht; der Viewer entfernt sie und meldet es. Quelle: Quellen.
+Segmente enden mit einem Wagenrücklauf (CR, Hex 0D). Viele Texteditoren, Mails und Logs machen daraus einen Zeilenvorschub (LF) oder CRLF. Der Viewer liest alle drei. Über TCP/IP werden Nachrichten üblicherweise mit dem MLLP-Rahmen übertragen: Ein Startzeichen (Hex 0B) steht vor der Nachricht, danach folgen die Zeichen Hex 1C und 0D. Diese Zeichen gehören nicht zur Nachricht; der Viewer entfernt sie und meldet es. Quelle: Quellen.
 
 Abgrenzung zu FHIR und CDA
 
@@ -362,7 +362,7 @@ ORM – Auftrag (Order Message)
 MSH-9 | Ereignis | Bedeutung |  |
 ORM^O01 | Auftrag (allgemein) | Ein Auftrag wird neu angelegt, geändert oder storniert, gesteuert über ORC-1. | Beispiel |
 
-Zur Einordnung: Neuere Versionen nutzen für Aufträge üblicherweise die spezialisierten Nachrichten OML (Laborauftrag) und OMG (allgemeiner klinischer Auftrag). ORM^O01 ist in älteren Schnittstellen üblich und weit verbreitet. Welche Variante gilt, steht in der Schnittstellenbeschreibung.
+Zur Einordnung: Neuere Versionen nutzen für Aufträge üblicherweise die spezialisierten Nachrichten OML (Laborauftrag) und OMG (allgemeiner klinischer Auftrag). ORM^O01 ist in älteren Schnittstellen üblich. Welche Variante gilt, steht in der Schnittstellenbeschreibung.
 
 ORR – Auftragsantwort
 Antwort auf eine Auftragsnachricht (ORM).
@@ -433,7 +433,7 @@ Wie unterscheiden sich ADT^A01 und ADT^A04?
 A01 meldet eine stationäre Aufnahme, A04 die Registrierung zu einem Besuch, etwa ambulant. Der Aufbau ist ähnlich. Unterschiede zeigen sich vor allem in PV1-2 (Patientenklasse: I stationär, O ambulant). Beide Beispiele finden Sie im Viewer.
 
 Wofür steht ORU^R01?
-Für die Übermittlung von Beobachtungsergebnissen ohne vorherige Abfrage, in der Praxis meist Laborbefunde. OBR beschreibt die Untersuchung, jedes OBX liefert einen Einzelwert.
+Für die Übermittlung von Beobachtungsergebnissen ohne vorherige Abfrage, zum Beispiel Laborbefunde. OBR beschreibt die Untersuchung, jedes OBX liefert einen Einzelwert.
 
 Weitere Werkzeuge
 Andere Formate aus dem Praxis- und Laboralltag, ebenfalls lokal im Browser:
@@ -624,7 +624,7 @@ URL: https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/oru-r01/
 
 # HL7 ORU^R01: Laborbefund-Nachricht mit Beispiel
 
-ORU^R01 überträgt Beobachtungsergebnisse, in der Praxis meist Laborbefunde, vom ausführenden System an den Empfänger, ohne dass dafür eine eigene Abfrage nötig ist. OBR beschreibt die Untersuchung, jedes OBX liefert einen Einzelwert.
+ORU^R01 überträgt Beobachtungsergebnisse, zum Beispiel Laborbefunde, vom ausführenden System an den Empfänger, ohne dass dafür eine eigene Abfrage nötig ist. OBR beschreibt die Untersuchung, jedes OBX liefert einen Einzelwert.
 
 Im Viewer öffnen oru-r01-labor.hl7
 
@@ -742,7 +742,7 @@ URL: https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/orm-o01/
 
 # HL7 ORM^O01: Auftragsnachricht mit Beispiel
 
-ORM^O01 überträgt einen Auftrag, zum Beispiel eine Laboranforderung, vom anfordernden an das ausführende System. ORC steuert den Auftrag, OBR beschreibt die angeforderte Untersuchung. Der Typ ist weiterhin verbreitet, auch wenn neuere Versionen mit OML^O21 und OMG^O19 spezialisierte Auftragsnachrichten bieten.
+ORM^O01 überträgt einen Auftrag, zum Beispiel eine Laboranforderung, vom anfordernden an das ausführende System. ORC steuert den Auftrag, OBR beschreibt die angeforderte Untersuchung. Der Typ ist in älteren Schnittstellen üblich, neuere Versionen bieten mit OML^O21 und OMG^O19 spezialisierte Auftragsnachrichten.
 
 Im Viewer öffnen orm-o01-auftrag.hl7
 
@@ -1168,7 +1168,7 @@ Stolpersteine
 OBX-2 Werttyp: Er bestimmt, wie OBX-5 zu lesen ist: NM Zahl, ST Text, TX Freitext, CWE codierter Wert, DT/TS Datum bzw. Zeit, ED eingebettetes Dokument.
 OBX-3 Kennung: Code ^ Text ^ Codesystem. Ohne Angabe des Codesystems (zum Beispiel LN für LOINC) ist ein Code nur im Absendersystem eindeutig.
 OBX-4: Die Unter-ID gruppiert zusammengehörige OBX-Zeilen, etwa bei mehrteiligen Ergebnissen.
-OBX-5 Wert: Bei NM nur Ziffern, Vorzeichen und Dezimalpunkt. Ein Dezimalkomma (5,9) ist ein häufiger Fehler. Das Feld darf mehrere Werte mit ~ tragen.
+OBX-5 Wert: Bei NM nur Ziffern, Vorzeichen und Dezimalpunkt. Ein Dezimalkomma (5,9) ist ein typischer Fehler. Das Feld darf mehrere Werte mit ~ tragen.
 OBX-6 bis OBX-8: Einheit, Referenzbereich und Kennzeichen (N normal, H hoch, L niedrig, A auffällig).
 OBX-11 Status: F endgültig, P vorläufig, C korrigiert, X nicht durchführbar. Ein Wert ohne Status ist für Empfänger schwer zu deuten.
 Freitext: Ein | im Text beendet das Feld, ein & teilt die Komponente. Beides muss maskiert sein (\F\, \T\).
@@ -1190,7 +1190,7 @@ URL: https://freimoser.github.io/hl7v2-viewer/hl7-fehler/
 
 # Häufige Fehler in HL7-v2-Nachrichten
 
-Die meisten Probleme mit HL7-v2-Nachrichten sind Formatfehler: falsche Zeilenenden, Datumsformate, Dezimalkomma, Zeichensatz oder unmaskierte Trennzeichen. Diese Seite nennt zu jedem Fehler Symptom, Ursache und Lösung. Die Meldungen sind die Originaltexte, die der Viewer ausgibt.
+Probleme mit HL7-v2-Nachrichten sind oft Formatfehler: falsche Zeilenenden, Datumsformate, Dezimalkomma, Zeichensatz oder unmaskierte Trennzeichen. Diese Seite nennt zu jedem Fehler Symptom, Ursache und Lösung. Die Meldungen sind die Originaltexte, die der Viewer ausgibt.
 
 Testfall mit Fehlern im Viewer öffnen
 
@@ -1252,7 +1252,7 @@ Lösung
 Der Viewer warnt, wenn OBX-5 nicht zu NM passt. Ändern Sie das Format im Absender oder den Werttyp auf ST, falls Text gemeint ist.
 
 Meldung des Viewers:
-OBX-5 „5,9“ ist als Zahl (NM) gekennzeichnet, aber keine reine Zahl. Ein Dezimalkomma statt Punkt ist die häufigste Ursache.
+OBX-5 „5,9“ ist als Zahl (NM) gekennzeichnet, aber keine reine Zahl. Ein Dezimalkomma statt Punkt ist eine mögliche Ursache.
 
 Leere Pflichtfelder und Nullwert
 

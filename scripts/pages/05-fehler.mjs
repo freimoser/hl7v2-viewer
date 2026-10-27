@@ -100,7 +100,7 @@ export default {
   keywords: "HL7 Fehler, HL7 Nachricht Fehler finden, HL7 Datumsformat, HL7 MLLP, HL7 Zeichensatz Umlaute, HL7 Zeilenumbruch",
   faq,
   body: `
-<p class="lead"><strong>Die meisten Probleme mit HL7-v2-Nachrichten sind Formatfehler: falsche Zeilenenden, Datumsformate, Dezimalkomma, Zeichensatz oder unmaskierte Trennzeichen.</strong> Diese Seite nennt zu jedem Fehler Symptom, Ursache und Lösung. Die Meldungen sind die Originaltexte, die der Viewer ausgibt.</p>
+<p class="lead"><strong>Probleme mit HL7-v2-Nachrichten sind oft Formatfehler: falsche Zeilenenden, Datumsformate, Dezimalkomma, Zeichensatz oder unmaskierte Trennzeichen.</strong> Diese Seite nennt zu jedem Fehler Symptom, Ursache und Lösung. Die Meldungen sind die Originaltexte, die der Viewer ausgibt.</p>
 <p>${openLink("fehlerhaft", "Testfall mit Fehlern im Viewer öffnen")}</p>
 ${sections.map(sectionHtml).join("\n")}
 <h2 id="grenzen">Was der Viewer nicht findet</h2>

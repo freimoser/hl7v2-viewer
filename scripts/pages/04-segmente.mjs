@@ -146,7 +146,7 @@ const obx = segPage({
     "<strong>OBX-2 Werttyp:</strong> Er bestimmt, wie OBX-5 zu lesen ist: <code>NM</code> Zahl, <code>ST</code> Text, <code>TX</code> Freitext, <code>CWE</code> codierter Wert, <code>DT</code>/<code>TS</code> Datum bzw. Zeit, <code>ED</code> eingebettetes Dokument.",
     "<strong>OBX-3 Kennung:</strong> Code ^ Text ^ Codesystem. Ohne Angabe des Codesystems (zum Beispiel <code>LN</code> für LOINC) ist ein Code nur im Absendersystem eindeutig.",
     "<strong>OBX-4:</strong> Die Unter-ID gruppiert zusammengehörige OBX-Zeilen, etwa bei mehrteiligen Ergebnissen.",
-    "<strong>OBX-5 Wert:</strong> Bei <code>NM</code> nur Ziffern, Vorzeichen und Dezimalpunkt. Ein Dezimalkomma (<code>5,9</code>) ist ein häufiger Fehler. Das Feld darf mehrere Werte mit <code>~</code> tragen.",
+    "<strong>OBX-5 Wert:</strong> Bei <code>NM</code> nur Ziffern, Vorzeichen und Dezimalpunkt. Ein Dezimalkomma (<code>5,9</code>) ist ein typischer Fehler. Das Feld darf mehrere Werte mit <code>~</code> tragen.",
     "<strong>OBX-6 bis OBX-8:</strong> Einheit, Referenzbereich und Kennzeichen (<code>N</code> normal, <code>H</code> hoch, <code>L</code> niedrig, <code>A</code> auffällig).",
     "<strong>OBX-11 Status:</strong> <code>F</code> endgültig, <code>P</code> vorläufig, <code>C</code> korrigiert, <code>X</code> nicht durchführbar. Ein Wert ohne Status ist für Empfänger schwer zu deuten.",
     "<strong>Freitext:</strong> Ein <code>|</code> im Text beendet das Feld, ein <code>&amp;</code> teilt die Komponente. Beides muss maskiert sein (<code>\\F\\</code>, <code>\\T\\</code>).",

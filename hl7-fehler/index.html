@@ -42,7 +42,7 @@
 <nav class="crumbs" aria-label="Brotkrumen"><a href="/hl7v2-viewer/">HL7-v2-Viewer</a> › <span aria-current="page">Häufige Fehler</span></nav>
 <h1>Häufige Fehler in HL7-v2-Nachrichten</h1>
 
-<p class="lead"><strong>Die meisten Probleme mit HL7-v2-Nachrichten sind Formatfehler: falsche Zeilenenden, Datumsformate, Dezimalkomma, Zeichensatz oder unmaskierte Trennzeichen.</strong> Diese Seite nennt zu jedem Fehler Symptom, Ursache und Lösung. Die Meldungen sind die Originaltexte, die der Viewer ausgibt.</p>
+<p class="lead"><strong>Probleme mit HL7-v2-Nachrichten sind oft Formatfehler: falsche Zeilenenden, Datumsformate, Dezimalkomma, Zeichensatz oder unmaskierte Trennzeichen.</strong> Diese Seite nennt zu jedem Fehler Symptom, Ursache und Lösung. Die Meldungen sind die Originaltexte, die der Viewer ausgibt.</p>
 <p><a class="btn pri" href="/hl7v2-viewer/#beispiel=fehlerhaft">Testfall mit Fehlern im Viewer öffnen</a></p>
 <section aria-labelledby="zeilenumbrueche">
 <h2 id="zeilenumbrueche">Segmente nicht getrennt oder alles in einer Zeile</h2>
@@ -67,7 +67,7 @@
 <section aria-labelledby="dezimal">
 <h2 id="dezimal">Dezimalkomma statt Punkt</h2>
 <dl class="fx"><dt>Symptom</dt><dd>Ein Messwert wie 5,9 wird vom Empfänger nicht als Zahl gelesen.</dd><dt>Ursache</dt><dd>Bei Werttyp <code>NM</code> in OBX-2 sind nur Ziffern, Vorzeichen und Dezimalpunkt erlaubt. Deutsche Ausgabeformate setzen oft das Komma.</dd><dt>Lösung</dt><dd>Der Viewer warnt, wenn OBX-5 nicht zu <code>NM</code> passt. Ändern Sie das Format im Absender oder den Werttyp auf <code>ST</code>, falls Text gemeint ist.</dd></dl>
-<p class="small muted">Meldung des Viewers:</p><blockquote class="tool">OBX-5 „5,9“ ist als Zahl (NM) gekennzeichnet, aber keine reine Zahl. Ein Dezimalkomma statt Punkt ist die häufigste Ursache.</blockquote>
+<p class="small muted">Meldung des Viewers:</p><blockquote class="tool">OBX-5 „5,9“ ist als Zahl (NM) gekennzeichnet, aber keine reine Zahl. Ein Dezimalkomma statt Punkt ist eine mögliche Ursache.</blockquote>
 </section>
 <section aria-labelledby="pflicht">
 <h2 id="pflicht">Leere Pflichtfelder und Nullwert</h2>

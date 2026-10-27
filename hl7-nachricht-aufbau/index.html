@@ -98,7 +98,7 @@
 <tr><td><code>\.br\</code></td><td>Zeilenumbruch in Freitext</td></tr>
 <tr><td><code>\Xhh…\</code></td><td>Zeichen als Hexadezimalwert</td></tr>
 </tbody></table></div>
-<p>Im Änderungs-Beispiel steht die Straße als <code>Teststraße 12 \T\ 14</code>. Gemeint ist „Teststraße 12 &amp; 14“. Der Viewer zeigt den entschlüsselten Text und behält den Originaltext im Rohtext bei. Ein unmaskiertes <code>&amp;</code> oder <code>|</code> im Freitext erzeugt dagegen zusätzliche Subkomponenten oder Felder. Das ist eine häufige Fehlerquelle, siehe <a href="/hl7v2-viewer/hl7-fehler/">Häufige Fehler</a>.</p>
+<p>Im Änderungs-Beispiel steht die Straße als <code>Teststraße 12 \T\ 14</code>. Gemeint ist „Teststraße 12 &amp; 14“. Der Viewer zeigt den entschlüsselten Text und behält den Originaltext im Rohtext bei. Ein unmaskiertes <code>&amp;</code> oder <code>|</code> im Freitext erzeugt dagegen zusätzliche Subkomponenten oder Felder. Das ist eine mögliche Fehlerquelle, siehe <a href="/hl7v2-viewer/hl7-fehler/">Häufige Fehler</a>.</p>
 
 <h2 id="datentypen">Datentypen in Kürze</h2>
 <p>Ein Feld hat einen Datentyp, und der legt fest, was die Komponenten bedeuten. Die wichtigsten, mit Beispielen aus den Beispielnachrichten:</p>
@@ -121,7 +121,7 @@
 <pre class="ex-pre" tabindex="0"><code>ZPI<span class="sf">|</span>1<span class="sf">|</span>KARTE-0815<span class="sf">|</span>Zusatzinfo nur lokal gültig</code></pre>
 
 <h2 id="mllp">Zeilenende und MLLP</h2>
-<p>Segmente enden mit einem Wagenrücklauf (CR, Hex 0D). Viele Texteditoren, Mails und Logs machen daraus einen Zeilenvorschub (LF) oder CRLF. Der Viewer liest alle drei. Über TCP/IP werden Nachrichten häufig mit dem MLLP-Rahmen übertragen: Ein Startzeichen (Hex 0B) steht vor der Nachricht, danach folgen die Zeichen Hex 1C und 0D. Diese Zeichen gehören nicht zur Nachricht; der Viewer entfernt sie und meldet es. Quelle: <a href="/hl7v2-viewer/quellen/">Quellen</a>.</p>
+<p>Segmente enden mit einem Wagenrücklauf (CR, Hex 0D). Viele Texteditoren, Mails und Logs machen daraus einen Zeilenvorschub (LF) oder CRLF. Der Viewer liest alle drei. Über TCP/IP werden Nachrichten üblicherweise mit dem MLLP-Rahmen übertragen: Ein Startzeichen (Hex 0B) steht vor der Nachricht, danach folgen die Zeichen Hex 1C und 0D. Diese Zeichen gehören nicht zur Nachricht; der Viewer entfernt sie und meldet es. Quelle: <a href="/hl7v2-viewer/quellen/">Quellen</a>.</p>
 
 <h2 id="abgrenzung">Abgrenzung zu FHIR und CDA</h2>
 <p>HL7 v2 ist ein Format aus getrennten Zeilen und Feldern. FHIR beschreibt Ressourcen in JSON oder XML, CDA beschreibt klinische Dokumente in XML. Alle drei stammen aus dem Umfeld von HL7 International, sind aber unterschiedliche Formate. Dieser Viewer liest nur das Pipe-Format von v2.</p>
