@@ -74,7 +74,7 @@ with sync_playwright() as p:
     pg2 = ctx.new_page(); pg2.goto(BASE+"#beispiel=oru-r01", wait_until="networkidle"); pg2.wait_for_timeout(500)
     ok("ORU" in pg2.inner_text("#result"), "Deep-Link #beispiel=oru-r01")
     # Netzwerk
-    ext = [r for r in reqs if not r.startswith("http://localhost")]
+    from urllib.parse import urlparse; origin = "{0.scheme}://{0.netloc}".format(urlparse(BASE)); ext = [r for r in reqs if not r.startswith(origin) and not r.startswith("blob:") and not r.startswith("data:")]
     ok(not ext, f"keine externen Requests ({ext})")
     ok(not msgs, f"keine Konsolenfehler/Warnungen {msgs}")
     # Responsiv
