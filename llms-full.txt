@@ -1419,7 +1419,7 @@ Der Viewer bietet eine Anonymisierung an. Sie ist eine Hilfe und garantiert nich
 
 Hosting
 
-Die Seite wird über GitHub Pages (GitHub Inc.) ausgeliefert. Beim Aufruf verarbeitet GitHub technisch notwendige Verbindungsdaten wie IP-Adresse, Zeitpunkt und angeforderte Datei, um die Seite bereitzustellen und abzusichern. Wir erhalten diese Daten nicht. Details: Datenschutzerklärung von GitHub.
+Hosting: Diese Seite wird über GitHub Pages ausgeliefert. Beim Aufruf verarbeitet der Hoster technisch bedingt die IP-Adresse der Besucher. Wir erhalten diese Daten nicht und speichern keine personenbezogenen Daten von Ihnen. Näheres steht in der Datenschutzerklärung von GitHub.
 
 Cookies und Speicher
 
@@ -1432,9 +1432,5 @@ Es gibt keine Reichweitenmessung, keine Schriften, Skripte oder Bilder von Dritt
 Search Console und Bing Webmaster Tools
 
 Die Seite enthält Bestätigungs-Meta-Tags für diese Dienste. Dabei werden keine Daten von Besucherinnen und Besuchern übertragen.
-
-Gespeicherte Daten
-
-Wir speichern keine personenbezogenen Daten von Ihnen; für das Hosting gilt die Datenschutzerklärung des Hosters (GitHub Pages).
 
 Zum Viewer

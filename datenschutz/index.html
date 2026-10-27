@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Datenschutz: HL7-v2-Viewer ohne Upload und Tracking</title>
-<meta name="description" content="Datenschutz beim HL7-v2-Viewer: Ihre Nachrichten werden nur lokal im Browser verarbeitet. Keine Cookies, kein Tracking, kein Upload, keine Drittdienste.">
+<meta name="description" content="Datenschutz beim HL7-v2-Viewer: Nachrichten werden nur lokal im Browser verarbeitet. Keine Cookies, kein Tracking, kein Upload, kein Drittdienst im Code.">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="google-site-verification" content="6pYvtFCnU7UFcQFajtMSkQ7tYMy3Z_Bt7teKiT5yKNg">
 <meta name="msvalidate.01" content="E1F30DEB311AAF5458907DB431B481AC">
@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="HL7-v2-Viewer">
 <meta property="og:locale" content="de_DE">
 <meta property="og:title" content="Datenschutz: HL7-v2-Viewer ohne Upload und Tracking">
-<meta property="og:description" content="Datenschutz beim HL7-v2-Viewer: Ihre Nachrichten werden nur lokal im Browser verarbeitet. Keine Cookies, kein Tracking, kein Upload, keine Drittdienste.">
+<meta property="og:description" content="Datenschutz beim HL7-v2-Viewer: Nachrichten werden nur lokal im Browser verarbeitet. Keine Cookies, kein Tracking, kein Upload, kein Drittdienst im Code.">
 <meta property="og:url" content="https://freimoser.github.io/hl7v2-viewer/datenschutz/">
 <meta property="og:image" content="https://freimoser.github.io/hl7v2-viewer/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -30,9 +30,9 @@
 <meta property="og:image:alt" content="HL7-v2-Viewer: HL7-v2-Nachrichten im Browser lesen">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Datenschutz: HL7-v2-Viewer ohne Upload und Tracking">
-<meta name="twitter:description" content="Datenschutz beim HL7-v2-Viewer: Ihre Nachrichten werden nur lokal im Browser verarbeitet. Keine Cookies, kein Tracking, kein Upload, keine Drittdienste.">
+<meta name="twitter:description" content="Datenschutz beim HL7-v2-Viewer: Nachrichten werden nur lokal im Browser verarbeitet. Keine Cookies, kein Tracking, kein Upload, kein Drittdienst im Code.">
 <meta name="twitter:image" content="https://freimoser.github.io/hl7v2-viewer/og-image.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://freimoser.de/#thomas-freimoser","name":"Thomas Freimoser","url":"https://freimoser.de/","sameAs":["https://www.linkedin.com/in/thomas-freimoser/"]},{"@type":"TechArticle","@id":"https://freimoser.github.io/hl7v2-viewer/datenschutz/#article","headline":"Datenschutz","description":"Datenschutz beim HL7-v2-Viewer: Ihre Nachrichten werden nur lokal im Browser verarbeitet. Keine Cookies, kein Tracking, kein Upload, keine Drittdienste.","url":"https://freimoser.github.io/hl7v2-viewer/datenschutz/","inLanguage":"de","author":{"@id":"https://freimoser.de/#thomas-freimoser"},"datePublished":"2026-10-27","dateModified":"2026-10-27","isPartOf":{"@type":"WebSite","name":"HL7-v2-Viewer","url":"https://freimoser.github.io/hl7v2-viewer/"}},{"@type":"BreadcrumbList","@id":"https://freimoser.github.io/hl7v2-viewer/datenschutz/#crumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"HL7-v2-Viewer","item":"https://freimoser.github.io/hl7v2-viewer/"},{"@type":"ListItem","position":2,"name":"Datenschutz","item":"https://freimoser.github.io/hl7v2-viewer/datenschutz/"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://freimoser.de/#thomas-freimoser","name":"Thomas Freimoser","url":"https://freimoser.de/","sameAs":["https://www.linkedin.com/in/thomas-freimoser/"]},{"@type":"TechArticle","@id":"https://freimoser.github.io/hl7v2-viewer/datenschutz/#article","headline":"Datenschutz","description":"Datenschutz beim HL7-v2-Viewer: Nachrichten werden nur lokal im Browser verarbeitet. Keine Cookies, kein Tracking, kein Upload, kein Drittdienst im Code.","url":"https://freimoser.github.io/hl7v2-viewer/datenschutz/","inLanguage":"de","author":{"@id":"https://freimoser.de/#thomas-freimoser"},"datePublished":"2026-10-27","dateModified":"2026-10-27","isPartOf":{"@type":"WebSite","name":"HL7-v2-Viewer","url":"https://freimoser.github.io/hl7v2-viewer/"}},{"@type":"BreadcrumbList","@id":"https://freimoser.github.io/hl7v2-viewer/datenschutz/#crumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"HL7-v2-Viewer","item":"https://freimoser.github.io/hl7v2-viewer/"},{"@type":"ListItem","position":2,"name":"Datenschutz","item":"https://freimoser.github.io/hl7v2-viewer/datenschutz/"}]}]}</script>
 </head>
 <body>
 <a class="skip" href="#main">Zum Inhalt</a>
@@ -49,15 +49,13 @@
 <p>Text, den Sie einfügen, und Dateien, die Sie öffnen, werden nur im Arbeitsspeicher Ihres Browsers verarbeitet. Es findet keine Übertragung statt. Das erzwingt die Seite technisch: Die Content-Security-Policy der Seiten enthält <code>connect-src 'none'</code>, der Browser blockiert damit jede Netzwerkverbindung, die ein Skript aufbauen wollte. Exporte (JSON, CSV, anonymisierter Text) erzeugt Ihr Browser lokal als Download. Prüfen können Sie das in den Entwicklerwerkzeugen Ihres Browsers im Reiter „Netzwerk“.</p>
 <p>Der Viewer bietet eine Anonymisierung an. Sie ist eine Hilfe und garantiert nicht, dass in Freitexten keine Hinweise auf Personen stehen bleiben.</p>
 <h2 id="hosting">Hosting</h2>
-<p>Die Seite wird über GitHub Pages (GitHub Inc.) ausgeliefert. Beim Aufruf verarbeitet GitHub technisch notwendige Verbindungsdaten wie IP-Adresse, Zeitpunkt und angeforderte Datei, um die Seite bereitzustellen und abzusichern. Wir erhalten diese Daten nicht. Details: <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">Datenschutzerklärung von GitHub</a>.</p>
+<p><strong>Hosting:</strong> Diese Seite wird über GitHub Pages ausgeliefert. Beim Aufruf verarbeitet der Hoster technisch bedingt die IP-Adresse der Besucher. Wir erhalten diese Daten nicht und speichern keine personenbezogenen Daten von Ihnen. Näheres steht in der <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">Datenschutzerklärung von GitHub</a>.</p>
 <h2 id="speicher">Cookies und Speicher</h2>
 <p>Die Seite setzt keine Cookies und nutzt weder Local Storage noch Session Storage. Ein Service Worker legt ausschließlich die Dateien dieser Website im Cache Ihres Browsers ab, damit der Viewer auch offline startet. Nachrichten werden dort nicht gespeichert. Sie löschen diesen Cache in den Website-Einstellungen Ihres Browsers.</p>
 <h2 id="extern">Keine externen Dienste</h2>
 <p>Es gibt keine Reichweitenmessung, keine Schriften, Skripte oder Bilder von Dritten und keine Einbindung sozialer Netzwerke. Links zu anderen Seiten (zum Beispiel zur Impressumsseite oder zu den Quellen) laden erst beim Anklicken.</p>
 <h2 id="verifizierung">Search Console und Bing Webmaster Tools</h2>
 <p>Die Seite enthält Bestätigungs-Meta-Tags für diese Dienste. Dabei werden keine Daten von Besucherinnen und Besuchern übertragen.</p>
-<h2 id="gespeicherte-daten">Gespeicherte Daten</h2>
-<p>Wir speichern keine personenbezogenen Daten von Ihnen; für das Hosting gilt die Datenschutzerklärung des Hosters (GitHub Pages).</p>
 <p><a href="/hl7v2-viewer/">Zum Viewer</a></p>
 </main>
 <section class="about"><div class="wrap"><img src="/hl7v2-viewer/favicon.svg" alt="" width="44" height="44"><div><h2>Über den Entwickler</h2><p>Entwickelt von <strong>Thomas Freimoser</strong>, München / Remote. Dieses Werkzeug liest HL7-v2-Nachrichten lokal im Browser; es gibt keinen Upload und kein Tracking.</p><div class="btns"><a class="btn" href="https://freimoser.de/">freimoser.de</a><a class="btn" href="https://www.linkedin.com/in/thomas-freimoser/">LinkedIn</a></div></div></div></section>
