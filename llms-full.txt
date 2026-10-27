@@ -1,0 +1,1512 @@
+# HL7 Viewer & Parser (v2) online – Nachricht lesen
+
+> HL7-v2-Nachrichten (ADT, ORU, ORM) einfügen und Segmente, Felder und Komponenten lesbar anzeigen. Kostenlos, lokal im Browser, ohne Upload.
+
+Stand: 2026-10-27. Autor: Thomas Freimoser, https://freimoser.de/
+
+---
+
+URL: https://freimoser.github.io/hl7v2-viewer/
+
+# HL7-v2-Nachrichten lesen: Viewer und Parser im Browser
+
+Der HL7-v2-Viewer zerlegt HL7-v2-Nachrichten im Pipe-Format im Browser in Segmente, Felder und Komponenten und zeigt sie lesbar an. Er ist kostenlos, braucht keine Anmeldung, und Ihre Nachricht wird nicht hochgeladen. HL7 v2 ist ein Nachrichtenstandard, über den Systeme im Gesundheitswesen Daten austauschen, etwa Krankenhausinformationssystem, Labor und Radiologie.
+
+Dass nichts übertragen wird, ist technisch erzwungen: Die Seite setzt eine Content-Security-Policy mit connect-src 'none', der Browser blockiert damit Netzwerkverbindungen aus dem Seitencode. In den Entwicklertools (Reiter „Netzwerk“) bleibt es beim Einfügen und Auswerten still. Das Laden der Seite selbst geht natürlich an den Hoster, siehe Datenschutz.
+
+HL7-Nachricht einfügen
+
+Nachricht hier einfügen oder eine Datei öffnen
+
+Datei öffnen
+Zeichensatz automatischUTF-8ISO-8859-1Windows-1252ISO-8859-15
+Leeren
+
+Beispiel laden:
+
+Weiterverarbeiten
+
+Als JSON speichernAls CSV speichern Zellen gegen Formeln in Excel absichern
+
+Zeilenumbrüche reparieren und kopierenAls Datei speichern MLLP-Rahmen ergänzen
+
+Reparatur: Segmente werden mit CR (\r) getrennt, wie es der Standard verlangt.
+
+Was der Viewer kann und was nicht
+
+Das zeigt der Viewer
+
+Baumansicht, Tabelle und Rohtext mit farbigen Trennzeichen
+
+zu jedem Feld Pfad (PID-5.1), Name und Kurzerklärung beim Überfahren oder Antippen
+
+Nachrichtentyp aus MSH-9 mit kurzer Erklärung, Version, Absender, Zeitstempel
+
+Hinweise bei fehlendem MSH, leeren Pflichtfeldern, falschen Datumsformaten und auffälligen Trennzeichen
+
+Export als JSON oder CSV, Reparatur von Zeilenumbrüchen, Anonymisierungshilfe
+
+mehrere Nachrichten in einer Datei, MLLP-Rahmen und Z-Segmente
+
+Das leistet er nicht
+
+Er ist kein Konformitätsprüfer: Er prüft nicht gegen ein Schnittstellenprofil und nicht gegen eine bestimmte HL7-Version.
+
+Die Feldliste ist eigenhändig geschrieben und unvollständig. Unbekannte Felder erscheinen als „Feld n“.
+
+Er sendet und empfängt nichts (kein MLLP über TCP, keine ACKs). Browser können solche Verbindungen nicht öffnen.
+
+Er liest nur das Pipe-Format von HL7 v2, kein FHIR und kein CDA.
+
+Er ist kein Medizinprodukt und nicht für Diagnose, Behandlung oder den Produktivbetrieb gedacht.
+
+Anonymisierungshilfe für Testdaten
+
+Ersetzt Namen, Kennungen, Adressen, Telefonnummern und Freitexte der oben eingefügten Nachricht durch Platzhalter. Das ist Schwärzen für Tests und Fehlersuche, keine Anonymisierungsgarantie: Prüfen Sie das Ergebnis, vor allem Freitexte und Z-Segmente.
+
+Datumsfelder nur Jahr behaltenunverändertentfernen
+
+ Kennungen ersetzen Ärztinnen und Ärzte ersetzen Freitexte (NTE, OBX-Text) ersetzen Z-Segmente leeren
+
+Nachricht anonymisierenKopierenAls Datei speichernIm Viewer anzeigen
+
+Fügen Sie oben eine Nachricht ein und klicken Sie auf „Nachricht anonymisieren“.
+
+Ergebnis
+
+Eine Nachricht von Hand lesen: fünf Schritte
+
+MSH-9 nennen: Das ist der Nachrichtentyp, etwa ORU^R01. Er sagt, welche Segmente zu erwarten sind.
+
+MSH-12 (Version) und MSH-10 (Kontroll-ID) notieren. Die Kontroll-ID brauchen Sie, um eine Bestätigung zuzuordnen.
+
+Die Segmentkennung am Zeilenanfang lesen (PID, PV1, OBR, OBX …). Sie bestimmt, was die Felder bedeuten.
+
+Felder abzählen. Bei MSH ist das Trennzeichen selbst Feld 1, das erste Feld nach MSH| ist deshalb MSH-2.
+
+Zusammengesetzte Felder an ^ teilen und die Teile nach dem Datentyp deuten, zum Beispiel Name, Kennung oder Adresse.
+
+Das geht schneller mit dem Viewer, aber es hilft beim Prüfen seiner Anzeige. Mehr dazu auf Aufbau einer HL7-v2-Nachricht.
+
+Beispielnachrichten
+
+Alle Beispielnachrichten sind frei erfunden. Namen, Nummern und Adressen sind Platzhalter, die E-Mail-Adresse nutzt die reservierte Endung .invalid. Sie dürfen die Dateien frei verwenden (CC0). „Im Viewer öffnen“ lädt das Beispiel direkt in den Viewer oben.
+
+Stationäre Aufnahme (ADT^A01)
+Zwei Kennungen in PID-3 (Wiederholung mit ~), Name mit Komponenten, Adresse, Telefon und E-Mail, dazu Angehöriger, Diagnose, Allergie und Versicherung.
+Im Viewer öffnen adt-a01-aufnahme.hl7
+
+Ambulante Registrierung (ADT^A04)
+Gleiche Struktur wie A01, aber Patientenklasse O (ambulant), keine Station und kein Entlassungsbezug.
+Im Viewer öffnen adt-a04-registrierung.hl7
+
+Änderung von Patientendaten (ADT^A08)
+Mehrere Namen (Rufname und Alias), Escape-Sequenz \T\ in der Straße, Ereignisgrund in EVN-4 und ein Z-Segment (ZPI) als lokale Erweiterung.
+Im Viewer öffnen adt-a08-aenderung.hl7
+
+Laborbefund (ORU^R01)
+OBR als Kopf, vier OBX-Zeilen mit Zahlenwert, Einheit, Referenzbereich und Abnormal-Kennzeichen; Kommentar in NTE mit Zeilenumbruch (\.br\).
+Im Viewer öffnen oru-r01-labor.hl7
+
+Laborauftrag (ORM^O01)
+Zwei Aufträge in einer Nachricht: je ein ORC (Steuerung NW) mit zugehörigem OBR. Die Placer-Nummer vergibt das anfordernde System.
+Im Viewer öffnen orm-o01-auftrag.hl7
+
+Dokument mit Inhalt (MDM^T02)
+TXA beschreibt das Dokument, der Text steht in OBX-Segmenten vom Typ TX; Zeilenumbrüche im Text sind als \.br\ kodiert.
+Im Viewer öffnen mdm-t02-dokument.hl7
+
+Neuer Termin (SIU^S12)
+SCH beschreibt den Termin, RGS und AIS die gebuchte Leistung mit Startzeit und Dauer. SCH-11 enthält Start- und Endzeit.
+Im Viewer öffnen siu-s12-termin.hl7
+
+Bestätigung mit Fehlercode (ACK)
+Der Empfänger meldet AE (Fehler) zur Nachricht MSG-A01-0001. ERR nennt Ort und Grund: Das Geburtsdatum in PID-7 ließ sich nicht lesen.
+Im Viewer öffnen ack-fehler.hl7
+
+Absichtlich fehlerhafte Nachricht
+Enthält typische Fehler: Zeilenvorschub statt Wagenrücklauf, Geburtsdatum im deutschen Format, ISO-Datum, leere Pflichtfelder, Nullwert und Dezimalkomma.
+Im Viewer öffnen fehlerhaft.hl7
+
+Nachlesen
+
+Aufbau einer HL7-v2-Nachricht
+Segmente, Felder, Komponenten, Trennzeichen, Escape-Sequenzen und Datentypen mit einer kommentierten Beispielzeile.
+
+Nachrichtentypen im Überblick
+ADT, ORM, ORU und weitere, mit Auslöseereignissen und je einem Beispiel zum Öffnen.
+
+Segmente erklärt
+MSH, PID, PV1, OBR und OBX: wichtige Felder und typische Stolperstellen.
+
+Häufige Fehler
+Zeilenumbrüche, Datumsformate, Dezimalkomma, Zeichensatz: Symptom, Ursache, Lösung.
+
+Häufige Fragen
+
+Was ist eine HL7-v2-Nachricht?
+Eine HL7-v2-Nachricht ist ein Text im Pipe-Format. Jede Zeile ist ein Segment (zum Beispiel MSH, PID oder PV1). Innerhalb der Zeile trennt | die Felder, ^ die Komponenten, ~ Wiederholungen und & Subkomponenten. Krankenhaus-, Labor- und Praxissysteme tauschen darüber Patientenstammdaten, Aufträge und Befunde aus. Den Aufbau erklärt die Seite Aufbau einer HL7-v2-Nachricht.
+
+Wie lese ich eine HL7-Nachricht?
+Fügen Sie die Nachricht oben ein. Der Viewer zerlegt sie in Segmente und Felder, nennt zu jedem Wert den Pfad (zum Beispiel PID-5.1) und erklärt ihn beim Überfahren oder Antippen. Von Hand lesen Sie so: zuerst MSH-9 für den Nachrichtentyp, dann Segment für Segment die Felder abzählen. Bei MSH zählt das Trennzeichen direkt hinter „MSH“ bereits als Feld 1.
+
+Was bedeuten ADT, ORU und ORM?
+ADT meldet Ereignisse der Patientenverwaltung (A01 Aufnahme, A08 Änderung), ORU überträgt Ergebnisse und Befunde (R01) und ORM überträgt Aufträge (O01). Der Code steht in MSH-9, gefolgt vom Auslöseereignis. Eine Tabelle mit Beispielen finden Sie unter Nachrichtentypen im Überblick.
+
+Welche Trennzeichen verwendet HL7 v2?
+Üblich sind | für Felder, ^ für Komponenten, ~ für Wiederholungen, \ als Escape-Zeichen und & für Subkomponenten. Die Zeichen stehen in MSH-1 und MSH-2; der Viewer liest sie von dort und meldet es, wenn sie vom Üblichen abweichen. Segmente enden laut Standard mit einem Wagenrücklauf (CR).
+
+Warum steht meine Nachricht nur in einer Zeile oder wird falsch getrennt?
+Segmente sind mit CR getrennt. Beim Kopieren aus E-Mails, Logs oder Editoren wird daraus oft LF, oder die Umbrüche gehen verloren. Der Viewer liest CR, LF und CRLF und erkennt außerdem wörtliche „\r“-Zeichenfolgen sowie Segmente, die durch Leerzeichen getrennt sind. Er sagt dabei jeweils, was er angenommen hat. Mit „Zeilenumbrüche reparieren“ erhalten Sie die Nachricht mit CR zurück.
+
+Wo steht die HL7-Version einer Nachricht?
+In MSH-12, zum Beispiel 2.5.1. Die Version sagt, nach welchem Regelwerk die Nachricht aufgebaut sein soll. Der Viewer zeigt sie in der Zusammenfassung an, prüft aber nicht gegen die Regeln einer bestimmten Version.
+
+Was ist ein Z-Segment?
+Segmentnamen, die mit Z beginnen, sind für lokale Erweiterungen reserviert. Was darin steht, legen nur die beteiligten Systeme fest. Der Viewer zeigt solche Segmente an und markiert sie als lokal, kann ihre Felder aber nicht erklären. Das erledigt die Schnittstellenbeschreibung des Absenders.
+
+Werden meine Nachrichten hochgeladen?
+Nein. Die Auswertung läuft im Browser, und die Seite verbietet über eine Content-Security-Policy mit connect-src 'none' jede Netzwerkverbindung aus dem Seitencode. Das lässt sich in den Entwicklertools prüfen. Echte Patientendaten gehören trotzdem nicht in Testwerkzeuge. Nutzen Sie Testdaten oder anonymisieren Sie zuerst.
+
+Weitere Werkzeuge
+Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
+LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
+GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
+DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
+CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
+
+---
+
+URL: https://freimoser.github.io/hl7v2-viewer/hl7-nachricht-aufbau/
+
+# Aufbau einer HL7-v2-Nachricht: Segmente, Felder, Komponenten
+
+Eine HL7-v2-Nachricht besteht aus Segmenten, jedes Segment aus Feldern, jedes Feld aus Komponenten und diese gegebenenfalls aus Subkomponenten. Die Ebenen werden durch feste Trennzeichen getrennt, die im ersten Segment, dem MSH, festgelegt sind. Diese Seite erklärt das an echten Beispielzeilen. Die Beispiele sind frei erfunden und lassen sich im Viewer öffnen.
+
+Die vier Ebenen
+
+Ebene | Trenner | Beispiel |
+
+Segment | Zeilenende (CR) | PID|… ist ein Segment, die Kennung steht am Zeilenanfang |
+
+Feld | | | PID-5 ist das fünfte Feld von PID (der Name) |
+
+Wiederholung | ~ | zwei Kennungen in PID-3, durch ~ getrennt |
+
+Komponente | ^ | Nachname^Vorname in PID-5 |
+
+Subkomponente | & | Unterteilung einer Komponente, zum Beispiel beim Familiennamen |
+
+Eine Zeile gelesen
+
+Das PID-Segment des Aufnahme-Beispiels, mit farbigen Trennzeichen:
+
+| Feld^ Komponente~ Wiederholung& Subkomponente
+
+PID|1||TEST-100234^^^KLINIKUM_TEST^MR~TEST-F-7781^^^KLINIKUM_TEST^VN||Beispielmann^Bernd^Karl^^^^L||19710305|M|||Teststraße 12^^Musterstadt^^99999^DE^H||^PRN^PH^^49^555^1234567~^NET^Internet^bernd@example.invalid|||||TEST-ACC-5001
+
+Am Zeilenanfang steht die Segmentkennung PID. PID-1 ist 1, PID-2 ist leer. In PID-3 stehen zwei Wiederholungen. Die erste lautet TEST-100234^^^KLINIKUM_TEST^MR und hat Komponenten:
+
+Teil | Wert | Bedeutung |
+
+PID-3[1].1 | TEST-100234 | die Kennung selbst |
+
+PID-3[1].4 | KLINIKUM_TEST | die Stelle, die die Kennung vergeben hat |
+
+PID-3[1].5 | MR | Art der Kennung (hier Patientenakte, „medical record“) |
+
+Die zweite Wiederholung nach dem ~ hat die Art VN, eine Besuchs- bzw. Fallnummer. Der Viewer schreibt Wiederholungen als [n], also PID-3[2].1. Andere Werkzeuge schreiben das anders. Welche Komponente was bedeutet, hängt vom Datentyp des Feldes ab (hier CX, eine erweiterte Kennung).
+
+Dieses Beispiel im Viewer öffnen
+
+Trennzeichen kommen aus dem MSH
+
+Das erste Segment jeder Nachricht ist MSH. Direkt hinter den drei Buchstaben steht das Feldtrennzeichen, danach die vier Kodierzeichen:
+
+MSH|^~\&|TESTKIS|KLINIKUM_TEST|TESTLIS|KLINIKUM_TEST|20261027083015||ADT^A01^ADT_A01|MSG-A01-0001|P|2.5.1
+
+Zeichen | Aufgabe | Wo festgelegt |
+
+| | trennt Felder | MSH-1 |
+
+^ | trennt Komponenten | MSH-2, 1. Zeichen |
+
+~ | trennt Wiederholungen eines Feldes | MSH-2, 2. Zeichen |
+
+\ | leitet Escape-Sequenzen ein | MSH-2, 3. Zeichen |
+
+& | trennt Subkomponenten | MSH-2, 4. Zeichen |
+
+Die Zeichen |^~\& sind der übliche Satz. Ein Empfänger soll sie aus dem MSH lesen und nicht fest voraussetzen. Der Viewer macht das so und weist darauf hin, wenn sie vom Üblichen abweichen.
+
+Die Zählung im MSH weicht ab
+
+Das Feldtrennzeichen hinter „MSH“ ist selbst MSH-1. Das erste Feld, das Sie nach einem Split an | erhalten, ist deshalb schon MSH-2 (die Kodierzeichen), und MSH-9 ist der Nachrichtentyp. In allen anderen Segmenten ist das erste Feld nach der Kennung Feld 1. Wer MSH wie die anderen Segmente zählt, verschiebt alle Felder um eins.
+
+Pfadschreibweise
+
+Ein Wert wird als SEGMENT-Feld.Komponente.Subkomponente angegeben, etwa PID-5.2 für den Vornamen oder MSH-9.2 für das Auslöseereignis. Bei wiederholten Segmenten (mehrere OBX) unterscheidet die laufende Nummer in Feld 1 die einzelnen Zeilen. Im Viewer zeigt jede Zeile ihren Pfad an.
+
+Leer ist nicht gleich „“
+
+Ein leeres Feld (||) heißt: keine Angabe in dieser Nachricht. Zwei Anführungszeichen ("") sind der Nullwert und bedeuten ausdrücklich, dass ein vorhandener Wert gelöscht werden soll bzw. keiner existiert. Bei Änderungsnachrichten wie ADT^A08 ist das ein Unterschied. Der Viewer zeigt Nullwerte deshalb getrennt an. Überzählige Trennzeichen am Zeilenende (|||) sind erlaubt und verändern nichts.
+
+Escape-Sequenzen
+
+Kommen Trennzeichen im Text selbst vor, werden sie durch eine Sequenz mit dem Escape-Zeichen ersetzt. Der Buchstabe in der Sequenz steht für das Trennzeichen, das im MSH festgelegt ist.
+
+Sequenz | Bedeutung |
+
+\F\ | Feldtrennzeichen (üblich |) |
+
+\S\ | Komponententrennzeichen (^) |
+
+\T\ | Subkomponententrennzeichen (&) |
+
+\R\ | Wiederholungstrennzeichen (~) |
+
+\E\ | das Escape-Zeichen selbst (\) |
+
+\.br\ | Zeilenumbruch in Freitext |
+
+\Xhh…\ | Zeichen als Hexadezimalwert |
+
+Im Änderungs-Beispiel steht die Straße als Teststraße 12 \T\ 14. Gemeint ist „Teststraße 12 & 14“. Der Viewer zeigt den entschlüsselten Text und behält den Originaltext im Rohtext bei. Ein unmaskiertes & oder | im Freitext erzeugt dagegen zusätzliche Subkomponenten oder Felder. Das ist eine häufige Fehlerquelle, siehe Häufige Fehler.
+
+Datentypen in Kürze
+
+Ein Feld hat einen Datentyp, und der legt fest, was die Komponenten bedeuten. Die wichtigsten, mit Beispielen aus den Beispielnachrichten:
+
+Typ | Bedeutung | Komponenten, Beispiel |
+
+ST, TX | Text | einfacher Text ohne Komponenten |
+
+NM | Zahl | 5.9, Dezimalpunkt, kein Komma |
+
+DTM / TS | Zeitpunkt | 20261027083015 = 27.10.2026 08:30:15 |
+
+CX | Kennung | ID ^ Prüfziffer ^ Verfahren ^ vergebende Stelle ^ Art |
+
+XPN | Personenname | Nachname ^ Vorname ^ weitere Vornamen ^ Suffix ^ Präfix ^ Titel ^ Namensart |
+
+XAD | Adresse | Straße ^ Zusatz ^ Ort ^ Bundesland ^ PLZ ^ Land ^ Art |
+
+XTN | Telefon, E-Mail | Nummer-Komponenten und E-Mail-Komponente, je nach Version |
+
+PL | Aufenthaltsort | Station ^ Zimmer ^ Bett ^ Einrichtung |
+
+CWE / CE | codierter Wert | Code ^ Text ^ Codesystem |
+
+Zeitpunkte dürfen gekürzt werden: 20261027 ist nur das Datum, 202610270830 hat Minuten. Optional folgt eine Zeitzone, zum Beispiel +0100. Ohne Angabe ist unklar, in welcher Zeitzone der Absender gemeint hat. Die genauen Komponentenlisten je Version stehen in der Spezifikation. Der Viewer beschreibt nur eine Auswahl, unbekannte Stellen erscheinen als „Feld n“.
+
+Reihenfolge, Gruppen und Z-Segmente
+
+Welche Segmente in welcher Reihenfolge vorkommen, regelt die Nachrichtenstruktur (MSH-9.3, zum Beispiel ADT_A01). Segmente können optional oder wiederholbar sein und bilden Gruppen: Bei ORU^R01 gehört jedes OBX zum davor stehenden OBR, bis das nächste OBR beginnt. Ein NTE gehört zum Segment direkt davor.
+
+Segmente, deren Name mit Z beginnt (zum Beispiel ZPI), sind lokale Erweiterungen. Ihr Inhalt ist nur durch die Schnittstellenbeschreibung des Absenders erklärbar. Das Änderungs-Beispiel enthält eins:
+
+ZPI|1|KARTE-0815|Zusatzinfo nur lokal gültig
+
+Zeilenende und MLLP
+
+Segmente enden mit einem Wagenrücklauf (CR, Hex 0D). Viele Texteditoren, Mails und Logs machen daraus einen Zeilenvorschub (LF) oder CRLF. Der Viewer liest alle drei. Über TCP/IP werden Nachrichten häufig mit dem MLLP-Rahmen übertragen: Ein Startzeichen (Hex 0B) steht vor der Nachricht, danach folgen die Zeichen Hex 1C und 0D. Diese Zeichen gehören nicht zur Nachricht; der Viewer entfernt sie und meldet es. Quelle: Quellen.
+
+Abgrenzung zu FHIR und CDA
+
+HL7 v2 ist ein Format aus getrennten Zeilen und Feldern. FHIR beschreibt Ressourcen in JSON oder XML, CDA beschreibt klinische Dokumente in XML. Alle drei stammen aus dem Umfeld von HL7 International, sind aber unterschiedliche Formate. Dieser Viewer liest nur das Pipe-Format von v2.
+
+Kurz beantwortet
+
+Warum ist MSH-9 der Nachrichtentyp, obwohl er das achte Feld nach MSH ist?
+Weil das Feldtrennzeichen hinter „MSH“ als MSH-1 zählt. Das erste Feld nach MSH| ist MSH-2. In allen anderen Segmenten beginnt die Zählung mit dem ersten Feld hinter der Kennung.
+
+Was ist der Unterschied zwischen ~ und ^?
+^ trennt Komponenten innerhalb eines Feldwerts (Nachname^Vorname). ~ trennt mehrere Wiederholungen desselben Feldes, etwa zwei Patientenkennungen in PID-3.
+
+Wie maskiere ich ein | im Text?
+Mit der Escape-Sequenz \F\. Entsprechend \S\ für ^, \R\ für ~, \T\ für & und \E\ für den Backslash. Gemeint sind jeweils die Zeichen, die im MSH festgelegt sind.
+
+Weitere Werkzeuge
+Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
+LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
+GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
+DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
+CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
+
+---
+
+URL: https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/
+
+# HL7-Nachrichtentypen im Überblick
+
+Der Nachrichtentyp einer HL7-v2-Nachricht steht in MSH-9, zum Beispiel ADT^A01^ADT_A01. Er besteht aus dem Nachrichtencode (ADT), dem Auslöseereignis (A01) und der Nachrichtenstruktur (ADT_A01). Der Code sagt, um welche Art von Information es geht, das Ereignis, was passiert ist.
+
+Die Tabellen zeigen eine Auswahl häufiger Typen. Sie sind nicht vollständig, und welche davon ein System nutzt, legt die jeweilige Schnittstellenbeschreibung fest. Vier Typen haben eine eigene Seite mit Beispiel, Feldtabelle und Hinweisen: ADT^A01, ADT^A08, ORU^R01 und ORM^O01.
+
+Der Viewer zeigt für jede Nachricht den erkannten Typ mit einer Kurzerklärung an und weist auf Segmente hin, die bei diesem Typ üblicherweise vorkommen. Das ist ein Hinweis und keine Prüfung gegen die Spezifikation.
+
+ADT – Patientenverwaltung (Admission, Discharge, Transfer)
+Meldet Ereignisse rund um Patientenstammdaten und Aufenthalt: Aufnahme, Verlegung, Entlassung, Änderung von Daten.
+MSH-9 | Ereignis | Bedeutung |  |
+ADT^A01 | Aufnahme (stationär) | Ein Patient wird stationär aufgenommen. Typisch mit EVN, PID und PV1. | Beispiel |
+ADT^A02 | Verlegung | Ein Patient wechselt Station oder Zimmer. |  |
+ADT^A03 | Entlassung | Der Aufenthalt endet. PV1-45 trägt meist den Entlassungszeitpunkt. |  |
+ADT^A04 | Registrierung (ambulant / Besuch) | Ein Patient wird für einen Besuch registriert, ohne stationär aufgenommen zu werden. | Beispiel |
+ADT^A05 | Voranmeldung | Ein Patient wird für einen geplanten Aufenthalt angekündigt. |  |
+ADT^A06 | Wechsel ambulant → stationär | Ein ambulanter Patient wird stationär aufgenommen. |  |
+ADT^A07 | Wechsel stationär → ambulant | Ein stationärer Patient wird ambulant weiterbehandelt. |  |
+ADT^A08 | Änderung Patienten- oder Aufenthaltsdaten | Daten haben sich geändert, ohne dass ein anderes Ereignis vorliegt, etwa Adresse oder Kontakt. | Beispiel |
+ADT^A11 | Aufnahme stornieren | Eine zuvor gemeldete Aufnahme wird zurückgenommen. |  |
+ADT^A12 | Verlegung stornieren | Eine zuvor gemeldete Verlegung wird zurückgenommen. |  |
+ADT^A13 | Entlassung stornieren | Eine zuvor gemeldete Entlassung wird zurückgenommen. |  |
+ADT^A28 | Person anlegen | Eine Person wird im Patientenindex angelegt. |  |
+ADT^A31 | Person aktualisieren | Die Daten einer Person im Patientenindex ändern sich. |  |
+ADT^A40 | Patientenzusammenführung | Zwei Patientenkennungen werden zu einer zusammengeführt. |  |
+
+ORM – Auftrag (Order Message)
+Überträgt einen Auftrag, zum Beispiel eine Labor- oder Röntgenanforderung.
+MSH-9 | Ereignis | Bedeutung |  |
+ORM^O01 | Auftrag (allgemein) | Ein Auftrag wird neu angelegt, geändert oder storniert, gesteuert über ORC-1. | Beispiel |
+
+ORR – Auftragsantwort
+Antwort auf eine Auftragsnachricht (ORM).
+MSH-9 | Ereignis | Bedeutung |  |
+ORR^O02 | Antwort auf einen Auftrag | Der Empfänger bestätigt oder beantwortet einen ORM. |  |
+
+OML – Laborauftrag
+Spezialisierte Auftragsnachricht für Laboraufträge in neueren Versionen.
+MSH-9 | Ereignis | Bedeutung |  |
+OML^O21 | Laborauftrag | Auftragsnachricht für das Labor in neueren Versionen. |  |
+
+OMG – Allgemeiner klinischer Auftrag
+Spezialisierte Auftragsnachricht für allgemeine klinische Aufträge in neueren Versionen.
+MSH-9 | Ereignis | Bedeutung |  |
+OMG^O19 | Allgemeiner klinischer Auftrag | Auftragsnachricht für allgemeine Aufträge in neueren Versionen. |  |
+
+ORU – Befund (Observation Result, unsolicited)
+Überträgt Ergebnisse oder Befunde, ohne dass dafür eine eigene Abfrage nötig ist.
+MSH-9 | Ereignis | Bedeutung |  |
+ORU^R01 | Befund / Ergebnisübermittlung | Das ausführende System meldet Ergebnisse: OBR beschreibt die Untersuchung, OBX liefert die Einzelwerte. | Beispiel |
+
+MDM – Dokumentenmanagement (Medical Document Management)
+Meldet Dokumente und deren Status, optional mit dem Inhalt.
+MSH-9 | Ereignis | Bedeutung |  |
+MDM^T01 | Dokument melden (ohne Inhalt) | Meldet, dass ein Dokument existiert. |  |
+MDM^T02 | Dokument melden (mit Inhalt) | Meldet ein Dokument und liefert den Inhalt in OBX-Segmenten mit. | Beispiel |
+MDM^T03 | Dokumentstatus ändern (ohne Inhalt) | Meldet eine Statusänderung. |  |
+MDM^T04 | Dokumentstatus ändern (mit Inhalt) | Meldet eine Statusänderung samt Inhalt. |  |
+
+SIU – Terminverwaltung (Scheduling Information, unsolicited)
+Meldet Termine: neu, geändert, abgesagt.
+MSH-9 | Ereignis | Bedeutung |  |
+SIU^S12 | Neuer Termin | Ein Termin wird im Terminbuch angelegt. | Beispiel |
+SIU^S13 | Termin verschoben | Ein Termin wird auf einen neuen Zeitpunkt gelegt. |  |
+SIU^S14 | Termin geändert | Termindaten ändern sich, ohne dass er verschoben wird. |  |
+SIU^S15 | Termin abgesagt | Ein Termin wird storniert. |  |
+SIU^S26 | Patient nicht erschienen | Der Patient ist nicht zum Termin erschienen. |  |
+
+DFT – Leistungserfassung (Detailed Financial Transaction)
+Überträgt erbrachte Leistungen zur Abrechnung.
+MSH-9 | Ereignis | Bedeutung |  |
+DFT^P03 | Leistung erfassen | Eine erbrachte Leistung wird zur Abrechnung gemeldet. |  |
+
+BAR – Abrechnungskonto (Billing Account Record)
+Legt Abrechnungskonten an oder ändert sie.
+MSH-9 | Ereignis | Bedeutung |  |
+BAR^P01 | Abrechnungskonto anlegen | Ein Konto für die Abrechnung wird angelegt. |  |
+
+VXU – Impfdaten
+Meldet Impfinformationen eines Patienten.
+MSH-9 | Ereignis | Bedeutung |  |
+VXU^V04 | Impfmeldung | Eine Impfung wird unaufgefordert gemeldet. |  |
+
+ACK – Bestätigung (Acknowledgment)
+Antwort des Empfängers: Nachricht angenommen, mit Fehler oder abgelehnt.
+Eine ACK-Nachricht enthält ein MSA-Segment. MSA-1 trägt den Bestätigungscode (AA angenommen, AE Fehler, AR abgelehnt), MSA-2 die Kontroll-ID (MSH-10) der Nachricht, auf die sich die Antwort bezieht. Bei Fehlern erklärt ein ERR-Segment, was nicht stimmte. Beispiel mit Fehlercode im Viewer öffnen.
+
+Mehrere Ereignisse, eine Struktur
+
+Die dritte Komponente von MSH-9 benennt die Segmentstruktur. Viele Ereignisse einer Gruppe teilen sie: A01 und A04 sind im Beispiel beide ADT_A01. Daher sehen sich Nachrichten verschiedener Ereignisse oft ähnlich, und die Bedeutung steckt im Ereigniscode, im Inhalt von PV1 und im Kontext. Verlassen Sie sich nicht auf die Struktur allein.
+
+Kurz beantwortet
+
+Was steht in MSH-9?
+Der Nachrichtentyp in drei Komponenten: Nachrichtencode (zum Beispiel ADT), Auslöseereignis (A01) und Nachrichtenstruktur (ADT_A01). Mehrere Auslöseereignisse teilen sich häufig eine Struktur: Im Beispiel dieser Seite hat auch die ambulante Registrierung ADT^A04 die Struktur ADT_A01. Ältere Nachrichten lassen die dritte Komponente oft weg.
+
+Wie unterscheiden sich ADT^A01 und ADT^A04?
+A01 meldet eine stationäre Aufnahme, A04 die Registrierung zu einem Besuch, etwa ambulant. Der Aufbau ist ähnlich. Unterschiede zeigen sich vor allem in PV1-2 (Patientenklasse: I stationär, O ambulant). Beide Beispiele finden Sie im Viewer.
+
+Wofür steht ORU^R01?
+Für die Übermittlung von Beobachtungsergebnissen ohne vorherige Abfrage, in der Praxis meist Laborbefunde. OBR beschreibt die Untersuchung, jedes OBX liefert einen Einzelwert.
+
+Weitere Werkzeuge
+Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
+LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
+GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
+DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
+CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
+
+---
+
+URL: https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/adt-a01/
+
+# HL7 ADT^A01: Aufnahme-Nachricht mit Beispiel
+
+ADT^A01 meldet, dass ein Patient stationär aufgenommen wurde. Die Nachricht trägt Patientenstammdaten (PID) und Aufenthaltsdaten (PV1) vom aufnehmenden System an Empfänger wie Labor, Radiologie oder Abrechnung. ADT steht für Admission, Discharge, Transfer.
+
+Im Viewer öffnen adt-a01-aufnahme.hl7
+
+Beispielnachricht
+
+Zwei Kennungen in PID-3 (Wiederholung mit ~), Name mit Komponenten, Adresse, Telefon und E-Mail, dazu Angehöriger, Diagnose, Allergie und Versicherung. Alle Daten sind frei erfunden.
+
+MSH|^~\&|TESTKIS|KLINIKUM_TEST|TESTLIS|KLINIKUM_TEST|20261027083015||ADT^A01^ADT_A01|MSG-A01-0001|P|2.5.1|||AL|NE||UNICODE UTF-8
+EVN||20261027083012|||SCHMIDT^Anna|20261027080000
+PID|1||TEST-100234^^^KLINIKUM_TEST^MR~TEST-F-7781^^^KLINIKUM_TEST^VN||Beispielmann^Bernd^Karl^^^^L||19710305|M|||Teststraße 12^^Musterstadt^^99999^DE^H||^PRN^PH^^49^555^1234567~^NET^Internet^bernd@example.invalid|||||TEST-ACC-5001
+NK1|1|Beispielfrau^Berta|SPO^Ehepartnerin^LOKAL|Teststraße 12^^Musterstadt^^99999^DE|^PRN^PH^^49^555^7654321
+PV1|1|I|CHI^201^2^KLINIKUM_TEST|R|||1001^Musterarzt^Martin^^^Dr.|1002^Beispielärztin^Eva^^^Dr.||CHI|||||||1001^Musterarzt^Martin^^^Dr.||TEST-F-7781|||||||||||||||||||||||||20261027080000
+DG1|1||^Aufnahmediagnose (Testtext)^LOKAL|||A
+AL1|1|DA|^Testallergen^LOKAL|MO|Hautausschlag
+IN1|1|TARIF-A^Testtarif A|KASSE-01|Testkasse Musterstadt||||||||20260101|20261231|||||||||||||||||||||||TEST-V-0001
+
+Feld für Feld
+
+Alle gefüllten Felder des Beispiels mit den Namen aus der Feldliste des Viewers. Die Liste ist eine Auswahl, unbekannte Felder fehlen oder heißen „Feld n“.
+
+Pfad | Feld | Wert im Beispiel |
+MSH-3 | Sendende Anwendung | TESTKIS |
+MSH-4 | Sendende Einrichtung | KLINIKUM_TEST |
+MSH-5 | Empfangende Anwendung | TESTLIS |
+MSH-6 | Empfangende Einrichtung | KLINIKUM_TEST |
+MSH-7 | Zeitstempel | 20261027083015 |
+MSH-9 | Nachrichtentyp | ADT^A01^ADT_A01 |
+MSH-10 | Nachrichten-Kontroll-ID | MSG-A01-0001 |
+MSH-11 | Verarbeitungs-ID | P Produktion |
+MSH-12 | Versions-ID | 2.5.1 |
+MSH-15 | Accept-Bestätigung | AL immer |
+MSH-16 | Anwendungsbestätigung | NE nie |
+MSH-18 | Zeichensatz | UNICODE UTF-8 |
+EVN-2 | Erfassungszeitpunkt | 20261027083012 |
+EVN-5 | Bediener | SCHMIDT^Anna |
+EVN-6 | Ereigniszeitpunkt | 20261027080000 |
+PID-1 | Laufende Nummer | 1 |
+PID-3 | Patientenkennungen | TEST-100234^^^KLINIKUM_TEST^MR~TEST-F-7781^^^KLINIKUM_TEST^VN |
+PID-5 | Patientenname | Beispielmann^Bernd^Karl^^^^L |
+PID-7 | Geburtsdatum | 19710305 |
+PID-8 | Geschlecht | M männlich |
+PID-11 | Adresse | Teststraße 12^^Musterstadt^^99999^DE^H |
+PID-13 | Telefon privat | ^PRN^PH^^49^555^1234567~^NET^Internet^bernd@example.invalid |
+PID-18 | Patientenkonto-Nummer | TEST-ACC-5001 |
+NK1-1 | Laufende Nummer | 1 |
+NK1-2 | Name | Beispielfrau^Berta |
+NK1-3 | Beziehung | SPO^Ehepartnerin^LOKAL |
+NK1-4 | Adresse | Teststraße 12^^Musterstadt^^99999^DE |
+NK1-5 | Telefon | ^PRN^PH^^49^555^7654321 |
+PV1-1 | Laufende Nummer | 1 |
+PV1-2 | Patientenklasse | I stationär |
+PV1-3 | Aufenthaltsort | CHI^201^2^KLINIKUM_TEST |
+PV1-4 | Aufnahmeart | R Routine |
+PV1-7 | Behandelnder Arzt | 1001^Musterarzt^Martin^^^Dr. |
+PV1-8 | Überweisender Arzt | 1002^Beispielärztin^Eva^^^Dr. |
+PV1-10 | Fachabteilung | CHI |
+PV1-17 | Aufnehmender Arzt | 1001^Musterarzt^Martin^^^Dr. |
+PV1-19 | Fallnummer | TEST-F-7781 |
+PV1-44 | Aufnahmezeitpunkt | 20261027080000 |
+DG1-1 | Laufende Nummer | 1 |
+DG1-3 | Diagnose | ^Aufnahmediagnose (Testtext)^LOKAL |
+DG1-6 | Diagnosetyp | A Aufnahmediagnose |
+AL1-1 | Laufende Nummer | 1 |
+AL1-2 | Allergietyp | DA Medikament |
+AL1-3 | Allergen | ^Testallergen^LOKAL |
+AL1-4 | Schweregrad | MO mäßig |
+AL1-5 | Reaktion | Hautausschlag |
+IN1-1 | Laufende Nummer | 1 |
+IN1-2 | Versicherungsplan | TARIF-A^Testtarif A |
+IN1-3 | Versicherungsgesellschaft-ID | KASSE-01 |
+IN1-4 | Name der Gesellschaft | Testkasse Musterstadt |
+IN1-12 | Planbeginn | 20260101 |
+IN1-13 | Planende | 20261231 |
+IN1-36 | Versichertennummer | TEST-V-0001 |
+
+Worauf Sie achten sollten
+
+Pflichtsegmente: Bei der Struktur ADT_A01 sind üblicherweise MSH, EVN, PID und PV1 vorgesehen. NK1 (Angehörige), DG1 (Diagnose), AL1 (Allergie) und IN1 (Versicherung) sind optional und wiederholbar. Welche Felder gefüllt sein müssen, bestimmt das Schnittstellenprofil.
+Drei Zeitstempel: MSH-7 ist der Zeitpunkt der Nachrichtenerstellung, EVN-2 der Zeitpunkt der Erfassung, EVN-6 der Zeitpunkt, zu dem das Ereignis stattgefunden hat, und PV1-44 der Aufnahmezeitpunkt. Sie können unterschiedlich sein, etwa bei Nacherfassung.
+PV1-2 Patientenklasse: I stationär, O ambulant, E Notfall, P Voranmeldung. Weitere Codes und lokale Erweiterungen sind möglich.
+PV1-3 Aufenthaltsort: Komponenten Station ^ Zimmer ^ Bett ^ Einrichtung. Im Beispiel CHI^201^2^KLINIKUM_TEST. Was in „Station“ steht (Kürzel, Nummer), ist lokal vereinbart.
+Mehrere Kennungen: PID-3 enthält zwei Wiederholungen, getrennt durch ~: eine Patientenkennung (MR) und eine Fallnummer (VN). Die Kennung allein ist ohne die vergebende Stelle in PID-3.4 nicht eindeutig.
+Fallnummer: Die Besuchsnummer steht in PV1-19. Im Beispiel taucht sie zusätzlich in PID-3 auf. Das ist eine Eigenheit des Beispiels, kein Standard.
+Unterschied zu A04: ADT^A04 meldet die Registrierung zu einem Besuch, im Beispiel ambulant (PV1-2 = O). Der Aufbau ist ähnlich, die Struktur im Beispiel ebenfalls ADT_A01. A04-Beispiel öffnen.
+
+Weiterlesen
+
+Nachrichtentypen im Überblick
+Aufbau einer HL7-v2-Nachricht
+Häufige Fehler
+ADT^A08: Änderung von Patientendaten
+Das PV1-Segment
+
+Weitere Werkzeuge
+Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
+LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
+GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
+DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
+CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
+
+---
+
+URL: https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/adt-a08/
+
+# HL7 ADT^A08: Änderung von Patientendaten mit Beispiel
+
+ADT^A08 meldet, dass sich Patienten- oder Aufenthaltsdaten geändert haben, ohne dass ein anderes Ereignis wie Verlegung oder Entlassung vorliegt. Typisch sind Adress- oder Kontaktänderungen und Korrekturen. Empfänger gleichen die Daten mit ihrem Bestand ab.
+
+Im Viewer öffnen adt-a08-aenderung.hl7
+
+Beispielnachricht
+
+Mehrere Namen (Rufname und Alias), Escape-Sequenz \T\ in der Straße, Ereignisgrund in EVN-4 und ein Z-Segment (ZPI) als lokale Erweiterung. Alle Daten sind frei erfunden.
+
+MSH|^~\&|TESTKIS|KLINIKUM_TEST|TESTLIS|KLINIKUM_TEST|20261028101010||ADT^A08^ADT_A01|MSG-A08-0003|P|2.5.1|||AL|NE||UNICODE UTF-8
+EVN||20261028101005||ADRCHG||20261028101000
+PID|1||TEST-100234^^^KLINIKUM_TEST^MR~TEST-F-7781^^^KLINIKUM_TEST^VN||Beispielmann^Bernd^Karl^^^^L~Beispiel-Mann^B.^^^^^A||19710305|M|||Teststraße 12 \T\ 14^Hinterhaus^Musterstadt^^99999^DE^H||^PRN^PH^^49^555^1234567~^NET^Internet^bernd@example.invalid|||||TEST-ACC-5001
+PV1|1|I|CHI^201^2^KLINIKUM_TEST||||1001^Musterarzt^Martin^^^Dr.||||||||||||TEST-F-7781|||||||||||||||||||||||||20261027080000
+ZPI|1|KARTE-0815|Zusatzinfo nur lokal gültig
+
+Feld für Feld
+
+Alle gefüllten Felder des Beispiels mit den Namen aus der Feldliste des Viewers. Die Liste ist eine Auswahl, unbekannte Felder fehlen oder heißen „Feld n“.
+
+Pfad | Feld | Wert im Beispiel |
+MSH-3 | Sendende Anwendung | TESTKIS |
+MSH-4 | Sendende Einrichtung | KLINIKUM_TEST |
+MSH-5 | Empfangende Anwendung | TESTLIS |
+MSH-6 | Empfangende Einrichtung | KLINIKUM_TEST |
+MSH-7 | Zeitstempel | 20261028101010 |
+MSH-9 | Nachrichtentyp | ADT^A08^ADT_A01 |
+MSH-10 | Nachrichten-Kontroll-ID | MSG-A08-0003 |
+MSH-11 | Verarbeitungs-ID | P Produktion |
+MSH-12 | Versions-ID | 2.5.1 |
+MSH-15 | Accept-Bestätigung | AL immer |
+MSH-16 | Anwendungsbestätigung | NE nie |
+MSH-18 | Zeichensatz | UNICODE UTF-8 |
+EVN-2 | Erfassungszeitpunkt | 20261028101005 |
+EVN-4 | Ereignisgrund | ADRCHG |
+EVN-6 | Ereigniszeitpunkt | 20261028101000 |
+PID-1 | Laufende Nummer | 1 |
+PID-3 | Patientenkennungen | TEST-100234^^^KLINIKUM_TEST^MR~TEST-F-7781^^^KLINIKUM_TEST^VN |
+PID-5 | Patientenname | Beispielmann^Bernd^Karl^^^^L~Beispiel-Mann^B.^^^^^A |
+PID-7 | Geburtsdatum | 19710305 |
+PID-8 | Geschlecht | M männlich |
+PID-11 | Adresse | Teststraße 12 \T\ 14^Hinterhaus^Musterstadt^^99999^DE^H |
+PID-13 | Telefon privat | ^PRN^PH^^49^555^1234567~^NET^Internet^bernd@example.invalid |
+PID-18 | Patientenkonto-Nummer | TEST-ACC-5001 |
+PV1-1 | Laufende Nummer | 1 |
+PV1-2 | Patientenklasse | I stationär |
+PV1-3 | Aufenthaltsort | CHI^201^2^KLINIKUM_TEST |
+PV1-7 | Behandelnder Arzt | 1001^Musterarzt^Martin^^^Dr. |
+PV1-19 | Fallnummer | TEST-F-7781 |
+PV1-44 | Aufnahmezeitpunkt | 20261027080000 |
+ZPI-1 | Feld 1 | 1 |
+ZPI-2 | Feld 2 | KARTE-0815 |
+ZPI-3 | Feld 3 | Zusatzinfo nur lokal gültig |
+
+Worauf Sie achten sollten
+
+Ereignisgrund: EVN-4 trägt im Beispiel ADRCHG. Das ist ein frei gewählter Code des Beispiels, der den Grund der Änderung nennt. Welche Codes ein System verwendet, steht in dessen Schnittstellenbeschreibung.
+Alles oder nur das Geänderte? Viele Systeme senden bei A08 den vollständigen aktuellen Stand der Segmente, nicht nur die Änderung. Das ist eine Vereinbarung, der Standard erzwingt es nicht. Nach der Konvention des Standards heißt ein leeres Feld „keine Information“, der Nullwert "" dagegen „Wert löschen“. Ob der Empfänger das so umsetzt, muss die Schnittstellenbeschreibung klären.
+Mehrere Namen: PID-5 hat im Beispiel zwei Wiederholungen: den Rechtsnamen (Namensart L) und eine Schreibvariante als Alias (A). Wer nur die erste Wiederholung liest, übersieht den Alias.
+Escape-Sequenz: Die Straße steht als Teststraße 12 \T\ 14. \T\ ist die Maskierung des Zeichens &. Würde dort ein nacktes & stehen, entstünden zusätzliche Subkomponenten.
+Z-Segment: ZPI am Ende ist eine lokale Erweiterung. Der Viewer zeigt es an, kann aber seine Felder nicht benennen.
+Abgrenzung: ADT^A31 aktualisiert die Daten einer Person im Patientenindex, ohne dass ein Besuch betroffen sein muss. Ob ein System A08 oder A31 sendet, hängt von seiner Rolle ab.
+
+Weiterlesen
+
+Nachrichtentypen im Überblick
+Aufbau einer HL7-v2-Nachricht
+Häufige Fehler
+ADT^A01: Aufnahme
+Das PID-Segment
+
+Weitere Werkzeuge
+Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
+LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
+GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
+DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
+CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
+
+---
+
+URL: https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/oru-r01/
+
+# HL7 ORU^R01: Laborbefund-Nachricht mit Beispiel
+
+ORU^R01 überträgt Beobachtungsergebnisse, in der Praxis meist Laborbefunde, vom ausführenden System an den Empfänger, ohne dass dafür eine eigene Abfrage nötig ist. OBR beschreibt die Untersuchung, jedes OBX liefert einen Einzelwert.
+
+Im Viewer öffnen oru-r01-labor.hl7
+
+Beispielnachricht
+
+OBR als Kopf, vier OBX-Zeilen mit Zahlenwert, Einheit, Referenzbereich und Abnormal-Kennzeichen; Kommentar in NTE mit Zeilenumbruch (\.br\). Alle Daten sind frei erfunden.
+
+MSH|^~\&|TESTLIS|KLINIKUM_TEST|TESTKIS|KLINIKUM_TEST|20261027113045||ORU^R01^ORU_R01|MSG-R01-0004|P|2.5.1||||||UNICODE UTF-8
+PID|1||TEST-100234^^^KLINIKUM_TEST^MR||Beispielmann^Bernd^Karl||19710305|M
+PV1|1|I|CHI^201^2^KLINIKUM_TEST||||||||||||||||TEST-F-7781
+ORC|RE|PL-5501^TESTKIS|FL-9901^TESTLIS||CM||||20261027113000
+OBR|1|PL-5501^TESTKIS|FL-9901^TESTLIS|ELYT^Elektrolyte (Testpanel)^LOKAL|||20261027090000|||||||||||||||20261027113000|||F
+OBX|1|NM|NA^Natrium^LOKAL||139|mmol/L|135-145|N|||F|||20261027090000
+OBX|2|NM|K^Kalium^LOKAL||5.9|mmol/L|3.5-5.1|H|||F|||20261027090000
+OBX|3|NM|CL^Chlorid^LOKAL||101|mmol/L|98-107|N|||F|||20261027090000
+OBX|4|ST|HEM^Hämolyse^LOKAL||nicht erkennbar||||||F
+NTE|1|L|Kaliumwert auffällig.\.br\Kontrolle mit neuer Probe empfohlen (Testdaten).
+
+Feld für Feld
+
+Alle gefüllten Felder des Beispiels mit den Namen aus der Feldliste des Viewers. Die Liste ist eine Auswahl, unbekannte Felder fehlen oder heißen „Feld n“.
+
+Pfad | Feld | Wert im Beispiel |
+MSH-3 | Sendende Anwendung | TESTLIS |
+MSH-4 | Sendende Einrichtung | KLINIKUM_TEST |
+MSH-5 | Empfangende Anwendung | TESTKIS |
+MSH-6 | Empfangende Einrichtung | KLINIKUM_TEST |
+MSH-7 | Zeitstempel | 20261027113045 |
+MSH-9 | Nachrichtentyp | ORU^R01^ORU_R01 |
+MSH-10 | Nachrichten-Kontroll-ID | MSG-R01-0004 |
+MSH-11 | Verarbeitungs-ID | P Produktion |
+MSH-12 | Versions-ID | 2.5.1 |
+MSH-18 | Zeichensatz | UNICODE UTF-8 |
+PID-1 | Laufende Nummer | 1 |
+PID-3 | Patientenkennungen | TEST-100234^^^KLINIKUM_TEST^MR |
+PID-5 | Patientenname | Beispielmann^Bernd^Karl |
+PID-7 | Geburtsdatum | 19710305 |
+PID-8 | Geschlecht | M männlich |
+PV1-1 | Laufende Nummer | 1 |
+PV1-2 | Patientenklasse | I stationär |
+PV1-3 | Aufenthaltsort | CHI^201^2^KLINIKUM_TEST |
+PV1-19 | Fallnummer | TEST-F-7781 |
+ORC-1 | Auftragssteuerung | RE Ergebnisse folgen |
+ORC-2 | Auftragsnummer Auftraggeber | PL-5501^TESTKIS |
+ORC-3 | Auftragsnummer Ausführender | FL-9901^TESTLIS |
+ORC-5 | Auftragsstatus | CM abgeschlossen |
+ORC-9 | Zeitpunkt der Transaktion | 20261027113000 |
+OBR-1 | Laufende Nummer | 1 |
+OBR-2 | Auftragsnummer Auftraggeber | PL-5501^TESTKIS |
+OBR-3 | Auftragsnummer Ausführender | FL-9901^TESTLIS |
+OBR-4 | Untersuchung | ELYT^Elektrolyte (Testpanel)^LOKAL |
+OBR-7 | Entnahme-/Beobachtungszeitpunkt | 20261027090000 |
+OBR-22 | Berichtszeitpunkt | 20261027113000 |
+OBR-25 | Ergebnisstatus | F endgültig |
+OBX-1 | Laufende Nummer | 1 |
+OBX-2 | Werttyp | NM Zahl |
+OBX-3 | Beobachtungskennung | NA^Natrium^LOKAL |
+OBX-5 | Wert | 139 |
+OBX-6 | Einheit | mmol/L |
+OBX-7 | Referenzbereich | 135-145 |
+OBX-8 | Abnormal-Kennzeichen | N normal |
+OBX-11 | Ergebnisstatus | F endgültig |
+OBX-14 | Beobachtungszeitpunkt | 20261027090000 |
+OBX-1 | Laufende Nummer | 2 |
+OBX-2 | Werttyp | NM Zahl |
+OBX-3 | Beobachtungskennung | K^Kalium^LOKAL |
+OBX-5 | Wert | 5.9 |
+OBX-6 | Einheit | mmol/L |
+OBX-7 | Referenzbereich | 3.5-5.1 |
+OBX-8 | Abnormal-Kennzeichen | H hoch |
+OBX-11 | Ergebnisstatus | F endgültig |
+OBX-14 | Beobachtungszeitpunkt | 20261027090000 |
+OBX-1 | Laufende Nummer | 3 |
+OBX-2 | Werttyp | NM Zahl |
+OBX-3 | Beobachtungskennung | CL^Chlorid^LOKAL |
+OBX-5 | Wert | 101 |
+OBX-6 | Einheit | mmol/L |
+OBX-7 | Referenzbereich | 98-107 |
+OBX-8 | Abnormal-Kennzeichen | N normal |
+OBX-11 | Ergebnisstatus | F endgültig |
+OBX-14 | Beobachtungszeitpunkt | 20261027090000 |
+OBX-1 | Laufende Nummer | 4 |
+OBX-2 | Werttyp | ST kurzer Text |
+OBX-3 | Beobachtungskennung | HEM^Hämolyse^LOKAL |
+OBX-5 | Wert | nicht erkennbar |
+OBX-11 | Ergebnisstatus | F endgültig |
+NTE-1 | Laufende Nummer | 1 |
+NTE-2 | Quelle | L Ausführender (Filler) |
+NTE-3 | Kommentar | Kaliumwert auffällig.\.br\Kontrolle mit neuer Probe empfohlen (Testdaten). |
+
+Worauf Sie achten sollten
+
+Gruppierung: Jedes OBX gehört zum davor stehenden OBR. Beginnt ein neues OBR, beginnt eine neue Untersuchung. Ein NTE gehört zum Segment direkt davor, im Beispiel zum letzten OBX.
+OBX-2 Werttyp: Er bestimmt, wie OBX-5 zu lesen ist. Im Beispiel NM (Zahl) und ST (Text). Weitere Typen sind unter anderem TX (Freitext), CWE (codiert) und ED (eingebettetes Dokument).
+OBX-3 Beobachtungskennung: Code ^ Text ^ Codesystem. Im Beispiel ein lokales System (LOKAL). In der Praxis steht dort oft LN für LOINC. Ein lokaler Code ist nur im Absendersystem verständlich.
+Zahlen: Bei NM steht ein Dezimalpunkt (5.9), kein Komma. Einheit in OBX-6, Referenzbereich in OBX-7. Der Viewer warnt bei 5,9.
+OBX-8 Kennzeichen: N normal, H hoch, L niedrig, A auffällig. Im Beispiel ist Kalium als H markiert. Der Viewer wertet das nicht medizinisch.
+Status: OBX-11 und OBR-25 tragen den Ergebnisstatus: F endgültig, P vorläufig, C korrigiert, X nicht durchführbar. Ein Korrekturbefund (C) ersetzt einen früheren Wert.
+Auftragsnummern: ORC-2/OBR-2 sind die Auftragsnummer des Anfordernden (PL-5501), ORC-3/OBR-3 die des Ausführenden (FL-9901). Damit ordnet der Empfänger den Befund dem Auftrag zu.
+Freitext: \.br\ im NTE ist ein Zeilenumbruch. Eingebettete Dokumente (Typ ED) stehen oft als lange Base64-Zeichenkette in OBX-5, der Viewer zeigt sie als Text.
+Befunde im deutschen LDT-Format liest der LDT-/BDT-Viewer.
+
+Weiterlesen
+
+Nachrichtentypen im Überblick
+Aufbau einer HL7-v2-Nachricht
+Häufige Fehler
+ORM^O01: Auftrag
+Das OBX-Segment
+Das OBR-Segment
+
+Weitere Werkzeuge
+Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
+LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
+GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
+DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
+CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
+
+---
+
+URL: https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/orm-o01/
+
+# HL7 ORM^O01: Auftragsnachricht mit Beispiel
+
+ORM^O01 überträgt einen Auftrag, zum Beispiel eine Laboranforderung, vom anfordernden an das ausführende System. ORC steuert den Auftrag, OBR beschreibt die angeforderte Untersuchung. Der Typ ist weiterhin verbreitet, auch wenn neuere Versionen mit OML^O21 und OMG^O19 spezialisierte Auftragsnachrichten bieten.
+
+Im Viewer öffnen orm-o01-auftrag.hl7
+
+Beispielnachricht
+
+Zwei Aufträge in einer Nachricht: je ein ORC (Steuerung NW) mit zugehörigem OBR. Die Placer-Nummer vergibt das anfordernde System. Alle Daten sind frei erfunden.
+
+MSH|^~\&|TESTKIS|KLINIKUM_TEST|TESTLIS|KLINIKUM_TEST|20261027084000||ORM^O01^ORM_O01|MSG-O01-0005|P|2.5.1|||AL|NE||UNICODE UTF-8
+PID|1||TEST-100234^^^KLINIKUM_TEST^MR||Beispielmann^Bernd^Karl||19710305|M
+PV1|1|I|CHI^201^2^KLINIKUM_TEST||||||||||||||||TEST-F-7781
+ORC|NW|PL-5501^TESTKIS|||||||20261027083900|||1001^Musterarzt^Martin^^^Dr.
+OBR|1|PL-5501^TESTKIS||ELYT^Elektrolyte (Testpanel)^LOKAL|||20261027090000|||||||||1001^Musterarzt^Martin^^^Dr.
+ORC|NW|PL-5502^TESTKIS|||||||20261027083900|||1001^Musterarzt^Martin^^^Dr.
+OBR|2|PL-5502^TESTKIS||BB^Blutbild (Testpanel)^LOKAL|||20261027090000|||||||||1001^Musterarzt^Martin^^^Dr.
+NTE|1|P|Nüchtern abgenommen (Testkommentar)
+
+Feld für Feld
+
+Alle gefüllten Felder des Beispiels mit den Namen aus der Feldliste des Viewers. Die Liste ist eine Auswahl, unbekannte Felder fehlen oder heißen „Feld n“.
+
+Pfad | Feld | Wert im Beispiel |
+MSH-3 | Sendende Anwendung | TESTKIS |
+MSH-4 | Sendende Einrichtung | KLINIKUM_TEST |
+MSH-5 | Empfangende Anwendung | TESTLIS |
+MSH-6 | Empfangende Einrichtung | KLINIKUM_TEST |
+MSH-7 | Zeitstempel | 20261027084000 |
+MSH-9 | Nachrichtentyp | ORM^O01^ORM_O01 |
+MSH-10 | Nachrichten-Kontroll-ID | MSG-O01-0005 |
+MSH-11 | Verarbeitungs-ID | P Produktion |
+MSH-12 | Versions-ID | 2.5.1 |
+MSH-15 | Accept-Bestätigung | AL immer |
+MSH-16 | Anwendungsbestätigung | NE nie |
+MSH-18 | Zeichensatz | UNICODE UTF-8 |
+PID-1 | Laufende Nummer | 1 |
+PID-3 | Patientenkennungen | TEST-100234^^^KLINIKUM_TEST^MR |
+PID-5 | Patientenname | Beispielmann^Bernd^Karl |
+PID-7 | Geburtsdatum | 19710305 |
+PID-8 | Geschlecht | M männlich |
+PV1-1 | Laufende Nummer | 1 |
+PV1-2 | Patientenklasse | I stationär |
+PV1-3 | Aufenthaltsort | CHI^201^2^KLINIKUM_TEST |
+PV1-19 | Fallnummer | TEST-F-7781 |
+ORC-1 | Auftragssteuerung | NW neuer Auftrag |
+ORC-2 | Auftragsnummer Auftraggeber | PL-5501^TESTKIS |
+ORC-9 | Zeitpunkt der Transaktion | 20261027083900 |
+ORC-12 | Anfordernder Arzt | 1001^Musterarzt^Martin^^^Dr. |
+OBR-1 | Laufende Nummer | 1 |
+OBR-2 | Auftragsnummer Auftraggeber | PL-5501^TESTKIS |
+OBR-4 | Untersuchung | ELYT^Elektrolyte (Testpanel)^LOKAL |
+OBR-7 | Entnahme-/Beobachtungszeitpunkt | 20261027090000 |
+OBR-16 | Anfordernder Arzt | 1001^Musterarzt^Martin^^^Dr. |
+ORC-1 | Auftragssteuerung | NW neuer Auftrag |
+ORC-2 | Auftragsnummer Auftraggeber | PL-5502^TESTKIS |
+ORC-9 | Zeitpunkt der Transaktion | 20261027083900 |
+ORC-12 | Anfordernder Arzt | 1001^Musterarzt^Martin^^^Dr. |
+OBR-1 | Laufende Nummer | 2 |
+OBR-2 | Auftragsnummer Auftraggeber | PL-5502^TESTKIS |
+OBR-4 | Untersuchung | BB^Blutbild (Testpanel)^LOKAL |
+OBR-7 | Entnahme-/Beobachtungszeitpunkt | 20261027090000 |
+OBR-16 | Anfordernder Arzt | 1001^Musterarzt^Martin^^^Dr. |
+NTE-1 | Laufende Nummer | 1 |
+NTE-2 | Quelle | P Auftraggeber (Placer) |
+NTE-3 | Kommentar | Nüchtern abgenommen (Testkommentar) |
+
+Worauf Sie achten sollten
+
+ORC-1 Steuercode: NW neuer Auftrag, CA Stornierung anfordern, DC Auftrag abbrechen, XO Änderung. Er entscheidet, was der Empfänger mit der Nachricht tun soll. Weitere Codes existieren, der Viewer erklärt eine Auswahl.
+Auftragsnummern: ORC-2 ist die Nummer des Anfordernden (PL-5501), ORC-3 die des Ausführenden. Im Auftrag ist ORC-3 leer, weil das Labor sie erst vergibt. Im späteren ORU sind beide gefüllt.
+Mehrere Aufträge: Die Beispielnachricht enthält zwei Paare aus ORC und OBR. Jedes Paar ist ein eigener Auftrag mit eigener Nummer.
+Zeiten: ORC-9 ist der Zeitpunkt der Auftragserfassung, OBR-7 der Entnahme- bzw. Beobachtungszeitpunkt.
+Anfordernder Arzt: Er steht in ORC-12 und oft zusätzlich in OBR-16. Beide sollten übereinstimmen. Abweichungen klären Sie mit dem Absender.
+Kommentar: NTE-2 gibt an, wer kommentiert: P der Anfordernde, L das ausführende System. Im Beispiel kommentiert der Anfordernde.
+Antwort: Der Empfänger bestätigt mit einem ACK oder, je nach Vereinbarung, mit ORR^O02. Das Ergebnis folgt später als ORU^R01.
+
+Weiterlesen
+
+Nachrichtentypen im Überblick
+Aufbau einer HL7-v2-Nachricht
+Häufige Fehler
+ORU^R01: Befund
+Das OBR-Segment
+
+Weitere Werkzeuge
+Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
+LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
+GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
+DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
+CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
+
+---
+
+URL: https://freimoser.github.io/hl7v2-viewer/hl7-segmente/
+
+# HL7-v2-Segmente erklärt
+
+Ein Segment ist eine Zeile einer HL7-v2-Nachricht und beginnt mit einer dreistelligen Kennung wie MSH, PID oder OBX. Die Kennung bestimmt, welche Bedeutung die Felder der Zeile haben. Fünf Segmente haben eine eigene Seite mit Feldtabelle und Hinweisen; die übrigen sind unten kurz beschrieben.
+
+MSH – Nachrichtenkopf
+Steht am Anfang jeder Nachricht. Legt die Trennzeichen fest und nennt Absender, Empfänger, Nachrichtentyp, Kontroll-ID und Version.
+
+PID – Patientenidentifikation
+Identifiziert die Person: Kennungen, Name, Geburtsdatum, Geschlecht, Adresse und Kontaktdaten.
+
+PV1 – Patientenbesuch
+Beschreibt den Aufenthalt oder Besuch: Patientenklasse, Station, Ärzte, Fallnummer sowie Aufnahme- und Entlassungszeitpunkt.
+
+OBR – Untersuchungsanforderung
+Beschreibt eine Untersuchung oder einen Befund: Auftragsnummern, was untersucht wurde, wann die Probe genommen wurde und wie der Befundstand ist. Darunter folgen die Einzelwerte als OBX.
+
+OBX – Beobachtung / Messwert
+Ein einzelnes Ergebnis: Messwert, Textbefund oder eingebettete Daten. Der Datentyp in OBX-2 bestimmt, wie OBX-5 zu lesen ist.
+
+Segmente, die der Viewer beschreibt
+
+Die Liste ist eine Auswahl aus den gebräuchlichen Segmenten, in eigenen Worten formuliert. Jedes Segment, das hier fehlt, zeigt der Viewer trotzdem an: Die Felder heißen dann „Feld n“.
+
+Kennung | Name | Aufgabe |
+
+MSH | Nachrichtenkopf | Steht am Anfang jeder Nachricht. Legt die Trennzeichen fest und nennt Absender, Empfänger, Nachrichtentyp, Kontroll-ID und Version. |
+EVN | Ereignis | Beschreibt das fachliche Ereignis hinter einer Nachricht, vor allem in ADT-Nachrichten: wann es erfasst wurde und wann es tatsächlich stattfand. |
+PID | Patientenidentifikation | Identifiziert die Person: Kennungen, Name, Geburtsdatum, Geschlecht, Adresse und Kontaktdaten. |
+PD1 | Zusatzdaten Patient | Ergänzt PID um Angaben wie die Hauptversorgung, zum Beispiel den Hausarzt. Der Inhalt ist stark vom Profil abhängig. |
+NK1 | Angehörige und Kontakte | Eine nahestehende Person oder ein Kontakt des Patienten. Das Segment kann mehrfach vorkommen. |
+PV1 | Patientenbesuch | Beschreibt den Aufenthalt oder Besuch: Patientenklasse, Station, Ärzte, Fallnummer sowie Aufnahme- und Entlassungszeitpunkt. |
+PV2 | Besuch, Zusatzdaten | Zusätzliche Angaben zum Aufenthalt, zum Beispiel Aufnahmegrund oder erwartete Aufenthaltsdauer. |
+ORC | Allgemeiner Auftrag | Steuert einen Auftrag: neu, storniert, geändert, bestätigt. Steht in Auftrags- und Befundnachrichten vor OBR. |
+OBR | Untersuchungsanforderung | Beschreibt eine Untersuchung oder einen Befund: Auftragsnummern, was untersucht wurde, wann die Probe genommen wurde und wie der Befundstand ist. Darunter folgen die Einzelwerte als OBX. |
+OBX | Beobachtung / Messwert | Ein einzelnes Ergebnis: Messwert, Textbefund oder eingebettete Daten. Der Datentyp in OBX-2 bestimmt, wie OBX-5 zu lesen ist. |
+NTE | Anmerkung | Freitext-Kommentar, der sich auf das vorausgehende Segment bezieht, etwa auf ein OBR oder OBX. |
+AL1 | Allergie | Eine Allergie oder Unverträglichkeit des Patienten. Das Segment kann mehrfach vorkommen. |
+DG1 | Diagnose | Eine Diagnose zum Patienten oder Fall. Das Segment kann mehrfach vorkommen. |
+IN1 | Versicherung | Angaben zu einem Versicherungsverhältnis: Kostenträger, Versicherter, Laufzeit und Nummer. |
+MSA | Bestätigung | Kernsegment einer ACK-Nachricht: Ergebnis der Verarbeitung und Kontroll-ID der bestätigten Nachricht. |
+ERR | Fehler | Beschreibt einen Fehler in einer ACK-Nachricht: wo, welcher Code, wie schwer und mit welchem Text. |
+SCH | Terminplanung | Beschreibt einen Termin: Kennungen, Grund, Art, Dauer und Zeitangabe, außerdem den Stand im Terminbuch. |
+RGS | Ressourcengruppe | Fasst die Ressourcen eines Termins zusammen, die in den folgenden AIS-, AIG-, AIL- oder AIP-Segmenten stehen. |
+AIS | Terminleistung | Eine Leistung innerhalb eines Termins, etwa die angeforderte Untersuchung mit Start und Dauer. |
+TXA | Dokumentinformation | Kopf eines Dokuments in MDM-Nachrichten: Typ, Zeitpunkte, Autoren, Dokumentnummer und Status. |
+
+Segmente mit einem Z am Anfang (ZPI, ZBE …) sind lokale Erweiterungen. Ihre Felder kann nur die Schnittstellenbeschreibung des Absenders erklären.
+
+Aufbau einer Nachricht · Nachrichtentypen · Häufige Fehler
+
+Weitere Werkzeuge
+Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
+LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
+GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
+DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
+CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
+
+---
+
+URL: https://freimoser.github.io/hl7v2-viewer/hl7-segmente/msh/
+
+# MSH – der Nachrichtenkopf: Felder und Stolperstellen
+
+MSH ist das erste Segment jeder HL7-v2-Nachricht. Es legt die Trennzeichen fest und nennt Absender, Empfänger, Zeitpunkt, Nachrichtentyp, Kontroll-ID und Version.
+
+Beispielzeile
+
+MSH|^~\&|TESTKIS|KLINIKUM_TEST|TESTLIS|KLINIKUM_TEST|20261027083015||ADT^A01^ADT_A01|MSG-A01-0001|P|2.5.1|||AL|NE||UNICODE UTF-8
+
+Im Viewer öffnen Beispiel: Stationäre Aufnahme (ADT^A01), frei erfunden
+
+Felder, die der Viewer beschreibt
+
+Die Tabelle nennt die Felder dieses Segments aus der Feldliste des Viewers. Sie ist eine eigene Auswahl in eigenen Worten und nicht vollständig. Maßgeblich ist die Spezifikation der verwendeten Version und das Profil der beteiligten Systeme. Fett gesetzte Felder sind die, die am häufigsten gebraucht werden.
+
+Feld | Name | Typ | Erklärung |
+MSH-1 | Feldtrenner | ST | Das Zeichen, das die Felder trennt, fast immer |. Es steht direkt hinter „MSH“. |
+MSH-2 | Kodierzeichen | ST | Vier Zeichen für Komponente, Wiederholung, Escape und Subkomponente, üblich ^~\&. |
+MSH-3 | Sendende Anwendung | HD | Name des Programms, das die Nachricht erzeugt hat. |
+MSH-4 | Sendende Einrichtung | HD | Einrichtung oder Standort des Absenders. |
+MSH-5 | Empfangende Anwendung | HD | Programm, für das die Nachricht gedacht ist. |
+MSH-6 | Empfangende Einrichtung | HD | Einrichtung oder Standort des Empfängers. |
+MSH-7 | Zeitstempel | DTM | Zeitpunkt, zu dem die Nachricht erstellt wurde (JJJJMMTThhmmss, optional mit Zeitzone). |
+MSH-8 | Sicherheit | ST | Selten genutztes Feld für Sicherheitsangaben. |
+MSH-9 | Nachrichtentyp | MSG | Nachrichtencode ^ Auslöseereignis ^ Nachrichtenstruktur, zum Beispiel ADT^A01^ADT_A01. |
+MSH-10 | Nachrichten-Kontroll-ID | ST | Eindeutige Kennung dieser Nachricht. Die Bestätigung (ACK) bezieht sich in MSA-2 darauf. |
+MSH-11 | Verarbeitungs-ID | PT | Betriebsart: P Produktion, T Training, D Debugging. |
+MSH-12 | Versions-ID | VID | HL7-Version, nach der die Nachricht aufgebaut ist, zum Beispiel 2.5.1. |
+MSH-13 | Sequenznummer | NM | Laufende Nummer, wenn das Sequenzprotokoll genutzt wird. |
+MSH-14 | Fortsetzungszeiger | ST | Verweis auf eine Folgenachricht bei sehr langen Inhalten. |
+MSH-15 | Accept-Bestätigung | ID | Wann eine Empfangsbestätigung gewünscht ist. |
+MSH-16 | Anwendungsbestätigung | ID | Wann eine Verarbeitungsbestätigung gewünscht ist. |
+MSH-17 | Ländercode | ID | Land des Absenders (Ländercode, z. B. DEU). |
+MSH-18 | Zeichensatz | ID | Zeichensatz der Nachricht, z. B. UNICODE UTF-8 oder 8859/1. |
+MSH-19 | Hauptsprache | CE | Sprache der Textinhalte. |
+MSH-21 | Profil-ID | EI | Kennung des Schnittstellenprofils, nach dem die Nachricht gebaut ist. |
+
+Stolpersteine
+
+Zählung: Das Feldtrennzeichen hinter „MSH“ ist MSH-1, die Kodierzeichen sind MSH-2. Beim Zerlegen an | steht MSH-2 daher an erster Stelle. MSH-9 ist der Nachrichtentyp.
+MSH-9: Drei Komponenten: Code, Auslöseereignis, Struktur (ADT^A01^ADT_A01). Manche Nachrichten lassen die dritte weg. Der Code muss in Großbuchstaben stehen.
+MSH-10: Die Kontroll-ID soll eine Nachricht eindeutig kennzeichnen. Die Bestätigung (ACK) nennt sie in MSA-2, so ordnet der Absender sie zu.
+MSH-12: Die Version sagt, nach welchem Regelwerk die Nachricht aufgebaut sein soll. Der Viewer prüft nicht gegen die Regeln einer Version.
+MSH-7: Der Zeitstempel darf eine Zeitzone tragen (+0100). Fehlt sie, ist unklar, in welcher Zeit der Absender gerechnet hat.
+MSH-18: Der Zeichensatz (zum Beispiel UNICODE UTF-8 oder 8859/1) muss zur tatsächlichen Kodierung der Daten passen. Sonst erscheinen Umlaute als Ersatzzeichen. Der Viewer weist darauf hin und bietet beim Öffnen einer Datei die Wahl des Zeichensatzes.
+MSH-3 bis MSH-6: Namen von Sender und Empfänger sind frei vergeben. Schnittstellen-Software nutzt sie häufig zum Routen, deshalb müssen sie exakt zur Vereinbarung passen.
+MSH-11: P Produktion, T Training, D Debugging. Testnachrichten mit P sind ein klassischer Fehler.
+
+Kurz beantwortet
+
+Was steht im MSH-Segment?
+Trennzeichen (MSH-1, MSH-2), Absender und Empfänger (MSH-3 bis MSH-6), Zeitstempel (MSH-7), Nachrichtentyp (MSH-9), Kontroll-ID (MSH-10), Verarbeitungsart (MSH-11), Version (MSH-12) und Zeichensatz (MSH-18).
+
+Warum ist MSH-1 das Trennzeichen?
+Weil das Feldtrennzeichen direkt hinter „MSH“ steht und als erstes Feld zählt. Dadurch kann der Empfänger zuerst das Trennzeichen lesen und mit ihm den Rest zerlegen.
+
+Alle Segmente · Nachrichtentypen
+
+Weitere Werkzeuge
+Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
+LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
+GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
+DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
+CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
+
+---
+
+URL: https://freimoser.github.io/hl7v2-viewer/hl7-segmente/pid/
+
+# PID – Patientenidentifikation: Felder und Stolperstellen
+
+PID enthält die Stammdaten eines Patienten: Kennungen, Name, Geburtsdatum, Geschlecht, Adresse und Kontakt. Es ist das Segment mit den meisten personenbezogenen Daten. Geben Sie Nachrichten nur anonymisiert weiter, der Viewer bietet dafür eine Hilfe.
+
+Beispielzeile
+
+PID|1||TEST-100234^^^KLINIKUM_TEST^MR~TEST-F-7781^^^KLINIKUM_TEST^VN||Beispielmann^Bernd^Karl^^^^L||19710305|M|||Teststraße 12^^Musterstadt^^99999^DE^H||^PRN^PH^^49^555^1234567~^NET^Internet^bernd@example.invalid|||||TEST-ACC-5001
+
+Im Viewer öffnen Beispiel: Stationäre Aufnahme (ADT^A01), frei erfunden
+
+Felder, die der Viewer beschreibt
+
+Die Tabelle nennt die Felder dieses Segments aus der Feldliste des Viewers. Sie ist eine eigene Auswahl in eigenen Worten und nicht vollständig. Maßgeblich ist die Spezifikation der verwendeten Version und das Profil der beteiligten Systeme. Fett gesetzte Felder sind die, die am häufigsten gebraucht werden.
+
+Feld | Name | Typ | Erklärung |
+PID-1 | Laufende Nummer | SI | Zählt PID-Segmente innerhalb der Nachricht, meist 1. |
+PID-2 | Patienten-ID (veraltet) | CX | Frühere Form der Patientenkennung; heute steht sie in PID-3. |
+PID-3 | Patientenkennungen | CX | Liste der Kennungen der Person (Patienten-ID, Fallnummer, Versichertennummer …), jeweils mit zuweisender Stelle und Kennungstyp. |
+PID-4 | Alternative Patienten-ID (veraltet) | CX | Frühere Form für weitere Kennungen; heute ebenfalls PID-3. |
+PID-5 | Patientenname | XPN | Familienname ^ Vorname ^ weitere Vornamen ^ Suffix ^ Titel ^ … ^ Namensart. |
+PID-6 | Geburtsname der Mutter | XPN | Name der Mutter bei Geburt, wird zur Identifikation genutzt. |
+PID-7 | Geburtsdatum | DTM | Meist JJJJMMTT, kann auch eine Uhrzeit enthalten. |
+PID-8 | Geschlecht | IS | Code für das Geschlecht. Welche Werte gelten, regelt das Schnittstellenprofil. |
+PID-9 | Alias-Name | XPN | Weitere Namen des Patienten. |
+PID-10 | Rasse | CE | Im deutschen Umfeld meist leer. |
+PID-11 | Adresse | XAD | Straße ^ Zusatz ^ Ort ^ Region ^ PLZ ^ Land ^ Adressart. |
+PID-12 | Landkreis (veraltet) | IS | Veraltetes Feld. |
+PID-13 | Telefon privat | XTN | Telefon- oder E-Mail-Angaben für den privaten Bereich. |
+PID-14 | Telefon geschäftlich | XTN | Telefon- oder E-Mail-Angaben für den geschäftlichen Bereich. |
+PID-15 | Sprache | CE | Bevorzugte Sprache des Patienten. |
+PID-16 | Familienstand | CE | Familienstand als Code. |
+PID-17 | Religion | CE | Religionszugehörigkeit als Code. |
+PID-18 | Patientenkonto-Nummer | CX | Kennung des Abrechnungskontos oder Falls, je nach Konvention. |
+PID-23 | Geburtsort | ST | Geburtsort als Freitext. |
+PID-24 | Mehrlingsgeburt | ID | Y oder N. |
+PID-25 | Geburtenfolge | NM | Position bei Mehrlingsgeburten. |
+PID-26 | Staatsangehörigkeit | CE | Staatsangehörigkeit als Code. |
+PID-29 | Todeszeitpunkt | DTM | Zeitpunkt des Todes, falls bekannt. |
+PID-30 | Todesmerkmal | ID | Y, wenn die Person verstorben ist. |
+PID-33 | Letzte Aktualisierung | DTM | Wann die Patientendaten zuletzt geändert wurden. |
+
+Stolpersteine
+
+PID-3 Kennungen: Das Feld ist wiederholbar (~) und vom Typ CX: Kennung (.1), vergebende Stelle (.4), Art (.5, zum Beispiel MR). Eine Kennung ohne Stelle ist nicht eindeutig. Ältere Nachrichten nutzen daneben PID-2 und PID-4, prüfen Sie, wo Ihr Absender die Kennung ablegt.
+PID-5 Name: Typ XPN: Nachname, Vorname, weitere Vornamen, Suffix, Präfix, Titel, Namensart (L Rechtsname, A Alias). Mehrere Namen stehen als Wiederholungen. In neueren Versionen ist die erste Komponente selbst aus Subkomponenten (&) aufgebaut, zum Beispiel bei Namenszusätzen.
+PID-7 Geburtsdatum: Format JJJJMMTT, also 19710305. Das Datum 05.03.1971 ist kein gültiger HL7-Zeitstempel, der Viewer meldet es.
+PID-8 Geschlecht: Üblich sind M, F, O, U sowie A und N. Nationale Profile und lokale Tabellen können andere oder zusätzliche Werte vorsehen.
+PID-11 Adresse: Typ XAD: Straße, Zusatz, Ort, Bundesland, PLZ, Land, Art (H Wohnadresse). Mehrere Adressen sind Wiederholungen.
+PID-13 Telefon: Typ XTN. Im Beispiel eine Telefonnummer in den Komponenten 5 bis 7 (Land, Vorwahl, Nummer) und eine E-Mail in Komponente 4. Die Belegung der XTN-Komponenten unterscheidet sich zwischen den Versionen, besonders vor 2.5.
+Umgang mit Daten: PID gehört zu den sensibelsten Segmenten. Der Viewer verarbeitet alles lokal, aber Sie sollten ohnehin keine Echtdaten in Testwerkzeuge kopieren.
+
+Kurz beantwortet
+
+Welche Felder hat das PID-Segment?
+Die wichtigsten sind PID-3 (Kennungen), PID-5 (Name), PID-7 (Geburtsdatum), PID-8 (Geschlecht), PID-11 (Adresse) und PID-13 (Telefon). Der Viewer listet sie auf dieser Seite mit Datentyp und Erklärung.
+
+Wie steht eine Patientennummer im PID?
+In PID-3. Die erste Komponente ist die Nummer, die vierte die vergebende Stelle, die fünfte die Art der Kennung, zum Beispiel MR für eine Akten- bzw. Patientennummer.
+
+Alle Segmente · Nachrichtentypen
+
+Weitere Werkzeuge
+Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
+LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
+GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
+DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
+CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
+
+---
+
+URL: https://freimoser.github.io/hl7v2-viewer/hl7-segmente/pv1/
+
+# PV1 – Patientenbesuch: Felder und Stolperstellen
+
+PV1 beschreibt den Aufenthalt oder Besuch eines Patienten: Patientenklasse, Aufenthaltsort, behandelnde Ärzte, Besuchsnummer und Zeitpunkte. Es steht in ADT-Nachrichten üblicherweise direkt hinter PID.
+
+Beispielzeile
+
+PV1|1|I|CHI^201^2^KLINIKUM_TEST|R|||1001^Musterarzt^Martin^^^Dr.|1002^Beispielärztin^Eva^^^Dr.||CHI|||||||1001^Musterarzt^Martin^^^Dr.||TEST-F-7781|||||||||||||||||||||||||20261027080000
+
+Im Viewer öffnen Beispiel: Stationäre Aufnahme (ADT^A01), frei erfunden
+
+Felder, die der Viewer beschreibt
+
+Die Tabelle nennt die Felder dieses Segments aus der Feldliste des Viewers. Sie ist eine eigene Auswahl in eigenen Worten und nicht vollständig. Maßgeblich ist die Spezifikation der verwendeten Version und das Profil der beteiligten Systeme. Fett gesetzte Felder sind die, die am häufigsten gebraucht werden.
+
+Feld | Name | Typ | Erklärung |
+PV1-1 | Laufende Nummer | SI | Zählt PV1-Segmente, meist 1. |
+PV1-2 | Patientenklasse | IS | Stationär, ambulant, Notfall und so weiter. Die Codes legt das Profil fest. |
+PV1-3 | Aufenthaltsort | PL | Station ^ Zimmer ^ Bett ^ Einrichtung ^ … |
+PV1-4 | Aufnahmeart | IS | Art der Aufnahme. |
+PV1-5 | Voranmeldenummer | CX | Kennung der Voranmeldung. |
+PV1-6 | Bisheriger Aufenthaltsort | PL | Ort vor einer Verlegung. |
+PV1-7 | Behandelnder Arzt | XCN | Kennung ^ Familienname ^ Vorname ^ … |
+PV1-8 | Überweisender Arzt | XCN | Wer den Patienten überwiesen hat. |
+PV1-9 | Beratender Arzt | XCN | Mitbehandelnde oder konsiliarisch tätige Ärzte. |
+PV1-10 | Fachabteilung | IS | Fachrichtung oder Dienst, z. B. Innere Medizin. |
+PV1-11 | Vorübergehender Ort | PL | Zwischenzeitlicher Aufenthaltsort. |
+PV1-14 | Aufnahmequelle | IS | Woher der Patient kam. |
+PV1-17 | Aufnehmender Arzt | XCN | Arzt, der die Aufnahme veranlasst hat. |
+PV1-18 | Patiententyp | IS | Weitere Einordnung des Patienten. |
+PV1-19 | Fallnummer | CX | Kennung dieses Aufenthalts oder Falls. |
+PV1-20 | Finanzklasse | FC | Kostenträgerklasse. |
+PV1-36 | Entlassungsart | IS | Wohin oder wie der Patient entlassen wurde. |
+PV1-37 | Entlassen nach | DLD | Zielort der Entlassung. |
+PV1-44 | Aufnahmezeitpunkt | DTM | Beginn des Aufenthalts. |
+PV1-45 | Entlassungszeitpunkt | DTM | Ende des Aufenthalts. |
+
+Stolpersteine
+
+PV1-2 Patientenklasse: I stationär, O ambulant, E Notfall, P Voranmeldung. Weitere Codes und lokale Werte sind möglich.
+PV1-3 Aufenthaltsort: Typ PL: Station ^ Zimmer ^ Bett ^ Einrichtung. Was in den Komponenten steht, ist lokal vereinbart.
+Ärzte: PV1-7 behandelnder, PV1-8 überweisender, PV1-9 beratender, PV1-17 aufnehmender Arzt. Typ XCN: Kennung, Nachname, Vorname, weitere Vornamen, Suffix, Titel (zum Beispiel Dr. in .6).
+PV1-19 Besuchsnummer: Die Fall- oder Besuchsnummer. Sie verbindet Nachrichten desselben Aufenthalts. Prüfen Sie, welche Kennung Ihr System als Fallnummer führt.
+Zeiten: PV1-44 ist der Aufnahmezeitpunkt, PV1-45 der Entlassungszeitpunkt. Bei einer Aufnahme ist PV1-45 leer, bei der Entlassung ist es gefüllt.
+Nicht überall gefüllt: In ORU- und ORM-Nachrichten steht oft nur eine Teilmenge der PV1-Felder (Aufenthaltsort, Besuchsnummer). Welche Felder Ihr System erwartet, steht im Schnittstellenprofil.
+
+Kurz beantwortet
+
+Was bedeutet PV1-2?
+PV1-2 ist die Patientenklasse: I für stationär, O für ambulant, E für Notfall, P für Voranmeldung. Weitere Werte sind möglich.
+
+Wo steht die Fallnummer?
+In PV1-19 (Besuchsnummer). Manche Systeme legen sie zusätzlich in PID-3 mit der Kennungsart VN ab.
+
+Alle Segmente · Nachrichtentypen
+
+Weitere Werkzeuge
+Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
+LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
+GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
+DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
+CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
+
+---
+
+URL: https://freimoser.github.io/hl7v2-viewer/hl7-segmente/obr/
+
+# OBR – Untersuchung: Felder und Stolperstellen
+
+OBR beschreibt eine Untersuchung: welche, für welchen Auftrag, wann und mit welchem Status. In ORM-Nachrichten steht es im Auftrag, in ORU-Nachrichten kündigt es die Ergebnisse (OBX) an, die darauf folgen.
+
+Beispielzeile
+
+OBR|1|PL-5501^TESTKIS|FL-9901^TESTLIS|ELYT^Elektrolyte (Testpanel)^LOKAL|||20261027090000|||||||||||||||20261027113000|||F
+
+Im Viewer öffnen Beispiel: Laborbefund (ORU^R01), frei erfunden
+
+Felder, die der Viewer beschreibt
+
+Die Tabelle nennt die Felder dieses Segments aus der Feldliste des Viewers. Sie ist eine eigene Auswahl in eigenen Worten und nicht vollständig. Maßgeblich ist die Spezifikation der verwendeten Version und das Profil der beteiligten Systeme. Fett gesetzte Felder sind die, die am häufigsten gebraucht werden.
+
+Feld | Name | Typ | Erklärung |
+OBR-1 | Laufende Nummer | SI | Zählt OBR-Segmente. |
+OBR-2 | Auftragsnummer Auftraggeber | EI | Nummer des anfordernden Systems (Placer). |
+OBR-3 | Auftragsnummer Ausführender | EI | Nummer des ausführenden Systems, etwa des Labors (Filler). |
+OBR-4 | Untersuchung | CE | Code ^ Text ^ Codesystem der angeforderten Leistung. |
+OBR-7 | Entnahme-/Beobachtungszeitpunkt | DTM | Wann die Probe genommen oder die Beobachtung gemacht wurde. |
+OBR-8 | Ende des Beobachtungszeitraums | DTM | Bei Sammelproben das Ende der Sammlung. |
+OBR-9 | Entnahmevolumen | CQ | Menge ^ Einheit. |
+OBR-10 | Entnehmende Person | XCN | Wer die Probe genommen hat. |
+OBR-11 | Aktionscode | ID | Behandlung der Probe laut Labor. |
+OBR-12 | Gefahrenhinweis | CE | Hinweis auf Infektions- oder andere Gefahr. |
+OBR-13 | Klinische Information | ST | Relevante Angaben für die Auswertung. |
+OBR-14 | Eingang im Labor | DTM | Wann die Probe eingegangen ist. |
+OBR-15 | Probenart | SPS | Material und Herkunft der Probe. |
+OBR-16 | Anfordernder Arzt | XCN | Wer die Untersuchung angefordert hat. |
+OBR-17 | Rückruf-Telefon | XTN | Telefon für Rückfragen. |
+OBR-22 | Berichtszeitpunkt | DTM | Wann der Befund oder sein Status zuletzt geändert wurde. |
+OBR-24 | Diagnostischer Bereich | ID | Bereich wie Labor, Radiologie oder Pathologie. |
+OBR-25 | Ergebnisstatus | ID | Stand des Befunds. |
+OBR-32 | Hauptbefundender | NDL | Verantwortliche Person für das Ergebnis. |
+
+Stolpersteine
+
+OBR-2 und OBR-3: Auftragsnummer des Anfordernden und des Ausführenden, jeweils Nummer ^ Namensraum. Im Auftrag ist die zweite meist leer, im Befund sind beide gefüllt.
+OBR-4 Leistung: Code ^ Text ^ Codesystem der angeforderten bzw. durchgeführten Untersuchung. Ein lokaler Code (im Beispiel LOKAL) versteht nur das Absendersystem.
+OBR-7 und OBR-22: OBR-7 ist der Zeitpunkt der Entnahme bzw. Beobachtung, OBR-22 der Zeitpunkt des Berichts bzw. der letzten Statusänderung. Das sind zwei verschiedene Zeiten.
+OBR-25 Ergebnisstatus: F endgültig, P vorläufig, C korrigiert. Der Status der einzelnen Werte steht in OBX-11.
+OBR-16 und ORC-12: Beide können den anfordernden Arzt tragen. Sie sollten übereinstimmen.
+Gruppe: Alle OBX bis zum nächsten OBR gehören zu diesem OBR.
+
+Kurz beantwortet
+
+Wofür steht OBR?
+OBR ist das Segment „Observation Request“. Es beschreibt die Untersuchung hinter einem Auftrag oder Befund. Die einzelnen Ergebnisse stehen in folgenden OBX-Segmenten.
+
+Was ist der Unterschied zwischen OBR-2 und OBR-3?
+OBR-2 trägt die Auftragsnummer des Anfordernden (Placer), OBR-3 die des Ausführenden (Filler), zum Beispiel des Labors.
+
+Alle Segmente · Nachrichtentypen
+
+Weitere Werkzeuge
+Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
+LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
+GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
+DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
+CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
+
+---
+
+URL: https://freimoser.github.io/hl7v2-viewer/hl7-segmente/obx/
+
+# OBX – Beobachtung und Messwert: Felder und Stolperstellen
+
+OBX liefert einen einzelnen Wert eines Befunds, zum Beispiel ein Laborergebnis, mit Kennung, Wert, Einheit, Referenzbereich, Kennzeichen und Status. Ein Befund besteht meist aus mehreren OBX-Zeilen unter einem OBR.
+
+Beispielzeile
+
+OBX|1|NM|NA^Natrium^LOKAL||139|mmol/L|135-145|N|||F|||20261027090000
+OBX|2|NM|K^Kalium^LOKAL||5.9|mmol/L|3.5-5.1|H|||F|||20261027090000
+OBX|3|NM|CL^Chlorid^LOKAL||101|mmol/L|98-107|N|||F|||20261027090000
+OBX|4|ST|HEM^Hämolyse^LOKAL||nicht erkennbar||||||F
+
+Im Viewer öffnen Beispiel: Laborbefund (ORU^R01), frei erfunden
+
+Felder, die der Viewer beschreibt
+
+Die Tabelle nennt die Felder dieses Segments aus der Feldliste des Viewers. Sie ist eine eigene Auswahl in eigenen Worten und nicht vollständig. Maßgeblich ist die Spezifikation der verwendeten Version und das Profil der beteiligten Systeme. Fett gesetzte Felder sind die, die am häufigsten gebraucht werden.
+
+Feld | Name | Typ | Erklärung |
+OBX-1 | Laufende Nummer | SI | Zählt OBX-Segmente innerhalb der Gruppe. |
+OBX-2 | Werttyp | ID | Datentyp von OBX-5. |
+OBX-3 | Beobachtungskennung | CE | Code ^ Text ^ Codesystem: was gemessen wurde. |
+OBX-4 | Unterkennung | ST | Unterscheidet mehrere gleiche Beobachtungen, z. B. mehrere Messungen. |
+OBX-5 | Wert | var | Der Messwert oder Text. Aufbau hängt von OBX-2 ab. |
+OBX-6 | Einheit | CE | Einheit des Wertes, z. B. mmol/L. |
+OBX-7 | Referenzbereich | ST | Üblicher Bereich, z. B. 135-145. |
+OBX-8 | Abnormal-Kennzeichen | IS | Einordnung des Wertes gegenüber dem Referenzbereich. |
+OBX-9 | Wahrscheinlichkeit | NM | Wahrscheinlichkeit für den Wert, selten genutzt. |
+OBX-10 | Art des Abnormal-Tests | ID | Wie das Abnormal-Kennzeichen entstand. |
+OBX-11 | Ergebnisstatus | ID | Stand dieses Einzelwertes. |
+OBX-12 | Letzte Änderung Normwerte | DTM | Wann der Referenzbereich zuletzt geändert wurde. |
+OBX-14 | Beobachtungszeitpunkt | DTM | Wann der Wert gemessen wurde. |
+OBX-15 | Erzeugende Stelle | CE | Einrichtung oder Labor, das den Wert erzeugt hat. |
+OBX-16 | Verantwortlicher Beobachter | XCN | Wer den Wert verantwortet. |
+OBX-17 | Methode | CE | Verwendetes Messverfahren. |
+OBX-18 | Geräte-ID | EI | Gerät, das den Wert erzeugt hat. |
+OBX-19 | Analysezeitpunkt | DTM | Wann der Wert analysiert wurde. |
+
+Stolpersteine
+
+OBX-2 Werttyp: Er bestimmt, wie OBX-5 zu lesen ist: NM Zahl, ST Text, TX Freitext, CWE codierter Wert, DT/TS Datum bzw. Zeit, ED eingebettetes Dokument.
+OBX-3 Kennung: Code ^ Text ^ Codesystem. Ohne Angabe des Codesystems (zum Beispiel LN für LOINC) ist ein Code nur im Absendersystem eindeutig.
+OBX-4: Die Unter-ID gruppiert zusammengehörige OBX-Zeilen, etwa bei mehrteiligen Ergebnissen.
+OBX-5 Wert: Bei NM nur Ziffern, Vorzeichen und Dezimalpunkt. Ein Dezimalkomma (5,9) ist ein häufiger Fehler. Das Feld darf mehrere Werte mit ~ tragen.
+OBX-6 bis OBX-8: Einheit, Referenzbereich und Kennzeichen (N normal, H hoch, L niedrig, A auffällig).
+OBX-11 Status: F endgültig, P vorläufig, C korrigiert, X nicht durchführbar. Ein Wert ohne Status ist für Empfänger schwer zu deuten.
+Freitext: Ein | im Text beendet das Feld, ein & teilt die Komponente. Beides muss maskiert sein (\F\, \T\).
+NTE: Ein Kommentar-Segment steht direkt hinter dem OBX, auf das es sich bezieht.
+
+Kurz beantwortet
+
+Was bedeutet OBX in HL7?
+OBX („Observation/Result“) ist das Segment für einen einzelnen Ergebniswert in Befundnachrichten wie ORU^R01. Es enthält Kennung, Wert, Einheit, Kennzeichen und Status.
+
+Warum zeigt der Viewer eine Warnung bei OBX-5?
+Wenn OBX-2 den Typ NM nennt, der Wert aber keine reine Zahl ist. Meist ist ein Dezimalkomma statt eines Punkts die Ursache.
+
+Alle Segmente · Nachrichtentypen
+
+Weitere Werkzeuge
+Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
+LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
+GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
+DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
+CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
+
+---
+
+URL: https://freimoser.github.io/hl7v2-viewer/hl7-fehler/
+
+# Häufige Fehler in HL7-v2-Nachrichten
+
+Die meisten Probleme mit HL7-v2-Nachrichten sind Formatfehler: falsche Zeilenenden, Datumsformate, Dezimalkomma, Zeichensatz oder unmaskierte Trennzeichen. Diese Seite nennt zu jedem Fehler Symptom, Ursache und Lösung. Die Meldungen sind die Originaltexte, die der Viewer ausgibt.
+
+Testfall mit Fehlern im Viewer öffnen
+
+Segmente nicht getrennt oder alles in einer Zeile
+
+Symptom
+Die Nachricht erscheint als eine lange Zeile, oder Zeilenenden sehen anders aus als erwartet.
+Ursache
+Der Standard trennt Segmente mit einem Wagenrücklauf (CR). Mails, Logs und Editoren machen daraus Zeilenvorschub (LF) oder CRLF, ersetzen den Umbruch durch Leerzeichen oder zeigen ihn als Text \r.
+Lösung
+Der Viewer liest CR, LF und CRLF, erkennt wörtliches \r/\n und Leerzeichen vor einer Segmentkennung und sagt, was er angenommen hat. „Zeilenumbrüche reparieren“ liefert die Fassung mit CR. Prüfen Sie bei Leerzeichen-Trennung das Ergebnis: Es ist eine Vermutung.
+
+Meldung des Viewers:
+Die Segmente waren mit Zeilenvorschub (\n) statt mit Wagenrücklauf (\r) getrennt, wie es beim Kopieren aus Mails und Logs üblich ist. Der Viewer liest beides; für Systeme, die \r erwarten, bietet die reparierte Fassung den korrekten Umbruch.Die Nachricht stand in einer Zeile; 2 Segmente wurden an Leerzeichen vor einer Segmentkennung getrennt. Das ist eine Vermutung: Steht in einem Textfeld selbst „ABC|“, wäre die Trennung falsch.Zwischen Segmenten standen 1 wörtliche Zeichenfolgen „\r“ oder „\n“ (Text statt Zeilenumbruch). Sie wurden in echte Segmenttrennungen umgewandelt.
+
+Zeitstempel oder Text vor MSH
+
+Symptom
+Die Nachricht stammt aus einem Log und beginnt mit Datum, Uhrzeit oder Stufe („INFO“).
+Ursache
+Das ist Teil der Logzeile, nicht der Nachricht. Eine Nachricht muss mit MSH beginnen.
+Lösung
+Der Viewer ignoriert Text vor „MSH“ und meldet es. Sauberer ist es, die Nachricht ohne Präfix aus dem Log zu kopieren.
+
+Meldung des Viewers:
+Zeile 1: Text vor „MSH“ ("2026-10-27 08:00:01 INFO Received: ") wurde ignoriert, vermutlich ein Log-Präfix.
+
+Steuerzeichen am Anfang und Ende (MLLP)
+
+Symptom
+Vor „MSH“ und am Ende stehen unsichtbare Zeichen, oder eine Datei beginnt mit einem seltsamen Zeichen.
+Ursache
+Beim Versand über TCP wird die Nachricht mit den Zeichen Hex 0B (Start) und Hex 1C 0D (Ende) eingerahmt (MLLP). Mitgeschnittene Daten enthalten sie noch.
+Lösung
+Der Viewer entfernt den Rahmen und meldet es. Ein Byte-Order-Mark am Dateianfang wird ebenfalls ignoriert.
+
+Meldung des Viewers:
+MLLP-Rahmen erkannt und entfernt (1 Startzeichen, 1 Endzeichen). Das sind Übertragungszeichen und gehören nicht zur Nachricht.
+
+Datum im falschen Format
+
+Symptom
+Geburtsdatum oder Zeitstempel sehen aus wie im Alltag: 05.03.1971 oder 2026-10-27.
+Ursache
+HL7 v2 erwartet Ziffern ohne Trennzeichen: JJJJMMTT oder länger bis JJJJMMTThhmmss, optional mit Zeitzone. Exportfunktionen von Fremdsystemen schreiben oft das lokale oder das ISO-Format.
+Lösung
+Der Viewer prüft die bekannten Datumsfelder und nennt das erkannte Format. Korrigiert werden muss im erzeugenden System.
+
+Meldung des Viewers:
+PID-7 (Geburtsdatum) „05.03.1971“ sieht nach deutschem Format (TT.MM.JJJJ) aus. HL7 v2 erwartet JJJJMMTT.
+
+Dezimalkomma statt Punkt
+
+Symptom
+Ein Messwert wie 5,9 wird vom Empfänger nicht als Zahl gelesen.
+Ursache
+Bei Werttyp NM in OBX-2 sind nur Ziffern, Vorzeichen und Dezimalpunkt erlaubt. Deutsche Ausgabeformate setzen oft das Komma.
+Lösung
+Der Viewer warnt, wenn OBX-5 nicht zu NM passt. Ändern Sie das Format im Absender oder den Werttyp auf ST, falls Text gemeint ist.
+
+Meldung des Viewers:
+OBX-5 „5,9“ ist als Zahl (NM) gekennzeichnet, aber keine reine Zahl. Ein Dezimalkomma statt Punkt ist die häufigste Ursache.
+
+Leere Pflichtfelder und Nullwert
+
+Symptom
+Ein Empfänger lehnt die Nachricht ab oder löscht Daten, obwohl nichts gelöscht werden sollte.
+Ursache
+Leer (||) heißt „keine Angabe“, zwei Anführungszeichen ("") heißen „Wert löschen“. Das wird gern verwechselt. Dazu kommen Felder, die das Profil verlangt, aber leer sind.
+Lösung
+Der Viewer meldet leere Felder, die üblicherweise gefüllt sind, und kennzeichnet Nullwerte. Ob ein Feld in Ihrem Fall Pflicht ist, entscheidet das Schnittstellenprofil.
+
+Meldung des Viewers:
+PID-3 (Patientenkennungen) ist leer. Dieses Feld ist normalerweise ein Pflichtfeld.PID-29 enthält den Nullwert "" (zwei Anführungszeichen). Das bedeutet „Wert löschen“ und ist etwas anderes als ein leeres Feld.
+
+Kaputte Umlaute
+
+Symptom
+Aus „ä“ wird „Ã¤“ oder ein Ersatzzeichen (�).
+Ursache
+Die Bytes wurden mit einem anderen Zeichensatz gelesen, als sie geschrieben wurden, typischerweise UTF-8 als ISO-8859-1 oder umgekehrt. MSH-18 nennt den Zeichensatz, die tatsächliche Kodierung muss dazu passen.
+Lösung
+Beim Öffnen einer Datei können Sie im Viewer den Zeichensatz wählen. Er meldet die typischen Muster.
+
+Meldung des Viewers:
+Zeichenfolgen wie „Ã¤“ deuten darauf hin, dass UTF-8-Text als ISO-8859-1/Windows-1252 gelesen wurde. Prüfen Sie den Zeichensatz.
+
+Trennzeichen im Freitext
+
+Symptom
+Nach einem Textfeld sind Felder verschoben, oder ein Name taucht in Subkomponenten auf.
+Ursache
+Ein |, ^ oder & im Text wird als Trennzeichen gelesen, wenn es nicht maskiert ist: \F\, \S\, \T\.
+Lösung
+Maskieren im erzeugenden System. Der Viewer erkennt dieses Problem nicht von selbst, weil unmaskierte Zeichen gültige Syntax sind. Prüfen Sie im Viewer, ob Felder an unerwarteten Stellen enden.
+
+Falsche Zählung bei MSH
+
+Symptom
+Der Nachrichtentyp oder die Version „stimmen nicht“, wenn Felder per Skript abgezählt werden.
+Ursache
+MSH-1 ist das Trennzeichen selbst. Beim Zerlegen an | steht MSH-2 an erster Stelle, alles ist um eins verschoben.
+Lösung
+Zählen Sie bei MSH anders als bei anderen Segmenten oder verwenden Sie eine Bibliothek, die das kennt. Der Viewer zählt korrekt.
+
+Erwartete Segmente fehlen
+
+Symptom
+Eine ORU-Nachricht ohne OBX oder eine ADT ohne EVN.
+Ursache
+Der Nachrichtentyp in MSH-9 legt fest, welche Segmente üblich oder erforderlich sind. Ein Export kann sie weglassen.
+Lösung
+Der Viewer weist auf fehlende, üblicherweise erwartete Segmente hin. Er prüft aber nicht die genaue Reihenfolge und nicht die Spezifikation einer Version.
+
+Meldung des Viewers:
+Segment EVN fehlt. Bei ADT-Nachrichten wird es üblicherweise erwartet.
+
+Ungewöhnliche Trennzeichen
+
+Symptom
+Die Felder werden von einem Semikolon oder Tabulator getrennt.
+Ursache
+Die Trennzeichen stehen in MSH-1 und MSH-2 und dürfen vom Üblichen abweichen. Ein Empfänger, der | fest voraussetzt, scheitert.
+Lösung
+Der Viewer liest die Zeichen aus dem MSH und nennt sie.
+
+Meldung des Viewers:
+Ungewöhnliche Trennzeichen: Feld „;“, Komponente „^“, Wiederholung „~“, Escape „\“, Subkomponente „&“. Üblich sind | ^ ~ \ &.
+
+Was der Viewer nicht findet
+
+Inhaltliche Fehler, zum Beispiel ein falscher Code oder ein falscher Patient. Er kennt Ihre Daten nicht.
+
+Verstöße gegen ein Schnittstellenprofil oder gegen die Regeln einer HL7-Version.
+
+Unmaskierte Trennzeichen im Freitext, weil sie gültige Syntax sind.
+
+Fehler in Z-Segmenten und in Feldern, die die eigene Feldliste nicht kennt.
+
+Kurz beantwortet
+
+Warum meldet der Viewer eine Warnung, obwohl meine Nachricht funktioniert?
+Die Hinweise vergleichen mit üblicher Praxis, nicht mit Ihrem Schnittstellenprofil. Ein Feld, das im Standard oft gefüllt ist, kann bei Ihnen leer bleiben dürfen. Die Warnung ist ein Hinweis zum Nachsehen, kein Urteil.
+
+Prüft der Viewer, ob eine Nachricht HL7-konform ist?
+Nein. Er liest und zeigt an und weist auf auffällige Stellen hin. Er prüft nicht gegen die Spezifikation einer Version und nicht gegen ein Profil. Eine bestandene Ansicht ist keine Konformitätsaussage.
+
+Wie finde ich einen Fehler in einer Nachricht?
+Laden Sie sie in den Viewer und lesen Sie zuerst die Hinweise. Danach prüfen Sie MSH-9 und MSH-12, die Zeitstempel und die Felder, die zum Segment passen. Das Testbeispiel mit Fehlern zeigt die Meldungen im Viewer.
+
+Aufbau einer Nachricht · Segmente · Nachrichtentypen
+
+Weitere Werkzeuge
+Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
+LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
+GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
+DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
+CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
+
+---
+
+URL: https://freimoser.github.io/hl7v2-viewer/quellen/
+
+# Quellen und Lücken
+
+Hier steht, worauf sich die Aussagen auf dieser Website stützen und was nicht belegt ist. Abrufdatum: 27.10.2026.
+
+Geöffnete Dokumente
+
+Thema | Dokument | Genutzt für |
+
+Marken und Lizenz | FHIR-Spezifikation: Lizenzseite (License)
+HL7 International | Die Seite nennt HL7®, HEALTH LEVEL SEVEN® und FHIR® als Marken von Health Level Seven International. Grundlage für den Marken-Hinweis und die ausschließlich beschreibende Verwendung der Namen. |
+
+Aufbau | „HL7“ (englische Wikipedia)
+Wikipedia-Autoren (CC BY-SA) | Version 2 (auch „Pipehat“) unterstützt Verwaltung, Aufträge und Ergebnisse im Krankenhaus; Segmente werden per Pipe in Felder, Felder in Komponenten geteilt; OBR ist in ORM- und ORU-Nachrichten ein erforderliches Segment. |
+
+Praxis | „HL7“ (deutsche Wikipedia)
+Wikipedia-Autoren (CC BY-SA) | Version 2 ist textbasiert, nicht „Plug and Play“: Transportschichten wie MLLP und Parser sind verfügbar, die Verarbeitung von Nachrichten, Segmenten und Feldern ist applikationsspezifisch. |
+
+Transport | „Minimal Lower Layer Protocol“ (englische Wikipedia)
+Wikipedia-Autoren (CC BY-SA) | MLLP überträgt Nachrichten über TCP, ergänzt Anfangs- und Endzeichen, weil TCP ein Bytestrom ist, und bringt keine eigene Verschlüsselung mit. |
+
+Organisation | HL7 Deutschland: Startseite
+HL7 Deutschland e. V. | Beleg, dass HL7 v2.x, CDA, V3 und FHIR zur HL7-Standardfamilie gehören (Verweis auf die deutsche Nutzerorganisation). |
+
+Eigene Arbeit
+
+Feldlisten, Segmentnamen, Beispielnachrichten, Prüfhinweise und Erklärtexte sind eigene Arbeit des Autors auf Grundlage seiner Erfahrung mit HL7-v2-Nachrichten. Sie sind kein Auszug aus einer HL7-Spezifikation.
+Alle Beispielnachrichten sind frei erfunden. Namen, Nummern, Orte und Zeitpunkte sind Platzhalter.
+
+Lücken
+
+Was nicht geprüft werden konnte, ist hier offen benannt statt geraten.
+
+Der Volltext der HL7-v2-Spezifikation (hl7.org) war beim Abruf nicht erreichbar und ist daher nicht belegt. Segmentaufbau, „üblich erwartete“ Segmente je Nachrichtentyp und Codetabellen sind deshalb als „üblich“ formuliert und nicht als Zitat der Spezifikation. Die Feldlisten gelten unabhängig von der Version nur als Orientierung.
+Die Steuerzeichen des MLLP-Rahmens (Hex 0B als Start, Hex 1C und 0D als Ende) sind in den geöffneten Quellen nicht ausdrücklich genannt. Sie beruhen auf Fachwissen des Autors.
+Die deutsche Wikipedia hat keinen eigenen Artikel zu MLLP; die englische Seite wird als Beleg genutzt.
+Es gibt keine offizielle Prüfsuite für diese Werkzeuge. Der Viewer ist nicht gegen eine Referenzimplementierung getestet, nur gegen eigene Tests und eigene Beispiele.
+Es gibt keine belegten Aussagen zu Marktanteilen, zur Verbreitung bestimmter Versionen oder zu anderen Anbietern. Solche Aussagen stehen deshalb nirgends auf der Seite.
+
+Marken
+
+HL7® und FHIR® sind eingetragene Marken von Health Level Seven International. Dieses Werkzeug ist ein unabhängiges Projekt und wird von HL7 International weder bereitgestellt noch empfohlen.
+
+Zum Viewer
+
+---
+
+URL: https://freimoser.github.io/hl7v2-viewer/datenschutz/
+
+# Datenschutz
+
+Ihre HL7-Nachrichten verlassen Ihr Gerät nicht. Der Viewer läuft vollständig in Ihrem Browser, es gibt keinen Server, der sie empfangen könnte.
+
+Verantwortlicher
+
+Thomas Freimoser, München / Remote. Kontakt und vollständige Angaben: Impressum.
+
+Ihre Nachrichten
+
+Text, den Sie einfügen, und Dateien, die Sie öffnen, werden nur im Arbeitsspeicher Ihres Browsers verarbeitet. Es findet keine Übertragung statt. Das erzwingt die Seite technisch: Die Content-Security-Policy der Seiten enthält connect-src 'none', der Browser blockiert damit jede Netzwerkverbindung, die ein Skript aufbauen wollte. Exporte (JSON, CSV, anonymisierter Text) erzeugt Ihr Browser lokal als Download. Prüfen können Sie das in den Entwicklerwerkzeugen Ihres Browsers im Reiter „Netzwerk“.
+
+Wenn Sie echte Patientendaten prüfen, entscheiden Sie selbst, ob das nach den Regeln Ihrer Einrichtung zulässig ist. Der Viewer bietet eine Anonymisierung an. Sie ist eine Hilfe und garantiert nicht, dass in Freitexten keine Hinweise auf Personen stehen bleiben.
+
+Hosting
+
+Die Seite wird über GitHub Pages (GitHub Inc.) ausgeliefert. Beim Aufruf verarbeitet GitHub technisch notwendige Verbindungsdaten wie IP-Adresse, Zeitpunkt und angeforderte Datei, um die Seite bereitzustellen und abzusichern (Art. 6 Abs. 1 lit. f DSGVO). Wir haben darauf keinen Einfluss und erhalten diese Daten nicht. Details: Datenschutzerklärung von GitHub.
+
+Cookies und Speicher
+
+Die Seite setzt keine Cookies und nutzt weder Local Storage noch Session Storage. Ein Service Worker legt ausschließlich die Dateien dieser Website im Cache Ihres Browsers ab, damit der Viewer auch offline startet. Nachrichten werden dort nicht gespeichert. Sie löschen diesen Cache in den Website-Einstellungen Ihres Browsers.
+
+Keine externen Dienste
+
+Es gibt keine Reichweitenmessung, keine Schriften, Skripte oder Bilder von Dritten und keine Einbindung sozialer Netzwerke. Links zu anderen Seiten (zum Beispiel zur Impressumsseite oder zu den Quellen) laden erst beim Anklicken.
+
+Search Console und Bing Webmaster Tools
+
+Die Seite enthält Bestätigungs-Meta-Tags für diese Dienste. Dabei werden keine Daten von Besucherinnen und Besuchern übertragen.
+
+Ihre Rechte
+
+Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch sowie das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren. Da wir keine personenbezogenen Daten von Ihnen speichern, laufen diese Rechte gegenüber uns meist ins Leere; gegenüber dem Hoster gelten sie nach dessen Datenschutzerklärung.
+
+Zum Viewer

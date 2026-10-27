@@ -1,0 +1,4 @@
+MSH|^~\&|TESTKIS|KLINIKUM_TEST|TESTLIS|KLINIKUM_TEST|20261027||ADT^A08|MSG-X-0008|P|2.5.1|||AL|NE||UNICODE UTF-8
+PID|1||||Beispielmann^Bernd||05.03.1971|M|||||||||||||||||||||""
+PV1|1||CHI^201^2|||||||||||||||||||||||||||||||||||||||||2026-10-27
+OBX|1|NM|K^Kalium^LOKAL||5,9|mmol/L

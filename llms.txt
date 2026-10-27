@@ -1,0 +1,31 @@
+# HL7 Viewer & Parser (v2) online – Nachricht lesen
+
+> HL7-v2-Nachrichten (ADT, ORU, ORM) einfügen und Segmente, Felder und Komponenten lesbar anzeigen. Kostenlos, lokal im Browser, ohne Upload.
+
+HL7® und FHIR® sind eingetragene Marken von Health Level Seven International. Dieses Werkzeug ist ein unabhängiges Projekt von Thomas Freimoser (München / Remote) und wird von HL7 International weder bereitgestellt noch empfohlen. Nur zur Ansicht, kein Medizinprodukt, kein Konformitätsprüfer.
+
+## Seiten
+
+- [HL7-v2-Nachrichten lesen: Viewer und Parser im Browser](https://freimoser.github.io/hl7v2-viewer/): HL7-v2-Nachrichten (ADT, ORU, ORM) einfügen und Segmente, Felder und Komponenten lesbar anzeigen. Kostenlos, lokal im Browser, ohne Upload.
+- [Aufbau einer HL7-v2-Nachricht: Segmente, Felder, Komponenten](https://freimoser.github.io/hl7v2-viewer/hl7-nachricht-aufbau/): So ist eine HL7-v2-Nachricht aufgebaut: Segmente, Felder, Komponenten, Trennzeichen, Escape-Sequenzen und Datentypen mit kommentierter Beispielzeile.
+- [HL7-Nachrichtentypen im Überblick](https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/): HL7-v2-Nachrichtentypen im Überblick: ADT, ORM, ORU, MDM, SIU, DFT und ACK mit Auslöseereignissen wie A01, A08, R01 und O01, je mit Beispiel.
+- [HL7 ADT^A01: Aufnahme-Nachricht mit Beispiel](https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/adt-a01/): ADT^A01 meldet eine stationäre Aufnahme. Beispielnachricht mit MSH, EVN, PID, PV1, Feld für Feld erklärt, plus typische Stolperstellen.
+- [HL7 ADT^A08: Änderung von Patientendaten mit Beispiel](https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/adt-a08/): ADT^A08 meldet geänderte Patienten- oder Aufenthaltsdaten. Beispiel mit zwei Namen, Escape-Sequenz und Z-Segment, Feld für Feld erklärt.
+- [HL7 ORU^R01: Laborbefund-Nachricht mit Beispiel](https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/oru-r01/): ORU^R01 überträgt Ergebnisse, meist Laborbefunde. Beispiel mit OBR und OBX, OBX-2, OBX-8 und OBX-11 sowie Kommentar (NTE) Feld für Feld erklärt.
+- [HL7 ORM^O01: Auftragsnachricht mit Beispiel](https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/orm-o01/): ORM^O01 überträgt einen Auftrag, etwa eine Laboranforderung. Beispiel mit ORC und OBR, Steuercode ORC-1 und Auftragsnummern Feld für Feld erklärt.
+- [HL7-v2-Segmente erklärt](https://freimoser.github.io/hl7v2-viewer/hl7-segmente/): Die wichtigsten HL7-v2-Segmente MSH, PID, PV1, OBR und OBX: Aufgabe, wichtige Felder und typische Stolperstellen, mit Beispiel zum Öffnen im Viewer.
+- [MSH – der Nachrichtenkopf: Felder und Stolperstellen](https://freimoser.github.io/hl7v2-viewer/hl7-segmente/msh/): Das MSH-Segment steht am Anfang jeder HL7-v2-Nachricht: Trennzeichen, Absender, Nachrichtentyp MSH-9, Kontroll-ID MSH-10, Version MSH-12 und Zeichensatz.
+- [PID – Patientenidentifikation: Felder und Stolperstellen](https://freimoser.github.io/hl7v2-viewer/hl7-segmente/pid/): Das PID-Segment trägt die Patientenstammdaten einer HL7-v2-Nachricht: Kennungen PID-3, Name PID-5, Geburtsdatum, Geschlecht, Adresse und Telefon.
+- [PV1 – Patientenbesuch: Felder und Stolperstellen](https://freimoser.github.io/hl7v2-viewer/hl7-segmente/pv1/): Das PV1-Segment beschreibt den Aufenthalt in HL7-v2-Nachrichten: Patientenklasse PV1-2, Aufenthaltsort PV1-3, Besuchsnummer PV1-19 und Zeiten.
+- [OBR – Untersuchung: Felder und Stolperstellen](https://freimoser.github.io/hl7v2-viewer/hl7-segmente/obr/): Das OBR-Segment beschreibt in HL7-v2-Aufträgen und -Befunden die Untersuchung: Auftragsnummern, Leistungscode OBR-4, Zeitpunkte und Ergebnisstatus OBR-25.
+- [OBX – Beobachtung und Messwert: Felder und Stolperstellen](https://freimoser.github.io/hl7v2-viewer/hl7-segmente/obx/): Das OBX-Segment liefert in HL7-v2-Befunden einen Ergebniswert: Werttyp OBX-2, Kennung OBX-3, Wert OBX-5, Kennzeichen OBX-8 und Status OBX-11.
+- [Häufige Fehler in HL7-v2-Nachrichten](https://freimoser.github.io/hl7v2-viewer/hl7-fehler/): Häufige Fehler in HL7-v2-Nachrichten finden: Zeilenumbrüche, MLLP-Zeichen, Datumsformat, Dezimalkomma, Umlaute und MSH-Zählung, mit Viewer-Meldungen.
+- [Quellen und Lücken](https://freimoser.github.io/hl7v2-viewer/quellen/): Welche Quellen geöffnet wurden und was nicht belegt ist.
+- [Datenschutz](https://freimoser.github.io/hl7v2-viewer/datenschutz/): Keine Cookies, kein Tracking, keine Übertragung der Nachrichten.
+
+## Verwandte Tools
+
+- [LDT- und BDT-Viewer](https://freimoser.github.io/ldt-bdt-viewer/): Labordaten (LDT) und Praxisdaten (BDT) lesen
+- [GDT-Viewer](https://freimoser.github.io/gdt-viewer/): GDT-Dateien zwischen Praxissoftware und Geräten lesen
+- [DICOM-Viewer](https://freimoser.github.io/dicom-viewer/): DICOM-Bilder und Radiologie-CDs im Browser öffnen
+- [CDA-Viewer](https://freimoser.github.io/cda-viewer/): CDA-Dokumente (Arztbriefe als XML) lesen

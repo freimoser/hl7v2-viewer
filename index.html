@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<title>HL7 Viewer &amp; Parser (v2) online – Nachricht lesen</title>
+<meta name="description" content="HL7-v2-Nachrichten (ADT, ORU, ORM) einfügen und Segmente, Felder und Komponenten lesbar anzeigen. Kostenlos, lokal im Browser, ohne Upload.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="google-site-verification" content="6pYvtFCnU7UFcQFajtMSkQ7tYMy3Z_Bt7teKiT5yKNg">
+<meta name="msvalidate.01" content="E1F30DEB311AAF5458907DB431B481AC">
+<meta name="theme-color" content="#0b1117">
+<meta name="author" content="Thomas Freimoser">
+<meta name="keywords" content="HL7 Viewer online, HL7 Parser online, HL7 v2 Viewer, HL7 Nachricht lesen, HL7 message example, ADT A01, ORU R01, ORM O01, Pipe-Format">
+<link rel="canonical" href="https://freimoser.github.io/hl7v2-viewer/">
+<link rel="icon" href="/hl7v2-viewer/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/hl7v2-viewer/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/hl7v2-viewer/apple-touch-icon.png">
+<link rel="manifest" href="/hl7v2-viewer/site.webmanifest">
+<link rel="stylesheet" href="/hl7v2-viewer/assets/css/styles.css?v=5e92e137">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HL7-v2-Viewer">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="HL7 Viewer &amp; Parser (v2) online – Nachricht lesen">
+<meta property="og:description" content="HL7-v2-Nachrichten (ADT, ORU, ORM) einfügen und Segmente, Felder und Komponenten lesbar anzeigen. Kostenlos, lokal im Browser, ohne Upload.">
+<meta property="og:url" content="https://freimoser.github.io/hl7v2-viewer/">
+<meta property="og:image" content="https://freimoser.github.io/hl7v2-viewer/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="HL7-v2-Viewer: HL7-v2-Nachrichten im Browser lesen">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HL7 Viewer &amp; Parser (v2) online – Nachricht lesen">
+<meta name="twitter:description" content="HL7-v2-Nachrichten (ADT, ORU, ORM) einfügen und Segmente, Felder und Komponenten lesbar anzeigen. Kostenlos, lokal im Browser, ohne Upload.">
+<meta name="twitter:image" content="https://freimoser.github.io/hl7v2-viewer/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://freimoser.de/#thomas-freimoser","name":"Thomas Freimoser","url":"https://freimoser.de/","sameAs":["https://www.linkedin.com/in/thomas-freimoser/"]},{"@type":"WebApplication","@id":"https://freimoser.github.io/hl7v2-viewer/#app","name":"HL7-v2-Viewer","url":"https://freimoser.github.io/hl7v2-viewer/","description":"HL7-v2-Nachrichten (ADT, ORU, ORM) einfügen und Segmente, Felder und Komponenten lesbar anzeigen. Kostenlos, lokal im Browser, ohne Upload.","applicationCategory":"DeveloperApplication","operatingSystem":"Alle Systeme mit aktuellem Webbrowser","browserRequirements":"JavaScript, aktueller Browser","inLanguage":"de","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"featureList":["HL7-v2-Nachricht als Baum, Tabelle oder Rohtext anzeigen","Erklärung zu jedem Feld per Hover oder Tippen","Erkennung des Nachrichtentyps aus MSH-9","Hinweise zu fehlenden Segmenten und falschen Trennzeichen","Export als JSON und CSV","Zeilenumbrüche reparieren und MLLP-Rahmen entfernen oder ergänzen","Anonymisierungshilfe für Testdaten","Verarbeitung nur lokal im Browser, kein Upload"],"author":{"@id":"https://freimoser.de/#thomas-freimoser"},"dateModified":"2026-10-27"},{"@type":"FAQPage","@id":"https://freimoser.github.io/hl7v2-viewer/#faq","mainEntity":[{"@type":"Question","name":"Was ist eine HL7-v2-Nachricht?","acceptedAnswer":{"@type":"Answer","text":"Eine HL7-v2-Nachricht ist ein Text im Pipe-Format. Jede Zeile ist ein Segment (zum Beispiel MSH, PID oder PV1). Innerhalb der Zeile trennt | die Felder, ^ die Komponenten, ~ Wiederholungen und &amp; Subkomponenten. Krankenhaus-, Labor- und Praxissysteme tauschen darüber Patientenstammdaten, Aufträge und Befunde aus. Den Aufbau erklärt die Seite Aufbau einer HL7-v2-Nachricht."}},{"@type":"Question","name":"Wie lese ich eine HL7-Nachricht?","acceptedAnswer":{"@type":"Answer","text":"Fügen Sie die Nachricht oben ein. Der Viewer zerlegt sie in Segmente und Felder, nennt zu jedem Wert den Pfad (zum Beispiel PID-5.1) und erklärt ihn beim Überfahren oder Antippen. Von Hand lesen Sie so: zuerst MSH-9 für den Nachrichtentyp, dann Segment für Segment die Felder abzählen. Bei MSH zählt das Trennzeichen direkt hinter „MSH“ bereits als Feld 1."}},{"@type":"Question","name":"Was bedeuten ADT, ORU und ORM?","acceptedAnswer":{"@type":"Answer","text":"ADT meldet Ereignisse der Patientenverwaltung (A01 Aufnahme, A08 Änderung), ORU überträgt Ergebnisse und Befunde (R01) und ORM überträgt Aufträge (O01). Der Code steht in MSH-9, gefolgt vom Auslöseereignis. Eine Tabelle mit Beispielen finden Sie unter Nachrichtentypen im Überblick."}},{"@type":"Question","name":"Welche Trennzeichen verwendet HL7 v2?","acceptedAnswer":{"@type":"Answer","text":"Üblich sind | für Felder, ^ für Komponenten, ~ für Wiederholungen, \\ als Escape-Zeichen und &amp; für Subkomponenten. Die Zeichen stehen in MSH-1 und MSH-2; der Viewer liest sie von dort und meldet es, wenn sie vom Üblichen abweichen. Segmente enden laut Standard mit einem Wagenrücklauf (CR)."}},{"@type":"Question","name":"Warum steht meine Nachricht nur in einer Zeile oder wird falsch getrennt?","acceptedAnswer":{"@type":"Answer","text":"Segmente sind mit CR getrennt. Beim Kopieren aus E-Mails, Logs oder Editoren wird daraus oft LF, oder die Umbrüche gehen verloren. Der Viewer liest CR, LF und CRLF und erkennt außerdem wörtliche „\\r“-Zeichenfolgen sowie Segmente, die durch Leerzeichen getrennt sind. Er sagt dabei jeweils, was er angenommen hat. Mit „Zeilenumbrüche reparieren“ erhalten Sie die Nachricht mit CR zurück."}},{"@type":"Question","name":"Wo steht die HL7-Version einer Nachricht?","acceptedAnswer":{"@type":"Answer","text":"In MSH-12, zum Beispiel 2.5.1. Die Version sagt, nach welchem Regelwerk die Nachricht aufgebaut sein soll. Der Viewer zeigt sie in der Zusammenfassung an, prüft aber nicht gegen die Regeln einer bestimmten Version."}},{"@type":"Question","name":"Was ist ein Z-Segment?","acceptedAnswer":{"@type":"Answer","text":"Segmentnamen, die mit Z beginnen, sind für lokale Erweiterungen reserviert. Was darin steht, legen nur die beteiligten Systeme fest. Der Viewer zeigt solche Segmente an und markiert sie als lokal, kann ihre Felder aber nicht erklären. Das erledigt die Schnittstellenbeschreibung des Absenders."}},{"@type":"Question","name":"Werden meine Nachrichten hochgeladen?","acceptedAnswer":{"@type":"Answer","text":"Nein. Die Auswertung läuft im Browser, und die Seite verbietet über eine Content-Security-Policy mit connect-src 'none' jede Netzwerkverbindung aus dem Seitencode. Das lässt sich in den Entwicklertools prüfen. Echte Patientendaten gehören trotzdem nicht in Testwerkzeuge. Nutzen Sie Testdaten oder anonymisieren Sie zuerst."}}]}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt</a>
+<header class="top"><div class="wrap"><a class="brand" href="/hl7v2-viewer/"><img src="/hl7v2-viewer/favicon.svg" alt="" width="28" height="28">HL7-v2-Viewer</a><button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menü"><span></span></button><nav class="main" id="site-nav" aria-label="Hauptnavigation"><a href="/hl7v2-viewer/" aria-current="page">Viewer</a><a href="/hl7v2-viewer/hl7-nachricht-aufbau/">Aufbau</a><a href="/hl7v2-viewer/hl7-nachrichtentypen/">Nachrichtentypen</a><a href="/hl7v2-viewer/hl7-segmente/">Segmente</a><a href="/hl7v2-viewer/hl7-fehler/">Häufige Fehler</a><a href="/hl7v2-viewer/#anonymisieren">Anonymisieren</a></nav></div></header>
+<main class="wrap" id="main">
+<p class="mdr" role="note">Nur zur Ansicht, kein Medizinprodukt, keine Konformitätsprüfung. Ihre Nachrichten bleiben im Browser. Bitte nutzen Sie Testdaten oder anonymisierte Daten.</p>
+
+<h1>HL7-v2-Nachrichten lesen: Viewer und Parser im Browser</h1>
+
+<p class="lead"><strong>Der HL7-v2-Viewer zerlegt HL7-v2-Nachrichten im Pipe-Format im Browser in Segmente, Felder und Komponenten und zeigt sie lesbar an.</strong> Er ist kostenlos, braucht keine Anmeldung, und Ihre Nachricht wird nicht hochgeladen. HL7 v2 ist ein Nachrichtenstandard, über den Systeme im Gesundheitswesen Daten austauschen, etwa Krankenhausinformationssystem, Labor und Radiologie.</p>
+<p class="note">Dass nichts übertragen wird, ist technisch erzwungen: Die Seite setzt eine Content-Security-Policy mit <code>connect-src 'none'</code>, der Browser blockiert damit Netzwerkverbindungen aus dem Seitencode. In den Entwicklertools (Reiter „Netzwerk“) bleibt es beim Einfügen und Auswerten still. Das Laden der Seite selbst geht natürlich an den Hoster, siehe <a href="/hl7v2-viewer/datenschutz/">Datenschutz</a>.</p>
+<section id="viewer" class="viewer" aria-labelledby="viewer-h">
+<h2 id="viewer-h" class="vh">HL7-Nachricht einfügen</h2>
+<div class="inbox">
+<label for="hl7-in" class="lbl">Nachricht hier einfügen oder eine Datei öffnen</label>
+<textarea id="hl7-in" rows="9" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="MSH|^~\&amp;|SENDER|…"></textarea>
+<div class="row">
+<label class="btn filebtn">Datei öffnen<input type="file" id="file" accept=".hl7,.txt,.msg,.dat,.mllp,text/plain"></label>
+<label class="sel">Zeichensatz <select id="charset"><option value="auto">automatisch</option><option value="utf-8">UTF-8</option><option value="iso-8859-1">ISO-8859-1</option><option value="windows-1252">Windows-1252</option><option value="iso-8859-15">ISO-8859-15</option></select></label>
+<button type="button" class="btn ghost" id="clear">Leeren</button>
+</div>
+<p class="muted small" id="file-note"></p>
+<div class="exrow"><span class="lbl2">Beispiel laden:</span><div class="chips" id="examples"></div></div>
+<p class="muted small" id="ex-note"></p>
+<p class="status" id="status" role="status" aria-live="polite"></p>
+</div>
+<div id="result" hidden></div>
+<div id="exports" class="card" hidden>
+<h3>Weiterverarbeiten</h3>
+<div class="row"><button type="button" class="btn" id="ex-json">Als JSON speichern</button><button type="button" class="btn" id="ex-csv">Als CSV speichern</button><label class="chk"><input type="checkbox" id="csv-safe" checked> Zellen gegen Formeln in Excel absichern</label></div>
+<div class="row"><button type="button" class="btn" id="fix-copy">Zeilenumbrüche reparieren und kopieren</button><button type="button" class="btn" id="fix-dl">Als Datei speichern</button><label class="chk"><input type="checkbox" id="fix-mllp"> MLLP-Rahmen ergänzen</label></div>
+<p class="muted small" id="fix-note">Reparatur: Segmente werden mit CR (\r) getrennt, wie es der Standard verlangt.</p>
+</div>
+<div id="tip" role="tooltip" hidden></div>
+</section>
+<section aria-labelledby="kann-h">
+<h2 id="kann-h">Was der Viewer kann und was nicht</h2>
+<div class="grid">
+<div class="card"><h3>Das zeigt der Viewer</h3><ul>
+<li>Baumansicht, Tabelle und Rohtext mit farbigen Trennzeichen</li>
+<li>zu jedem Feld Pfad (<code>PID-5.1</code>), Name und Kurzerklärung beim Überfahren oder Antippen</li>
+<li>Nachrichtentyp aus MSH-9 mit kurzer Erklärung, Version, Absender, Zeitstempel</li>
+<li>Hinweise bei fehlendem MSH, leeren Pflichtfeldern, falschen Datumsformaten und auffälligen Trennzeichen</li>
+<li>Export als JSON oder CSV, Reparatur von Zeilenumbrüchen, Anonymisierungshilfe</li>
+<li>mehrere Nachrichten in einer Datei, MLLP-Rahmen und Z-Segmente</li>
+</ul></div>
+<div class="card limits"><h3>Das leistet er nicht</h3><ul class="limits">
+<li>Er ist <strong>kein Konformitätsprüfer</strong>: Er prüft nicht gegen ein Schnittstellenprofil und nicht gegen eine bestimmte HL7-Version.</li>
+<li>Die Feldliste ist eigenhändig geschrieben und <strong>unvollständig</strong>. Unbekannte Felder erscheinen als „Feld n“.</li>
+<li>Er sendet und empfängt nichts (kein MLLP über TCP, keine ACKs). Browser können solche Verbindungen nicht öffnen.</li>
+<li>Er liest nur das Pipe-Format von HL7 v2, kein FHIR und kein CDA.</li>
+<li>Er ist <strong>kein Medizinprodukt</strong> und nicht für Diagnose, Behandlung oder den Produktivbetrieb gedacht.</li>
+</ul></div>
+</div>
+</section>
+<section id="anonymisieren" class="card anon" aria-labelledby="anon-h"><h2 id="anon-h">Anonymisierungshilfe für Testdaten</h2>
+<p>Ersetzt Namen, Kennungen, Adressen, Telefonnummern und Freitexte der oben eingefügten Nachricht durch Platzhalter. Das ist Schwärzen für Tests und Fehlersuche, <strong>keine Anonymisierungsgarantie</strong>: Prüfen Sie das Ergebnis, vor allem Freitexte und Z-Segmente.</p>
+<div id="anon-panel">
+<div class="row"><label class="sel">Datumsfelder <select id="anon-dates"><option value="year">nur Jahr behalten</option><option value="keep">unverändert</option><option value="remove">entfernen</option></select></label></div>
+<div class="checks"><label class="chk"><input type="checkbox" id="anon-ids" checked> Kennungen ersetzen</label><label class="chk"><input type="checkbox" id="anon-doc" checked> Ärztinnen und Ärzte ersetzen</label><label class="chk"><input type="checkbox" id="anon-free" checked> Freitexte (NTE, OBX-Text) ersetzen</label><label class="chk"><input type="checkbox" id="anon-z" checked> Z-Segmente leeren</label></div>
+<div class="row"><button type="button" class="btn pri" id="anon-run">Nachricht anonymisieren</button><button type="button" class="btn" id="anon-copy">Kopieren</button><button type="button" class="btn" id="anon-dl">Als Datei speichern</button><button type="button" class="btn" id="anon-show">Im Viewer anzeigen</button></div>
+<p class="muted small" id="anon-report" role="status">Fügen Sie oben eine Nachricht ein und klicken Sie auf „Nachricht anonymisieren“.</p>
+<label for="anon-out" class="lbl">Ergebnis</label><textarea id="anon-out" rows="6" readonly spellcheck="false"></textarea>
+</div></section>
+<section aria-labelledby="schritte-h">
+<h2 id="schritte-h">Eine Nachricht von Hand lesen: fünf Schritte</h2>
+<ol>
+<li><strong>MSH-9</strong> nennen: Das ist der Nachrichtentyp, etwa <code>ORU^R01</code>. Er sagt, welche Segmente zu erwarten sind.</li>
+<li><strong>MSH-12</strong> (Version) und <strong>MSH-10</strong> (Kontroll-ID) notieren. Die Kontroll-ID brauchen Sie, um eine Bestätigung zuzuordnen.</li>
+<li>Die <strong>Segmentkennung</strong> am Zeilenanfang lesen (PID, PV1, OBR, OBX …). Sie bestimmt, was die Felder bedeuten.</li>
+<li>Felder <strong>abzählen</strong>. Bei MSH ist das Trennzeichen selbst Feld 1, das erste Feld nach <code>MSH|</code> ist deshalb MSH-2.</li>
+<li>Zusammengesetzte Felder an <code>^</code> teilen und die Teile nach dem Datentyp deuten, zum Beispiel Name, Kennung oder Adresse.</li>
+</ol>
+<p>Das geht schneller mit dem Viewer, aber es hilft beim Prüfen seiner Anzeige. Mehr dazu auf <a href="/hl7v2-viewer/hl7-nachricht-aufbau/">Aufbau einer HL7-v2-Nachricht</a>.</p>
+</section>
+<section aria-labelledby="bsp-h">
+<h2 id="bsp-h">Beispielnachrichten</h2>
+<p>Alle Beispielnachrichten sind frei erfunden. Namen, Nummern und Adressen sind Platzhalter, die E-Mail-Adresse nutzt die reservierte Endung .invalid. Sie dürfen die Dateien frei verwenden (CC0). „Im Viewer öffnen“ lädt das Beispiel direkt in den Viewer oben.</p>
+<div class="grid g3"><div class="card"><h3>Stationäre Aufnahme (ADT^A01)</h3><p>Zwei Kennungen in PID-3 (Wiederholung mit ~), Name mit Komponenten, Adresse, Telefon und E-Mail, dazu Angehöriger, Diagnose, Allergie und Versicherung.</p><p class="btns"><a class="btn pri" href="/hl7v2-viewer/#beispiel=adt-a01">Im Viewer öffnen</a> <a class="btn" href="/hl7v2-viewer/beispiele/adt-a01-aufnahme.hl7" download>adt-a01-aufnahme.hl7</a></p></div><div class="card"><h3>Ambulante Registrierung (ADT^A04)</h3><p>Gleiche Struktur wie A01, aber Patientenklasse O (ambulant), keine Station und kein Entlassungsbezug.</p><p class="btns"><a class="btn pri" href="/hl7v2-viewer/#beispiel=adt-a04">Im Viewer öffnen</a> <a class="btn" href="/hl7v2-viewer/beispiele/adt-a04-registrierung.hl7" download>adt-a04-registrierung.hl7</a></p></div><div class="card"><h3>Änderung von Patientendaten (ADT^A08)</h3><p>Mehrere Namen (Rufname und Alias), Escape-Sequenz \T\ in der Straße, Ereignisgrund in EVN-4 und ein Z-Segment (ZPI) als lokale Erweiterung.</p><p class="btns"><a class="btn pri" href="/hl7v2-viewer/#beispiel=adt-a08">Im Viewer öffnen</a> <a class="btn" href="/hl7v2-viewer/beispiele/adt-a08-aenderung.hl7" download>adt-a08-aenderung.hl7</a></p></div><div class="card"><h3>Laborbefund (ORU^R01)</h3><p>OBR als Kopf, vier OBX-Zeilen mit Zahlenwert, Einheit, Referenzbereich und Abnormal-Kennzeichen; Kommentar in NTE mit Zeilenumbruch (\.br\).</p><p class="btns"><a class="btn pri" href="/hl7v2-viewer/#beispiel=oru-r01">Im Viewer öffnen</a> <a class="btn" href="/hl7v2-viewer/beispiele/oru-r01-labor.hl7" download>oru-r01-labor.hl7</a></p></div><div class="card"><h3>Laborauftrag (ORM^O01)</h3><p>Zwei Aufträge in einer Nachricht: je ein ORC (Steuerung NW) mit zugehörigem OBR. Die Placer-Nummer vergibt das anfordernde System.</p><p class="btns"><a class="btn pri" href="/hl7v2-viewer/#beispiel=orm-o01">Im Viewer öffnen</a> <a class="btn" href="/hl7v2-viewer/beispiele/orm-o01-auftrag.hl7" download>orm-o01-auftrag.hl7</a></p></div><div class="card"><h3>Dokument mit Inhalt (MDM^T02)</h3><p>TXA beschreibt das Dokument, der Text steht in OBX-Segmenten vom Typ TX; Zeilenumbrüche im Text sind als \.br\ kodiert.</p><p class="btns"><a class="btn pri" href="/hl7v2-viewer/#beispiel=mdm-t02">Im Viewer öffnen</a> <a class="btn" href="/hl7v2-viewer/beispiele/mdm-t02-dokument.hl7" download>mdm-t02-dokument.hl7</a></p></div><div class="card"><h3>Neuer Termin (SIU^S12)</h3><p>SCH beschreibt den Termin, RGS und AIS die gebuchte Leistung mit Startzeit und Dauer. SCH-11 enthält Start- und Endzeit.</p><p class="btns"><a class="btn pri" href="/hl7v2-viewer/#beispiel=siu-s12">Im Viewer öffnen</a> <a class="btn" href="/hl7v2-viewer/beispiele/siu-s12-termin.hl7" download>siu-s12-termin.hl7</a></p></div><div class="card"><h3>Bestätigung mit Fehlercode (ACK)</h3><p>Der Empfänger meldet AE (Fehler) zur Nachricht MSG-A01-0001. ERR nennt Ort und Grund: Das Geburtsdatum in PID-7 ließ sich nicht lesen.</p><p class="btns"><a class="btn pri" href="/hl7v2-viewer/#beispiel=ack-fehler">Im Viewer öffnen</a> <a class="btn" href="/hl7v2-viewer/beispiele/ack-fehler.hl7" download>ack-fehler.hl7</a></p></div><div class="card"><h3>Absichtlich fehlerhafte Nachricht</h3><p>Enthält typische Fehler: Zeilenvorschub statt Wagenrücklauf, Geburtsdatum im deutschen Format, ISO-Datum, leere Pflichtfelder, Nullwert und Dezimalkomma.</p><p class="btns"><a class="btn pri" href="/hl7v2-viewer/#beispiel=fehlerhaft">Im Viewer öffnen</a> <a class="btn" href="/hl7v2-viewer/beispiele/fehlerhaft.hl7" download>fehlerhaft.hl7</a></p></div></div>
+</section>
+<section aria-labelledby="wissen-h">
+<h2 id="wissen-h">Nachlesen</h2>
+<div class="grid">
+<div class="card"><h3><a href="/hl7v2-viewer/hl7-nachricht-aufbau/">Aufbau einer HL7-v2-Nachricht</a></h3><p>Segmente, Felder, Komponenten, Trennzeichen, Escape-Sequenzen und Datentypen mit einer kommentierten Beispielzeile.</p></div>
+<div class="card"><h3><a href="/hl7v2-viewer/hl7-nachrichtentypen/">Nachrichtentypen im Überblick</a></h3><p>ADT, ORM, ORU und weitere, mit Auslöseereignissen und je einem Beispiel zum Öffnen.</p></div>
+<div class="card"><h3><a href="/hl7v2-viewer/hl7-segmente/">Segmente erklärt</a></h3><p>MSH, PID, PV1, OBR und OBX: wichtige Felder und typische Stolperstellen.</p></div>
+<div class="card"><h3><a href="/hl7v2-viewer/hl7-fehler/">Häufige Fehler</a></h3><p>Zeilenumbrüche, Datumsformate, Dezimalkomma, Zeichensatz: Symptom, Ursache, Lösung.</p></div>
+</div>
+</section>
+<section aria-labelledby="faq-h">
+<h2 id="faq-h">Häufige Fragen</h2>
+<details class="faq"><summary>Was ist eine HL7-v2-Nachricht?</summary><p>Eine HL7-v2-Nachricht ist ein Text im Pipe-Format. Jede Zeile ist ein Segment (zum Beispiel MSH, PID oder PV1). Innerhalb der Zeile trennt <code>|</code> die Felder, <code>^</code> die Komponenten, <code>~</code> Wiederholungen und <code>&amp;</code> Subkomponenten. Krankenhaus-, Labor- und Praxissysteme tauschen darüber Patientenstammdaten, Aufträge und Befunde aus. Den Aufbau erklärt die Seite <a href="/hl7v2-viewer/hl7-nachricht-aufbau/">Aufbau einer HL7-v2-Nachricht</a>.</p></details>
+<details class="faq"><summary>Wie lese ich eine HL7-Nachricht?</summary><p>Fügen Sie die Nachricht oben ein. Der Viewer zerlegt sie in Segmente und Felder, nennt zu jedem Wert den Pfad (zum Beispiel PID-5.1) und erklärt ihn beim Überfahren oder Antippen. Von Hand lesen Sie so: zuerst MSH-9 für den Nachrichtentyp, dann Segment für Segment die Felder abzählen. Bei MSH zählt das Trennzeichen direkt hinter „MSH“ bereits als Feld 1.</p></details>
+<details class="faq"><summary>Was bedeuten ADT, ORU und ORM?</summary><p>ADT meldet Ereignisse der Patientenverwaltung (A01 Aufnahme, A08 Änderung), ORU überträgt Ergebnisse und Befunde (R01) und ORM überträgt Aufträge (O01). Der Code steht in MSH-9, gefolgt vom Auslöseereignis. Eine Tabelle mit Beispielen finden Sie unter <a href="/hl7v2-viewer/hl7-nachrichtentypen/">Nachrichtentypen im Überblick</a>.</p></details>
+<details class="faq"><summary>Welche Trennzeichen verwendet HL7 v2?</summary><p>Üblich sind | für Felder, ^ für Komponenten, ~ für Wiederholungen, \ als Escape-Zeichen und &amp; für Subkomponenten. Die Zeichen stehen in MSH-1 und MSH-2; der Viewer liest sie von dort und meldet es, wenn sie vom Üblichen abweichen. Segmente enden laut Standard mit einem Wagenrücklauf (CR).</p></details>
+<details class="faq"><summary>Warum steht meine Nachricht nur in einer Zeile oder wird falsch getrennt?</summary><p>Segmente sind mit CR getrennt. Beim Kopieren aus E-Mails, Logs oder Editoren wird daraus oft LF, oder die Umbrüche gehen verloren. Der Viewer liest CR, LF und CRLF und erkennt außerdem wörtliche „\r“-Zeichenfolgen sowie Segmente, die durch Leerzeichen getrennt sind. Er sagt dabei jeweils, was er angenommen hat. Mit „Zeilenumbrüche reparieren“ erhalten Sie die Nachricht mit CR zurück.</p></details>
+<details class="faq"><summary>Wo steht die HL7-Version einer Nachricht?</summary><p>In MSH-12, zum Beispiel 2.5.1. Die Version sagt, nach welchem Regelwerk die Nachricht aufgebaut sein soll. Der Viewer zeigt sie in der Zusammenfassung an, prüft aber nicht gegen die Regeln einer bestimmten Version.</p></details>
+<details class="faq"><summary>Was ist ein Z-Segment?</summary><p>Segmentnamen, die mit Z beginnen, sind für lokale Erweiterungen reserviert. Was darin steht, legen nur die beteiligten Systeme fest. Der Viewer zeigt solche Segmente an und markiert sie als lokal, kann ihre Felder aber nicht erklären. Das erledigt die Schnittstellenbeschreibung des Absenders.</p></details>
+<details class="faq"><summary>Werden meine Nachrichten hochgeladen?</summary><p>Nein. Die Auswertung läuft im Browser, und die Seite verbietet über eine Content-Security-Policy mit <code>connect-src 'none'</code> jede Netzwerkverbindung aus dem Seitencode. Das lässt sich in den Entwicklertools prüfen. Echte Patientendaten gehören trotzdem nicht in Testwerkzeuge. Nutzen Sie Testdaten oder anonymisieren Sie zuerst.</p></details>
+</section>
+<section class="xlink" id="weitere-werkzeuge"><h2>Weitere Werkzeuge</h2><p>Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.</p><ul class="tl"><li><a href="https://freimoser.github.io/ldt-bdt-viewer/">LDT- und BDT-Viewer</a> – Labordaten (LDT) und Praxisdaten (BDT) lesen</li><li><a href="https://freimoser.github.io/gdt-viewer/">GDT-Viewer</a> – GDT-Dateien zwischen Praxissoftware und Geräten lesen</li><li><a href="https://freimoser.github.io/dicom-viewer/">DICOM-Viewer</a> – DICOM-Bilder und Radiologie-CDs im Browser öffnen</li><li><a href="https://freimoser.github.io/cda-viewer/">CDA-Viewer</a> – CDA-Dokumente (Arztbriefe als XML) lesen</li></ul></section>
+</main>
+<section class="about"><div class="wrap"><img src="/hl7v2-viewer/favicon.svg" alt="" width="44" height="44"><div><h2>Über den Entwickler</h2><p>Entwickelt von <strong>Thomas Freimoser</strong>, München / Remote. Dieses Werkzeug liest HL7-v2-Nachrichten lokal im Browser; es gibt keinen Upload und kein Tracking.</p><div class="btns"><a class="btn" href="https://freimoser.de/">freimoser.de</a><a class="btn" href="https://www.linkedin.com/in/thomas-freimoser/">LinkedIn</a></div></div></div></section>
+<footer><div class="wrap"><div class="cols">
+<div><strong>Werkzeug</strong><a href="/hl7v2-viewer/">Viewer</a><a href="/hl7v2-viewer/#anonymisieren">Anonymisieren</a><a href="/hl7v2-viewer/quellen/">Quellen</a><a href="https://github.com/freimoser/hl7v2-viewer">Quellcode</a></div>
+<div><strong>Wissen</strong><a href="/hl7v2-viewer/hl7-nachricht-aufbau/">Aufbau</a><a href="/hl7v2-viewer/hl7-nachrichtentypen/">Nachrichtentypen</a><a href="/hl7v2-viewer/hl7-segmente/">Segmente</a><a href="/hl7v2-viewer/hl7-fehler/">Häufige Fehler</a></div>
+<div><strong>Weitere Werkzeuge</strong><a href="https://freimoser.github.io/ldt-bdt-viewer/">LDT- und BDT-Viewer</a><a href="https://freimoser.github.io/gdt-viewer/">GDT-Viewer</a><a href="https://freimoser.github.io/dicom-viewer/">DICOM-Viewer</a><a href="https://freimoser.github.io/cda-viewer/">CDA-Viewer</a></div>
+<div><strong>Rechtliches</strong><a href="https://freimoser.de/impressum/">Impressum</a><a href="/hl7v2-viewer/datenschutz/">Datenschutz</a></div>
+</div><p class="disc">HL7® und FHIR® sind eingetragene Marken von Health Level Seven International. Dieses Werkzeug ist ein unabhängiges Projekt und wird von HL7 International weder bereitgestellt noch empfohlen.</p><p class="disc">Nur zur Ansicht: kein Medizinprodukt und kein Konformitätsprüfer. © 2026 Thomas Freimoser, München / Remote. Quellcode unter MIT-Lizenz, Beispielnachrichten frei erfunden (CC0). <a href="/hl7v2-viewer/quellen/">Quellen und Lizenzen</a>.</p></div></footer>
+<script type="module" src="/hl7v2-viewer/assets/js/site.js"></script><script type="module" src="/hl7v2-viewer/assets/js/app.js"></script>
+</body>
+</html>

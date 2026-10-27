@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Häufige HL7-Fehler: Zeilenumbrüche, Datum, Zeichensatz</title>
+<meta name="description" content="Häufige Fehler in HL7-v2-Nachrichten finden: Zeilenumbrüche, MLLP-Zeichen, Datumsformat, Dezimalkomma, Umlaute und MSH-Zählung, mit Viewer-Meldungen.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="google-site-verification" content="6pYvtFCnU7UFcQFajtMSkQ7tYMy3Z_Bt7teKiT5yKNg">
+<meta name="msvalidate.01" content="E1F30DEB311AAF5458907DB431B481AC">
+<meta name="theme-color" content="#0b1117">
+<meta name="author" content="Thomas Freimoser">
+<meta name="keywords" content="HL7 Fehler, HL7 Nachricht Fehler finden, HL7 Datumsformat, HL7 MLLP, HL7 Zeichensatz Umlaute, HL7 Zeilenumbruch">
+<link rel="canonical" href="https://freimoser.github.io/hl7v2-viewer/hl7-fehler/">
+<link rel="icon" href="/hl7v2-viewer/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/hl7v2-viewer/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/hl7v2-viewer/apple-touch-icon.png">
+<link rel="manifest" href="/hl7v2-viewer/site.webmanifest">
+<link rel="stylesheet" href="/hl7v2-viewer/assets/css/styles.css?v=5e92e137">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HL7-v2-Viewer">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="Häufige HL7-Fehler: Zeilenumbrüche, Datum, Zeichensatz">
+<meta property="og:description" content="Häufige Fehler in HL7-v2-Nachrichten finden: Zeilenumbrüche, MLLP-Zeichen, Datumsformat, Dezimalkomma, Umlaute und MSH-Zählung, mit Viewer-Meldungen.">
+<meta property="og:url" content="https://freimoser.github.io/hl7v2-viewer/hl7-fehler/">
+<meta property="og:image" content="https://freimoser.github.io/hl7v2-viewer/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="HL7-v2-Viewer: HL7-v2-Nachrichten im Browser lesen">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Häufige HL7-Fehler: Zeilenumbrüche, Datum, Zeichensatz">
+<meta name="twitter:description" content="Häufige Fehler in HL7-v2-Nachrichten finden: Zeilenumbrüche, MLLP-Zeichen, Datumsformat, Dezimalkomma, Umlaute und MSH-Zählung, mit Viewer-Meldungen.">
+<meta name="twitter:image" content="https://freimoser.github.io/hl7v2-viewer/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://freimoser.de/#thomas-freimoser","name":"Thomas Freimoser","url":"https://freimoser.de/","sameAs":["https://www.linkedin.com/in/thomas-freimoser/"]},{"@type":"TechArticle","@id":"https://freimoser.github.io/hl7v2-viewer/hl7-fehler/#article","headline":"Häufige Fehler in HL7-v2-Nachrichten","description":"Häufige Fehler in HL7-v2-Nachrichten finden: Zeilenumbrüche, MLLP-Zeichen, Datumsformat, Dezimalkomma, Umlaute und MSH-Zählung, mit Viewer-Meldungen.","url":"https://freimoser.github.io/hl7v2-viewer/hl7-fehler/","inLanguage":"de","author":{"@id":"https://freimoser.de/#thomas-freimoser"},"datePublished":"2026-10-27","dateModified":"2026-10-27","isPartOf":{"@type":"WebSite","name":"HL7-v2-Viewer","url":"https://freimoser.github.io/hl7v2-viewer/"}},{"@type":"FAQPage","@id":"https://freimoser.github.io/hl7v2-viewer/hl7-fehler/#faq","mainEntity":[{"@type":"Question","name":"Warum meldet der Viewer eine Warnung, obwohl meine Nachricht funktioniert?","acceptedAnswer":{"@type":"Answer","text":"Die Hinweise vergleichen mit üblicher Praxis, nicht mit Ihrem Schnittstellenprofil. Ein Feld, das im Standard oft gefüllt ist, kann bei Ihnen leer bleiben dürfen. Die Warnung ist ein Hinweis zum Nachsehen, kein Urteil."}},{"@type":"Question","name":"Prüft der Viewer, ob eine Nachricht HL7-konform ist?","acceptedAnswer":{"@type":"Answer","text":"Nein. Er liest und zeigt an und weist auf auffällige Stellen hin. Er prüft nicht gegen die Spezifikation einer Version und nicht gegen ein Profil. Eine bestandene Ansicht ist keine Konformitätsaussage."}},{"@type":"Question","name":"Wie finde ich einen Fehler in einer Nachricht?","acceptedAnswer":{"@type":"Answer","text":"Laden Sie sie in den Viewer und lesen Sie zuerst die Hinweise. Danach prüfen Sie MSH-9 und MSH-12, die Zeitstempel und die Felder, die zum Segment passen. Das Testbeispiel mit Fehlern zeigt die Meldungen im Viewer."}}]},{"@type":"BreadcrumbList","@id":"https://freimoser.github.io/hl7v2-viewer/hl7-fehler/#crumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"HL7-v2-Viewer","item":"https://freimoser.github.io/hl7v2-viewer/"},{"@type":"ListItem","position":2,"name":"Häufige Fehler","item":"https://freimoser.github.io/hl7v2-viewer/hl7-fehler/"}]}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt</a>
+<header class="top"><div class="wrap"><a class="brand" href="/hl7v2-viewer/"><img src="/hl7v2-viewer/favicon.svg" alt="" width="28" height="28">HL7-v2-Viewer</a><button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menü"><span></span></button><nav class="main" id="site-nav" aria-label="Hauptnavigation"><a href="/hl7v2-viewer/">Viewer</a><a href="/hl7v2-viewer/hl7-nachricht-aufbau/">Aufbau</a><a href="/hl7v2-viewer/hl7-nachrichtentypen/">Nachrichtentypen</a><a href="/hl7v2-viewer/hl7-segmente/">Segmente</a><a href="/hl7v2-viewer/hl7-fehler/" aria-current="page">Häufige Fehler</a><a href="/hl7v2-viewer/#anonymisieren">Anonymisieren</a></nav></div></header>
+<main class="wrap" id="main">
+<p class="mdr" role="note">Nur zur Ansicht, kein Medizinprodukt, keine Konformitätsprüfung. Ihre Nachrichten bleiben im Browser. Bitte nutzen Sie Testdaten oder anonymisierte Daten.</p>
+<nav class="crumbs" aria-label="Brotkrumen"><a href="/hl7v2-viewer/">HL7-v2-Viewer</a> › <span aria-current="page">Häufige Fehler</span></nav>
+<h1>Häufige Fehler in HL7-v2-Nachrichten</h1>
+
+<p class="lead"><strong>Die meisten Probleme mit HL7-v2-Nachrichten sind Formatfehler: falsche Zeilenenden, Datumsformate, Dezimalkomma, Zeichensatz oder unmaskierte Trennzeichen.</strong> Diese Seite nennt zu jedem Fehler Symptom, Ursache und Lösung. Die Meldungen sind die Originaltexte, die der Viewer ausgibt.</p>
+<p><a class="btn pri" href="/hl7v2-viewer/#beispiel=fehlerhaft">Testfall mit Fehlern im Viewer öffnen</a></p>
+<section aria-labelledby="zeilenumbrueche">
+<h2 id="zeilenumbrueche">Segmente nicht getrennt oder alles in einer Zeile</h2>
+<dl class="fx"><dt>Symptom</dt><dd>Die Nachricht erscheint als eine lange Zeile, oder Zeilenenden sehen anders aus als erwartet.</dd><dt>Ursache</dt><dd>Der Standard trennt Segmente mit einem Wagenrücklauf (CR). Mails, Logs und Editoren machen daraus Zeilenvorschub (LF) oder CRLF, ersetzen den Umbruch durch Leerzeichen oder zeigen ihn als Text <code>\r</code>.</dd><dt>Lösung</dt><dd>Der Viewer liest CR, LF und CRLF, erkennt wörtliches <code>\r</code>/<code>\n</code> und Leerzeichen vor einer Segmentkennung und sagt, was er angenommen hat. „Zeilenumbrüche reparieren“ liefert die Fassung mit CR. Prüfen Sie bei Leerzeichen-Trennung das Ergebnis: Es ist eine Vermutung.</dd></dl>
+<p class="small muted">Meldung des Viewers:</p><blockquote class="tool">Die Segmente waren mit Zeilenvorschub (\n) statt mit Wagenrücklauf (\r) getrennt, wie es beim Kopieren aus Mails und Logs üblich ist. Der Viewer liest beides; für Systeme, die \r erwarten, bietet die reparierte Fassung den korrekten Umbruch.</blockquote><blockquote class="tool">Die Nachricht stand in einer Zeile; 2 Segmente wurden an Leerzeichen vor einer Segmentkennung getrennt. Das ist eine Vermutung: Steht in einem Textfeld selbst „ABC|“, wäre die Trennung falsch.</blockquote><blockquote class="tool">Zwischen Segmenten standen 1 wörtliche Zeichenfolgen „\r“ oder „\n“ (Text statt Zeilenumbruch). Sie wurden in echte Segmenttrennungen umgewandelt.</blockquote>
+</section>
+<section aria-labelledby="log-praefix">
+<h2 id="log-praefix">Zeitstempel oder Text vor MSH</h2>
+<dl class="fx"><dt>Symptom</dt><dd>Die Nachricht stammt aus einem Log und beginnt mit Datum, Uhrzeit oder Stufe („INFO“).</dd><dt>Ursache</dt><dd>Das ist Teil der Logzeile, nicht der Nachricht. Eine Nachricht muss mit MSH beginnen.</dd><dt>Lösung</dt><dd>Der Viewer ignoriert Text vor „MSH“ und meldet es. Sauberer ist es, die Nachricht ohne Präfix aus dem Log zu kopieren.</dd></dl>
+<p class="small muted">Meldung des Viewers:</p><blockquote class="tool">Zeile 1: Text vor „MSH“ (&quot;2026-10-27 08:00:01 INFO Received: &quot;) wurde ignoriert, vermutlich ein Log-Präfix.</blockquote>
+</section>
+<section aria-labelledby="mllp">
+<h2 id="mllp">Steuerzeichen am Anfang und Ende (MLLP)</h2>
+<dl class="fx"><dt>Symptom</dt><dd>Vor „MSH“ und am Ende stehen unsichtbare Zeichen, oder eine Datei beginnt mit einem seltsamen Zeichen.</dd><dt>Ursache</dt><dd>Beim Versand über TCP wird die Nachricht mit den Zeichen Hex 0B (Start) und Hex 1C 0D (Ende) eingerahmt (MLLP). Mitgeschnittene Daten enthalten sie noch.</dd><dt>Lösung</dt><dd>Der Viewer entfernt den Rahmen und meldet es. Ein Byte-Order-Mark am Dateianfang wird ebenfalls ignoriert.</dd></dl>
+<p class="small muted">Meldung des Viewers:</p><blockquote class="tool">MLLP-Rahmen erkannt und entfernt (1 Startzeichen, 1 Endzeichen). Das sind Übertragungszeichen und gehören nicht zur Nachricht.</blockquote>
+</section>
+<section aria-labelledby="datum">
+<h2 id="datum">Datum im falschen Format</h2>
+<dl class="fx"><dt>Symptom</dt><dd>Geburtsdatum oder Zeitstempel sehen aus wie im Alltag: 05.03.1971 oder 2026-10-27.</dd><dt>Ursache</dt><dd>HL7 v2 erwartet Ziffern ohne Trennzeichen: <code>JJJJMMTT</code> oder länger bis <code>JJJJMMTThhmmss</code>, optional mit Zeitzone. Exportfunktionen von Fremdsystemen schreiben oft das lokale oder das ISO-Format.</dd><dt>Lösung</dt><dd>Der Viewer prüft die bekannten Datumsfelder und nennt das erkannte Format. Korrigiert werden muss im erzeugenden System.</dd></dl>
+<p class="small muted">Meldung des Viewers:</p><blockquote class="tool">PID-7 (Geburtsdatum) „05.03.1971“ sieht nach deutschem Format (TT.MM.JJJJ) aus. HL7 v2 erwartet JJJJMMTT.</blockquote>
+</section>
+<section aria-labelledby="dezimal">
+<h2 id="dezimal">Dezimalkomma statt Punkt</h2>
+<dl class="fx"><dt>Symptom</dt><dd>Ein Messwert wie 5,9 wird vom Empfänger nicht als Zahl gelesen.</dd><dt>Ursache</dt><dd>Bei Werttyp <code>NM</code> in OBX-2 sind nur Ziffern, Vorzeichen und Dezimalpunkt erlaubt. Deutsche Ausgabeformate setzen oft das Komma.</dd><dt>Lösung</dt><dd>Der Viewer warnt, wenn OBX-5 nicht zu <code>NM</code> passt. Ändern Sie das Format im Absender oder den Werttyp auf <code>ST</code>, falls Text gemeint ist.</dd></dl>
+<p class="small muted">Meldung des Viewers:</p><blockquote class="tool">OBX-5 „5,9“ ist als Zahl (NM) gekennzeichnet, aber keine reine Zahl. Ein Dezimalkomma statt Punkt ist die häufigste Ursache.</blockquote>
+</section>
+<section aria-labelledby="pflicht">
+<h2 id="pflicht">Leere Pflichtfelder und Nullwert</h2>
+<dl class="fx"><dt>Symptom</dt><dd>Ein Empfänger lehnt die Nachricht ab oder löscht Daten, obwohl nichts gelöscht werden sollte.</dd><dt>Ursache</dt><dd>Leer (<code>||</code>) heißt „keine Angabe“, zwei Anführungszeichen (<code>""</code>) heißen „Wert löschen“. Das wird gern verwechselt. Dazu kommen Felder, die das Profil verlangt, aber leer sind.</dd><dt>Lösung</dt><dd>Der Viewer meldet leere Felder, die üblicherweise gefüllt sind, und kennzeichnet Nullwerte. Ob ein Feld in Ihrem Fall Pflicht ist, entscheidet das Schnittstellenprofil.</dd></dl>
+<p class="small muted">Meldung des Viewers:</p><blockquote class="tool">PID-3 (Patientenkennungen) ist leer. Dieses Feld ist normalerweise ein Pflichtfeld.</blockquote><blockquote class="tool">PID-29 enthält den Nullwert &quot;&quot; (zwei Anführungszeichen). Das bedeutet „Wert löschen“ und ist etwas anderes als ein leeres Feld.</blockquote>
+</section>
+<section aria-labelledby="umlaute">
+<h2 id="umlaute">Kaputte Umlaute</h2>
+<dl class="fx"><dt>Symptom</dt><dd>Aus „ä“ wird „Ã¤“ oder ein Ersatzzeichen (�).</dd><dt>Ursache</dt><dd>Die Bytes wurden mit einem anderen Zeichensatz gelesen, als sie geschrieben wurden, typischerweise UTF-8 als ISO-8859-1 oder umgekehrt. MSH-18 nennt den Zeichensatz, die tatsächliche Kodierung muss dazu passen.</dd><dt>Lösung</dt><dd>Beim Öffnen einer Datei können Sie im Viewer den Zeichensatz wählen. Er meldet die typischen Muster.</dd></dl>
+<p class="small muted">Meldung des Viewers:</p><blockquote class="tool">Zeichenfolgen wie „Ã¤“ deuten darauf hin, dass UTF-8-Text als ISO-8859-1/Windows-1252 gelesen wurde. Prüfen Sie den Zeichensatz.</blockquote>
+</section>
+<section aria-labelledby="unmaskiert">
+<h2 id="unmaskiert">Trennzeichen im Freitext</h2>
+<dl class="fx"><dt>Symptom</dt><dd>Nach einem Textfeld sind Felder verschoben, oder ein Name taucht in Subkomponenten auf.</dd><dt>Ursache</dt><dd>Ein <code>|</code>, <code>^</code> oder <code>&amp;</code> im Text wird als Trennzeichen gelesen, wenn es nicht maskiert ist: <code>\F\</code>, <code>\S\</code>, <code>\T\</code>.</dd><dt>Lösung</dt><dd>Maskieren im erzeugenden System. Der Viewer erkennt dieses Problem nicht von selbst, weil unmaskierte Zeichen gültige Syntax sind. Prüfen Sie im Viewer, ob Felder an unerwarteten Stellen enden.</dd></dl>
+
+</section>
+<section aria-labelledby="msh-zaehlung">
+<h2 id="msh-zaehlung">Falsche Zählung bei MSH</h2>
+<dl class="fx"><dt>Symptom</dt><dd>Der Nachrichtentyp oder die Version „stimmen nicht“, wenn Felder per Skript abgezählt werden.</dd><dt>Ursache</dt><dd>MSH-1 ist das Trennzeichen selbst. Beim Zerlegen an <code>|</code> steht MSH-2 an erster Stelle, alles ist um eins verschoben.</dd><dt>Lösung</dt><dd>Zählen Sie bei MSH anders als bei anderen Segmenten oder verwenden Sie eine Bibliothek, die das kennt. Der Viewer zählt korrekt.</dd></dl>
+
+</section>
+<section aria-labelledby="segmente-fehlen">
+<h2 id="segmente-fehlen">Erwartete Segmente fehlen</h2>
+<dl class="fx"><dt>Symptom</dt><dd>Eine ORU-Nachricht ohne OBX oder eine ADT ohne EVN.</dd><dt>Ursache</dt><dd>Der Nachrichtentyp in MSH-9 legt fest, welche Segmente üblich oder erforderlich sind. Ein Export kann sie weglassen.</dd><dt>Lösung</dt><dd>Der Viewer weist auf fehlende, üblicherweise erwartete Segmente hin. Er prüft aber nicht die genaue Reihenfolge und nicht die Spezifikation einer Version.</dd></dl>
+<p class="small muted">Meldung des Viewers:</p><blockquote class="tool">Segment EVN fehlt. Bei ADT-Nachrichten wird es üblicherweise erwartet.</blockquote>
+</section>
+<section aria-labelledby="trennzeichen">
+<h2 id="trennzeichen">Ungewöhnliche Trennzeichen</h2>
+<dl class="fx"><dt>Symptom</dt><dd>Die Felder werden von einem Semikolon oder Tabulator getrennt.</dd><dt>Ursache</dt><dd>Die Trennzeichen stehen in MSH-1 und MSH-2 und dürfen vom Üblichen abweichen. Ein Empfänger, der <code>|</code> fest voraussetzt, scheitert.</dd><dt>Lösung</dt><dd>Der Viewer liest die Zeichen aus dem MSH und nennt sie.</dd></dl>
+<p class="small muted">Meldung des Viewers:</p><blockquote class="tool">Ungewöhnliche Trennzeichen: Feld „;“, Komponente „^“, Wiederholung „~“, Escape „\“, Subkomponente „&amp;“. Üblich sind | ^ ~ \ &amp;.</blockquote>
+</section>
+<h2 id="grenzen">Was der Viewer nicht findet</h2>
+<ul class="limits">
+<li>Inhaltliche Fehler, zum Beispiel ein falscher Code oder ein falscher Patient. Er kennt Ihre Daten nicht.</li>
+<li>Verstöße gegen ein Schnittstellenprofil oder gegen die Regeln einer HL7-Version.</li>
+<li>Unmaskierte Trennzeichen im Freitext, weil sie gültige Syntax sind.</li>
+<li>Fehler in Z-Segmenten und in Feldern, die die eigene Feldliste nicht kennt.</li>
+</ul>
+
+<h2 id="faq-fehler">Kurz beantwortet</h2>
+<details class="faq"><summary>Warum meldet der Viewer eine Warnung, obwohl meine Nachricht funktioniert?</summary><p>Die Hinweise vergleichen mit üblicher Praxis, nicht mit Ihrem Schnittstellenprofil. Ein Feld, das im Standard oft gefüllt ist, kann bei Ihnen leer bleiben dürfen. Die Warnung ist ein Hinweis zum Nachsehen, kein Urteil.</p></details>
+<details class="faq"><summary>Prüft der Viewer, ob eine Nachricht HL7-konform ist?</summary><p>Nein. Er liest und zeigt an und weist auf auffällige Stellen hin. Er prüft nicht gegen die Spezifikation einer Version und nicht gegen ein Profil. Eine bestandene Ansicht ist keine Konformitätsaussage.</p></details>
+<details class="faq"><summary>Wie finde ich einen Fehler in einer Nachricht?</summary><p>Laden Sie sie in den Viewer und lesen Sie zuerst die Hinweise. Danach prüfen Sie MSH-9 und MSH-12, die Zeitstempel und die Felder, die zum Segment passen. Das <a href="/hl7v2-viewer/#beispiel=fehlerhaft">Testbeispiel mit Fehlern</a> zeigt die Meldungen im Viewer.</p></details>
+<p><a href="/hl7v2-viewer/hl7-nachricht-aufbau/">Aufbau einer Nachricht</a> · <a href="/hl7v2-viewer/hl7-segmente/">Segmente</a> · <a href="/hl7v2-viewer/hl7-nachrichtentypen/">Nachrichtentypen</a></p>
+<section class="xlink" id="weitere-werkzeuge"><h2>Weitere Werkzeuge</h2><p>Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.</p><ul class="tl"><li><a href="https://freimoser.github.io/ldt-bdt-viewer/">LDT- und BDT-Viewer</a> – Labordaten (LDT) und Praxisdaten (BDT) lesen</li><li><a href="https://freimoser.github.io/gdt-viewer/">GDT-Viewer</a> – GDT-Dateien zwischen Praxissoftware und Geräten lesen</li><li><a href="https://freimoser.github.io/dicom-viewer/">DICOM-Viewer</a> – DICOM-Bilder und Radiologie-CDs im Browser öffnen</li><li><a href="https://freimoser.github.io/cda-viewer/">CDA-Viewer</a> – CDA-Dokumente (Arztbriefe als XML) lesen</li></ul></section>
+</main>
+<section class="about"><div class="wrap"><img src="/hl7v2-viewer/favicon.svg" alt="" width="44" height="44"><div><h2>Über den Entwickler</h2><p>Entwickelt von <strong>Thomas Freimoser</strong>, München / Remote. Dieses Werkzeug liest HL7-v2-Nachrichten lokal im Browser; es gibt keinen Upload und kein Tracking.</p><div class="btns"><a class="btn" href="https://freimoser.de/">freimoser.de</a><a class="btn" href="https://www.linkedin.com/in/thomas-freimoser/">LinkedIn</a></div></div></div></section>
+<footer><div class="wrap"><div class="cols">
+<div><strong>Werkzeug</strong><a href="/hl7v2-viewer/">Viewer</a><a href="/hl7v2-viewer/#anonymisieren">Anonymisieren</a><a href="/hl7v2-viewer/quellen/">Quellen</a><a href="https://github.com/freimoser/hl7v2-viewer">Quellcode</a></div>
+<div><strong>Wissen</strong><a href="/hl7v2-viewer/hl7-nachricht-aufbau/">Aufbau</a><a href="/hl7v2-viewer/hl7-nachrichtentypen/">Nachrichtentypen</a><a href="/hl7v2-viewer/hl7-segmente/">Segmente</a><a href="/hl7v2-viewer/hl7-fehler/">Häufige Fehler</a></div>
+<div><strong>Weitere Werkzeuge</strong><a href="https://freimoser.github.io/ldt-bdt-viewer/">LDT- und BDT-Viewer</a><a href="https://freimoser.github.io/gdt-viewer/">GDT-Viewer</a><a href="https://freimoser.github.io/dicom-viewer/">DICOM-Viewer</a><a href="https://freimoser.github.io/cda-viewer/">CDA-Viewer</a></div>
+<div><strong>Rechtliches</strong><a href="https://freimoser.de/impressum/">Impressum</a><a href="/hl7v2-viewer/datenschutz/">Datenschutz</a></div>
+</div><p class="disc">HL7® und FHIR® sind eingetragene Marken von Health Level Seven International. Dieses Werkzeug ist ein unabhängiges Projekt und wird von HL7 International weder bereitgestellt noch empfohlen.</p><p class="disc">Nur zur Ansicht: kein Medizinprodukt und kein Konformitätsprüfer. © 2026 Thomas Freimoser, München / Remote. Quellcode unter MIT-Lizenz, Beispielnachrichten frei erfunden (CC0). <a href="/hl7v2-viewer/quellen/">Quellen und Lizenzen</a>.</p></div></footer>
+<script type="module" src="/hl7v2-viewer/assets/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'none'; connect-src 'none'; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<title>HL7-Nachricht Aufbau: Segmente, Felder, Trennzeichen</title>
+<meta name="description" content="So ist eine HL7-v2-Nachricht aufgebaut: Segmente, Felder, Komponenten, Trennzeichen, Escape-Sequenzen und Datentypen mit kommentierter Beispielzeile.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="google-site-verification" content="6pYvtFCnU7UFcQFajtMSkQ7tYMy3Z_Bt7teKiT5yKNg">
+<meta name="msvalidate.01" content="E1F30DEB311AAF5458907DB431B481AC">
+<meta name="theme-color" content="#0b1117">
+<meta name="author" content="Thomas Freimoser">
+<meta name="keywords" content="HL7 Nachricht Aufbau, HL7 v2 Struktur, HL7 Segmente Felder Komponenten, HL7 Trennzeichen, HL7 Escape-Sequenzen, HL7 Datentypen">
+<link rel="canonical" href="https://freimoser.github.io/hl7v2-viewer/hl7-nachricht-aufbau/">
+<link rel="icon" href="/hl7v2-viewer/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/hl7v2-viewer/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/hl7v2-viewer/apple-touch-icon.png">
+<link rel="manifest" href="/hl7v2-viewer/site.webmanifest">
+<link rel="stylesheet" href="/hl7v2-viewer/assets/css/styles.css?v=5e92e137">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HL7-v2-Viewer">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="HL7-Nachricht Aufbau: Segmente, Felder, Trennzeichen">
+<meta property="og:description" content="So ist eine HL7-v2-Nachricht aufgebaut: Segmente, Felder, Komponenten, Trennzeichen, Escape-Sequenzen und Datentypen mit kommentierter Beispielzeile.">
+<meta property="og:url" content="https://freimoser.github.io/hl7v2-viewer/hl7-nachricht-aufbau/">
+<meta property="og:image" content="https://freimoser.github.io/hl7v2-viewer/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="HL7-v2-Viewer: HL7-v2-Nachrichten im Browser lesen">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HL7-Nachricht Aufbau: Segmente, Felder, Trennzeichen">
+<meta name="twitter:description" content="So ist eine HL7-v2-Nachricht aufgebaut: Segmente, Felder, Komponenten, Trennzeichen, Escape-Sequenzen und Datentypen mit kommentierter Beispielzeile.">
+<meta name="twitter:image" content="https://freimoser.github.io/hl7v2-viewer/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://freimoser.de/#thomas-freimoser","name":"Thomas Freimoser","url":"https://freimoser.de/","sameAs":["https://www.linkedin.com/in/thomas-freimoser/"]},{"@type":"TechArticle","@id":"https://freimoser.github.io/hl7v2-viewer/hl7-nachricht-aufbau/#article","headline":"Aufbau einer HL7-v2-Nachricht: Segmente, Felder, Komponenten","description":"So ist eine HL7-v2-Nachricht aufgebaut: Segmente, Felder, Komponenten, Trennzeichen, Escape-Sequenzen und Datentypen mit kommentierter Beispielzeile.","url":"https://freimoser.github.io/hl7v2-viewer/hl7-nachricht-aufbau/","inLanguage":"de","author":{"@id":"https://freimoser.de/#thomas-freimoser"},"datePublished":"2026-10-27","dateModified":"2026-10-27","isPartOf":{"@type":"WebSite","name":"HL7-v2-Viewer","url":"https://freimoser.github.io/hl7v2-viewer/"}},{"@type":"FAQPage","@id":"https://freimoser.github.io/hl7v2-viewer/hl7-nachricht-aufbau/#faq","mainEntity":[{"@type":"Question","name":"Warum ist MSH-9 der Nachrichtentyp, obwohl er das achte Feld nach MSH ist?","acceptedAnswer":{"@type":"Answer","text":"Weil das Feldtrennzeichen hinter „MSH“ als MSH-1 zählt. Das erste Feld nach MSH| ist MSH-2. In allen anderen Segmenten beginnt die Zählung mit dem ersten Feld hinter der Kennung."}},{"@type":"Question","name":"Was ist der Unterschied zwischen ~ und ^?","acceptedAnswer":{"@type":"Answer","text":"^ trennt Komponenten innerhalb eines Feldwerts (Nachname^Vorname). ~ trennt mehrere Wiederholungen desselben Feldes, etwa zwei Patientenkennungen in PID-3."}},{"@type":"Question","name":"Wie maskiere ich ein | im Text?","acceptedAnswer":{"@type":"Answer","text":"Mit der Escape-Sequenz \\F\\. Entsprechend \\S\\ für ^, \\R\\ für ~, \\T\\ für &amp; und \\E\\ für den Backslash. Gemeint sind jeweils die Zeichen, die im MSH festgelegt sind."}}]},{"@type":"BreadcrumbList","@id":"https://freimoser.github.io/hl7v2-viewer/hl7-nachricht-aufbau/#crumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"HL7-v2-Viewer","item":"https://freimoser.github.io/hl7v2-viewer/"},{"@type":"ListItem","position":2,"name":"Aufbau","item":"https://freimoser.github.io/hl7v2-viewer/hl7-nachricht-aufbau/"}]}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt</a>
+<header class="top"><div class="wrap"><a class="brand" href="/hl7v2-viewer/"><img src="/hl7v2-viewer/favicon.svg" alt="" width="28" height="28">HL7-v2-Viewer</a><button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menü"><span></span></button><nav class="main" id="site-nav" aria-label="Hauptnavigation"><a href="/hl7v2-viewer/">Viewer</a><a href="/hl7v2-viewer/hl7-nachricht-aufbau/" aria-current="page">Aufbau</a><a href="/hl7v2-viewer/hl7-nachrichtentypen/">Nachrichtentypen</a><a href="/hl7v2-viewer/hl7-segmente/">Segmente</a><a href="/hl7v2-viewer/hl7-fehler/">Häufige Fehler</a><a href="/hl7v2-viewer/#anonymisieren">Anonymisieren</a></nav></div></header>
+<main class="wrap" id="main">
+<p class="mdr" role="note">Nur zur Ansicht, kein Medizinprodukt, keine Konformitätsprüfung. Ihre Nachrichten bleiben im Browser. Bitte nutzen Sie Testdaten oder anonymisierte Daten.</p>
+<nav class="crumbs" aria-label="Brotkrumen"><a href="/hl7v2-viewer/">HL7-v2-Viewer</a> › <span aria-current="page">Aufbau</span></nav>
+<h1>Aufbau einer HL7-v2-Nachricht: Segmente, Felder, Komponenten</h1>
+
+<p class="lead"><strong>Eine HL7-v2-Nachricht besteht aus Segmenten, jedes Segment aus Feldern, jedes Feld aus Komponenten und diese gegebenenfalls aus Subkomponenten.</strong> Die Ebenen werden durch feste Trennzeichen getrennt, die im ersten Segment, dem MSH, festgelegt sind. Diese Seite erklärt das an echten Beispielzeilen. Die Beispiele sind frei erfunden und lassen sich im <a href="/hl7v2-viewer/">Viewer</a> öffnen.</p>
+
+<h2 id="ebenen">Die vier Ebenen</h2>
+<div class="tbl-wrap"><table class="cmpT"><thead><tr><th>Ebene</th><th>Trenner</th><th>Beispiel</th></tr></thead><tbody>
+<tr><td>Segment</td><td>Zeilenende (CR)</td><td><code>PID|…</code> ist ein Segment, die Kennung steht am Zeilenanfang</td></tr>
+<tr><td>Feld</td><td><code>|</code></td><td>PID-5 ist das fünfte Feld von PID (der Name)</td></tr>
+<tr><td>Wiederholung</td><td><code>~</code></td><td>zwei Kennungen in PID-3, durch <code>~</code> getrennt</td></tr>
+<tr><td>Komponente</td><td><code>^</code></td><td>Nachname^Vorname in PID-5</td></tr>
+<tr><td>Subkomponente</td><td><code>&amp;</code></td><td>Unterteilung einer Komponente, zum Beispiel beim Familiennamen</td></tr>
+</tbody></table></div>
+
+<h2 id="zeile">Eine Zeile gelesen</h2>
+<p>Das PID-Segment des Aufnahme-Beispiels, mit farbigen Trennzeichen:</p>
+<p class="legend"><span><span class="sf">|</span> Feld</span><span><span class="sc">^</span> Komponente</span><span><span class="sr">~</span> Wiederholung</span><span><span class="ss">&amp;</span> Subkomponente</span></p>
+<pre class="ex-pre" tabindex="0"><code>PID<span class="sf">|</span>1<span class="sf">|</span><span class="sf">|</span>TEST-100234<span class="sc">^</span><span class="sc">^</span><span class="sc">^</span>KLINIKUM_TEST<span class="sc">^</span>MR<span class="sr">~</span>TEST-F-7781<span class="sc">^</span><span class="sc">^</span><span class="sc">^</span>KLINIKUM_TEST<span class="sc">^</span>VN<span class="sf">|</span><span class="sf">|</span>Beispielmann<span class="sc">^</span>Bernd<span class="sc">^</span>Karl<span class="sc">^</span><span class="sc">^</span><span class="sc">^</span><span class="sc">^</span>L<span class="sf">|</span><span class="sf">|</span>19710305<span class="sf">|</span>M<span class="sf">|</span><span class="sf">|</span><span class="sf">|</span>Teststraße 12<span class="sc">^</span><span class="sc">^</span>Musterstadt<span class="sc">^</span><span class="sc">^</span>99999<span class="sc">^</span>DE<span class="sc">^</span>H<span class="sf">|</span><span class="sf">|</span><span class="sc">^</span>PRN<span class="sc">^</span>PH<span class="sc">^</span><span class="sc">^</span>49<span class="sc">^</span>555<span class="sc">^</span>1234567<span class="sr">~</span><span class="sc">^</span>NET<span class="sc">^</span>Internet<span class="sc">^</span>bernd@example.invalid<span class="sf">|</span><span class="sf">|</span><span class="sf">|</span><span class="sf">|</span><span class="sf">|</span>TEST-ACC-5001</code></pre>
+<p>Am Zeilenanfang steht die Segmentkennung <code>PID</code>. PID-1 ist <code>1</code>, PID-2 ist leer. In PID-3 stehen zwei Wiederholungen. Die erste lautet <code>TEST-100234^^^KLINIKUM_TEST^MR</code> und hat Komponenten:</p>
+<div class="tbl-wrap"><table class="cmpT"><thead><tr><th>Teil</th><th>Wert</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td>PID-3[1].1</td><td>TEST-100234</td><td>die Kennung selbst</td></tr>
+<tr><td>PID-3[1].4</td><td>KLINIKUM_TEST</td><td>die Stelle, die die Kennung vergeben hat</td></tr>
+<tr><td>PID-3[1].5</td><td>MR</td><td>Art der Kennung (hier Patientenakte, „medical record“)</td></tr>
+</tbody></table></div>
+<p>Die zweite Wiederholung nach dem <code>~</code> hat die Art <code>VN</code>, eine Besuchs- bzw. Fallnummer. Der Viewer schreibt Wiederholungen als <code>[n]</code>, also <code>PID-3[2].1</code>. Andere Werkzeuge schreiben das anders. Welche Komponente was bedeutet, hängt vom Datentyp des Feldes ab (hier CX, eine erweiterte Kennung).</p>
+<p><a class="btn pri" href="/hl7v2-viewer/#beispiel=adt-a01">Dieses Beispiel im Viewer öffnen</a></p>
+
+<h2 id="trenner">Trennzeichen kommen aus dem MSH</h2>
+<p>Das erste Segment jeder Nachricht ist <code>MSH</code>. Direkt hinter den drei Buchstaben steht das Feldtrennzeichen, danach die vier Kodierzeichen:</p>
+<pre class="ex-pre" tabindex="0"><code>MSH<span class="sf">|</span><span class="sc">^</span><span class="sr">~</span>\<span class="ss">&amp;</span><span class="sf">|</span>TESTKIS<span class="sf">|</span>KLINIKUM_TEST<span class="sf">|</span>TESTLIS<span class="sf">|</span>KLINIKUM_TEST<span class="sf">|</span>20261027083015<span class="sf">|</span><span class="sf">|</span>ADT<span class="sc">^</span>A01<span class="sc">^</span>ADT_A01<span class="sf">|</span>MSG-A01-0001<span class="sf">|</span>P<span class="sf">|</span>2.5.1</code></pre>
+<div class="tbl-wrap"><table class="cmpT"><thead><tr><th>Zeichen</th><th>Aufgabe</th><th>Wo festgelegt</th></tr></thead><tbody>
+<tr><td><code>|</code></td><td>trennt Felder</td><td>MSH-1</td></tr>
+<tr><td><code>^</code></td><td>trennt Komponenten</td><td>MSH-2, 1. Zeichen</td></tr>
+<tr><td><code>~</code></td><td>trennt Wiederholungen eines Feldes</td><td>MSH-2, 2. Zeichen</td></tr>
+<tr><td><code>\</code></td><td>leitet Escape-Sequenzen ein</td><td>MSH-2, 3. Zeichen</td></tr>
+<tr><td><code>&amp;</code></td><td>trennt Subkomponenten</td><td>MSH-2, 4. Zeichen</td></tr>
+</tbody></table></div>
+<p>Die Zeichen <code>|^~\&amp;</code> sind der übliche Satz. Ein Empfänger soll sie aus dem MSH lesen und nicht fest voraussetzen. Der Viewer macht das so und weist darauf hin, wenn sie vom Üblichen abweichen.</p>
+
+<h2 id="msh-zaehlung">Die Zählung im MSH weicht ab</h2>
+<p>Das Feldtrennzeichen hinter „MSH“ ist selbst MSH-1. Das erste Feld, das Sie nach einem Split an <code>|</code> erhalten, ist deshalb schon MSH-2 (die Kodierzeichen), und MSH-9 ist der Nachrichtentyp. In allen anderen Segmenten ist das erste Feld nach der Kennung Feld 1. Wer MSH wie die anderen Segmente zählt, verschiebt alle Felder um eins.</p>
+
+<h2 id="pfad">Pfadschreibweise</h2>
+<p>Ein Wert wird als <code>SEGMENT-Feld.Komponente.Subkomponente</code> angegeben, etwa <code>PID-5.2</code> für den Vornamen oder <code>MSH-9.2</code> für das Auslöseereignis. Bei wiederholten Segmenten (mehrere OBX) unterscheidet die laufende Nummer in Feld 1 die einzelnen Zeilen. Im Viewer zeigt jede Zeile ihren Pfad an.</p>
+
+<h2 id="leer-null">Leer ist nicht gleich „“</h2>
+<p>Ein leeres Feld (<code>||</code>) heißt: keine Angabe in dieser Nachricht. Zwei Anführungszeichen (<code>""</code>) sind der <em>Nullwert</em> und bedeuten ausdrücklich, dass ein vorhandener Wert gelöscht werden soll bzw. keiner existiert. Bei Änderungsnachrichten wie ADT^A08 ist das ein Unterschied. Der Viewer zeigt Nullwerte deshalb getrennt an. Überzählige Trennzeichen am Zeilenende (<code>|||</code>) sind erlaubt und verändern nichts.</p>
+
+<h2 id="escape">Escape-Sequenzen</h2>
+<p>Kommen Trennzeichen im Text selbst vor, werden sie durch eine Sequenz mit dem Escape-Zeichen ersetzt. Der Buchstabe in der Sequenz steht für das Trennzeichen, das im MSH festgelegt ist.</p>
+<div class="tbl-wrap"><table class="cmpT"><thead><tr><th>Sequenz</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td><code>\F\</code></td><td>Feldtrennzeichen (üblich <code>|</code>)</td></tr>
+<tr><td><code>\S\</code></td><td>Komponententrennzeichen (<code>^</code>)</td></tr>
+<tr><td><code>\T\</code></td><td>Subkomponententrennzeichen (<code>&amp;</code>)</td></tr>
+<tr><td><code>\R\</code></td><td>Wiederholungstrennzeichen (<code>~</code>)</td></tr>
+<tr><td><code>\E\</code></td><td>das Escape-Zeichen selbst (<code>\</code>)</td></tr>
+<tr><td><code>\.br\</code></td><td>Zeilenumbruch in Freitext</td></tr>
+<tr><td><code>\Xhh…\</code></td><td>Zeichen als Hexadezimalwert</td></tr>
+</tbody></table></div>
+<p>Im Änderungs-Beispiel steht die Straße als <code>Teststraße 12 \T\ 14</code>. Gemeint ist „Teststraße 12 &amp; 14“. Der Viewer zeigt den entschlüsselten Text und behält den Originaltext im Rohtext bei. Ein unmaskiertes <code>&amp;</code> oder <code>|</code> im Freitext erzeugt dagegen zusätzliche Subkomponenten oder Felder. Das ist eine häufige Fehlerquelle, siehe <a href="/hl7v2-viewer/hl7-fehler/">Häufige Fehler</a>.</p>
+
+<h2 id="datentypen">Datentypen in Kürze</h2>
+<p>Ein Feld hat einen Datentyp, und der legt fest, was die Komponenten bedeuten. Die wichtigsten, mit Beispielen aus den Beispielnachrichten:</p>
+<div class="tbl-wrap"><table class="cmpT"><thead><tr><th>Typ</th><th>Bedeutung</th><th>Komponenten, Beispiel</th></tr></thead><tbody>
+<tr><td>ST, TX</td><td>Text</td><td>einfacher Text ohne Komponenten</td></tr>
+<tr><td>NM</td><td>Zahl</td><td><code>5.9</code>, Dezimalpunkt, kein Komma</td></tr>
+<tr><td>DTM / TS</td><td>Zeitpunkt</td><td><code>20261027083015</code> = 27.10.2026 08:30:15</td></tr>
+<tr><td>CX</td><td>Kennung</td><td>ID ^ Prüfziffer ^ Verfahren ^ vergebende Stelle ^ Art</td></tr>
+<tr><td>XPN</td><td>Personenname</td><td>Nachname ^ Vorname ^ weitere Vornamen ^ Suffix ^ Präfix ^ Titel ^ Namensart</td></tr>
+<tr><td>XAD</td><td>Adresse</td><td>Straße ^ Zusatz ^ Ort ^ Bundesland ^ PLZ ^ Land ^ Art</td></tr>
+<tr><td>XTN</td><td>Telefon, E-Mail</td><td>Nummer-Komponenten und E-Mail-Komponente, je nach Version</td></tr>
+<tr><td>PL</td><td>Aufenthaltsort</td><td>Station ^ Zimmer ^ Bett ^ Einrichtung</td></tr>
+<tr><td>CWE / CE</td><td>codierter Wert</td><td>Code ^ Text ^ Codesystem</td></tr>
+</tbody></table></div>
+<p>Zeitpunkte dürfen gekürzt werden: <code>20261027</code> ist nur das Datum, <code>202610270830</code> hat Minuten. Optional folgt eine Zeitzone, zum Beispiel <code>+0100</code>. Ohne Angabe ist unklar, in welcher Zeitzone der Absender gemeint hat. Die genauen Komponentenlisten je Version stehen in der Spezifikation. Der Viewer beschreibt nur eine Auswahl, unbekannte Stellen erscheinen als „Feld n“.</p>
+
+<h2 id="reihenfolge">Reihenfolge, Gruppen und Z-Segmente</h2>
+<p>Welche Segmente in welcher Reihenfolge vorkommen, regelt die Nachrichtenstruktur (MSH-9.3, zum Beispiel <code>ADT_A01</code>). Segmente können optional oder wiederholbar sein und bilden Gruppen: Bei ORU^R01 gehört jedes OBX zum davor stehenden OBR, bis das nächste OBR beginnt. Ein NTE gehört zum Segment direkt davor.</p>
+<p>Segmente, deren Name mit <code>Z</code> beginnt (zum Beispiel <code>ZPI</code>), sind lokale Erweiterungen. Ihr Inhalt ist nur durch die Schnittstellenbeschreibung des Absenders erklärbar. Das Änderungs-Beispiel enthält eins:</p>
+<pre class="ex-pre" tabindex="0"><code>ZPI<span class="sf">|</span>1<span class="sf">|</span>KARTE-0815<span class="sf">|</span>Zusatzinfo nur lokal gültig</code></pre>
+
+<h2 id="mllp">Zeilenende und MLLP</h2>
+<p>Segmente enden mit einem Wagenrücklauf (CR, Hex 0D). Viele Texteditoren, Mails und Logs machen daraus einen Zeilenvorschub (LF) oder CRLF. Der Viewer liest alle drei. Über TCP/IP werden Nachrichten häufig mit dem MLLP-Rahmen übertragen: Ein Startzeichen (Hex 0B) steht vor der Nachricht, danach folgen die Zeichen Hex 1C und 0D. Diese Zeichen gehören nicht zur Nachricht; der Viewer entfernt sie und meldet es. Quelle: <a href="/hl7v2-viewer/quellen/">Quellen</a>.</p>
+
+<h2 id="abgrenzung">Abgrenzung zu FHIR und CDA</h2>
+<p>HL7 v2 ist ein Format aus getrennten Zeilen und Feldern. FHIR beschreibt Ressourcen in JSON oder XML, CDA beschreibt klinische Dokumente in XML. Alle drei stammen aus dem Umfeld von HL7 International, sind aber unterschiedliche Formate. Dieser Viewer liest nur das Pipe-Format von v2.</p>
+
+<h2 id="faq-aufbau">Kurz beantwortet</h2>
+<details class="faq"><summary>Warum ist MSH-9 der Nachrichtentyp, obwohl er das achte Feld nach MSH ist?</summary><p>Weil das Feldtrennzeichen hinter „MSH“ als MSH-1 zählt. Das erste Feld nach <code>MSH|</code> ist MSH-2. In allen anderen Segmenten beginnt die Zählung mit dem ersten Feld hinter der Kennung.</p></details>
+<details class="faq"><summary>Was ist der Unterschied zwischen ~ und ^?</summary><p><code>^</code> trennt Komponenten innerhalb eines Feldwerts (Nachname^Vorname). <code>~</code> trennt mehrere Wiederholungen desselben Feldes, etwa zwei Patientenkennungen in PID-3.</p></details>
+<details class="faq"><summary>Wie maskiere ich ein | im Text?</summary><p>Mit der Escape-Sequenz <code>\F\</code>. Entsprechend <code>\S\</code> für ^, <code>\R\</code> für ~, <code>\T\</code> für &amp; und <code>\E\</code> für den Backslash. Gemeint sind jeweils die Zeichen, die im MSH festgelegt sind.</p></details>
+<section class="xlink" id="weitere-werkzeuge"><h2>Weitere Werkzeuge</h2><p>Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.</p><ul class="tl"><li><a href="https://freimoser.github.io/ldt-bdt-viewer/">LDT- und BDT-Viewer</a> – Labordaten (LDT) und Praxisdaten (BDT) lesen</li><li><a href="https://freimoser.github.io/gdt-viewer/">GDT-Viewer</a> – GDT-Dateien zwischen Praxissoftware und Geräten lesen</li><li><a href="https://freimoser.github.io/dicom-viewer/">DICOM-Viewer</a> – DICOM-Bilder und Radiologie-CDs im Browser öffnen</li><li><a href="https://freimoser.github.io/cda-viewer/">CDA-Viewer</a> – CDA-Dokumente (Arztbriefe als XML) lesen</li></ul></section>
+</main>
+<section class="about"><div class="wrap"><img src="/hl7v2-viewer/favicon.svg" alt="" width="44" height="44"><div><h2>Über den Entwickler</h2><p>Entwickelt von <strong>Thomas Freimoser</strong>, München / Remote. Dieses Werkzeug liest HL7-v2-Nachrichten lokal im Browser; es gibt keinen Upload und kein Tracking.</p><div class="btns"><a class="btn" href="https://freimoser.de/">freimoser.de</a><a class="btn" href="https://www.linkedin.com/in/thomas-freimoser/">LinkedIn</a></div></div></div></section>
+<footer><div class="wrap"><div class="cols">
+<div><strong>Werkzeug</strong><a href="/hl7v2-viewer/">Viewer</a><a href="/hl7v2-viewer/#anonymisieren">Anonymisieren</a><a href="/hl7v2-viewer/quellen/">Quellen</a><a href="https://github.com/freimoser/hl7v2-viewer">Quellcode</a></div>
+<div><strong>Wissen</strong><a href="/hl7v2-viewer/hl7-nachricht-aufbau/">Aufbau</a><a href="/hl7v2-viewer/hl7-nachrichtentypen/">Nachrichtentypen</a><a href="/hl7v2-viewer/hl7-segmente/">Segmente</a><a href="/hl7v2-viewer/hl7-fehler/">Häufige Fehler</a></div>
+<div><strong>Weitere Werkzeuge</strong><a href="https://freimoser.github.io/ldt-bdt-viewer/">LDT- und BDT-Viewer</a><a href="https://freimoser.github.io/gdt-viewer/">GDT-Viewer</a><a href="https://freimoser.github.io/dicom-viewer/">DICOM-Viewer</a><a href="https://freimoser.github.io/cda-viewer/">CDA-Viewer</a></div>
+<div><strong>Rechtliches</strong><a href="https://freimoser.de/impressum/">Impressum</a><a href="/hl7v2-viewer/datenschutz/">Datenschutz</a></div>
+</div><p class="disc">HL7® und FHIR® sind eingetragene Marken von Health Level Seven International. Dieses Werkzeug ist ein unabhängiges Projekt und wird von HL7 International weder bereitgestellt noch empfohlen.</p><p class="disc">Nur zur Ansicht: kein Medizinprodukt und kein Konformitätsprüfer. © 2026 Thomas Freimoser, München / Remote. Quellcode unter MIT-Lizenz, Beispielnachrichten frei erfunden (CC0). <a href="/hl7v2-viewer/quellen/">Quellen und Lizenzen</a>.</p></div></footer>
+<script type="module" src="/hl7v2-viewer/assets/js/site.js"></script>
+</body>
+</html>

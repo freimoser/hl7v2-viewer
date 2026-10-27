@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://freimoser.github.io/hl7v2-viewer/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://freimoser.github.io/hl7v2-viewer/hl7-nachricht-aufbau/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/adt-a01/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/adt-a08/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/oru-r01/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/orm-o01/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://freimoser.github.io/hl7v2-viewer/hl7-segmente/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://freimoser.github.io/hl7v2-viewer/hl7-segmente/msh/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://freimoser.github.io/hl7v2-viewer/hl7-segmente/pid/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://freimoser.github.io/hl7v2-viewer/hl7-segmente/pv1/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://freimoser.github.io/hl7v2-viewer/hl7-segmente/obr/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://freimoser.github.io/hl7v2-viewer/hl7-segmente/obx/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://freimoser.github.io/hl7v2-viewer/hl7-fehler/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://freimoser.github.io/hl7v2-viewer/quellen/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://freimoser.github.io/hl7v2-viewer/datenschutz/</loc><lastmod>2026-10-27</lastmod></url>
+</urlset>
