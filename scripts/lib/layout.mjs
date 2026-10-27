@@ -109,17 +109,23 @@ export function about() {
   return `<section class="about"><div class="wrap"><img src="${url("favicon.svg")}" alt="" width="44" height="44"><div><h2>Über den Entwickler</h2><p>Entwickelt von <strong>${SITE.dev.name}</strong>, München / Remote. Dieses Werkzeug liest HL7-v2-Nachrichten lokal im Browser; es gibt keinen Upload und kein Tracking.</p><div class="btns"><a class="btn" href="${SITE.dev.url}">freimoser.de</a><a class="btn" href="${SITE.dev.linkedin}">LinkedIn</a></div></div></div></section>`;
 }
 
+/** Genau ein Block pro Seite, nur auf ausgewählten Seiten. Anker beschreiben das Ziel, nicht den Tool-Namen. */
+const ANCHOR = {
+  ldt: ["LDT- und BDT-Dateien aus Labor und Praxis lesen", "Labordaten (LDT) und Praxisdaten (BDT)"],
+  gdt: ["GDT-Dateien zwischen Praxissoftware und Geräten ansehen", "Gerätedaten im GDT-Format"],
+  dicom: ["DICOM-Bilder und Radiologie-CDs im Browser öffnen", "Bilddaten aus MRT, CT und Röntgen"],
+  fhir: ["FHIR-Daten ansehen", "FHIR-Ressourcen als JSON lesbar anzeigen"],
+  cda: ["CDA-Arztbriefe lesen", "Arztbriefe als CDA-XML lesbar anzeigen"],
+};
 export function tools() {
   if (!SITE.siblings.length) return "";
-  return `<section class="xlink" id="weitere-werkzeuge"><h2>Weitere Werkzeuge</h2><p>Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.</p><ul class="tl">${SITE.siblings.map((s) => `<li><a href="${s.url}">${esc(s.name)}</a> – ${esc(s.desc)}</li>`).join("")}</ul></section>`;
+  return `<section class="xlink" id="weitere-werkzeuge"><h2>Weitere Werkzeuge</h2><p>Andere Formate aus dem Praxis- und Laboralltag, ebenfalls lokal im Browser:</p><ul class="tl">${SITE.siblings.map((s) => { const a = ANCHOR[s.key] || [s.name, s.desc]; return `<li><a href="${s.url}">${esc(a[0])}</a>${a[1] ? ` – ${esc(a[1])}` : ""}</li>`; }).join("")}</ul></section>`;
 }
 
 function footer() {
-  const sib = SITE.siblings.map((s) => `<a href="${s.url}">${esc(s.name)}</a>`).join("");
   return `<footer><div class="wrap"><div class="cols">
 <div><strong>Werkzeug</strong><a href="${url("")}">Viewer</a><a href="${url("")}#anonymisieren">Anonymisieren</a><a href="${url("quellen/")}">Quellen</a><a href="${SITE.repo}">Quellcode</a></div>
 <div><strong>Wissen</strong><a href="${url("hl7-nachricht-aufbau/")}">Aufbau</a><a href="${url("hl7-nachrichtentypen/")}">Nachrichtentypen</a><a href="${url("hl7-segmente/")}">Segmente</a><a href="${url("hl7-fehler/")}">Häufige Fehler</a></div>
-<div><strong>Weitere Werkzeuge</strong>${sib}</div>
 <div><strong>Rechtliches</strong><a href="${SITE.dev.impressum}">Impressum</a><a href="${url("datenschutz/")}">Datenschutz</a></div>
 </div><p class="disc">${DISCLAIMER}</p><p class="disc">Nur zur Ansicht: kein Medizinprodukt und kein Konformitätsprüfer. © ${SITE.date.slice(0, 4)} ${SITE.dev.name}, München / Remote. Quellcode unter MIT-Lizenz, Beispielnachrichten frei erfunden (CC0). <a href="${url("quellen/")}">Quellen und Lizenzen</a>.</p></div></footer>`;
 }

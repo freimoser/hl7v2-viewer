@@ -169,11 +169,12 @@ Werden meine Nachrichten hochgeladen?
 Nein. Die Auswertung läuft im Browser, und die Seite verbietet über eine Content-Security-Policy mit connect-src 'none' jede Netzwerkverbindung aus dem Seitencode. Das lässt sich in den Entwicklertools prüfen. Echte Patientendaten gehören trotzdem nicht in Testwerkzeuge. Nutzen Sie Testdaten oder anonymisieren Sie zuerst.
 
 Weitere Werkzeuge
-Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
-LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
-GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
-DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
-CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
+Andere Formate aus dem Praxis- und Laboralltag, ebenfalls lokal im Browser:
+LDT- und BDT-Dateien aus Labor und Praxis lesen – Labordaten (LDT) und Praxisdaten (BDT)
+GDT-Dateien zwischen Praxissoftware und Geräten ansehen – Gerätedaten im GDT-Format
+DICOM-Bilder und Radiologie-CDs im Browser öffnen – Bilddaten aus MRT, CT und Röntgen
+FHIR-Daten ansehen – FHIR-Ressourcen als JSON lesbar anzeigen
+CDA-Arztbriefe lesen – Arztbriefe als CDA-XML lesbar anzeigen
 
 ---
 
@@ -326,13 +327,6 @@ Was ist der Unterschied zwischen ~ und ^?
 Wie maskiere ich ein | im Text?
 Mit der Escape-Sequenz \F\. Entsprechend \S\ für ^, \R\ für ~, \T\ für & und \E\ für den Backslash. Gemeint sind jeweils die Zeichen, die im MSH festgelegt sind.
 
-Weitere Werkzeuge
-Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
-LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
-GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
-DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
-CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
-
 ---
 
 URL: https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/
@@ -367,6 +361,8 @@ ORM – Auftrag (Order Message)
 Überträgt einen Auftrag, zum Beispiel eine Labor- oder Röntgenanforderung.
 MSH-9 | Ereignis | Bedeutung |  |
 ORM^O01 | Auftrag (allgemein) | Ein Auftrag wird neu angelegt, geändert oder storniert, gesteuert über ORC-1. | Beispiel |
+
+Zur Einordnung: Neuere Versionen nutzen für Aufträge üblicherweise die spezialisierten Nachrichten OML (Laborauftrag) und OMG (allgemeiner klinischer Auftrag). ORM^O01 ist in älteren Schnittstellen üblich und weit verbreitet. Welche Variante gilt, steht in der Schnittstellenbeschreibung.
 
 ORR – Auftragsantwort
 Antwort auf eine Auftragsnachricht (ORM).
@@ -440,11 +436,12 @@ Wofür steht ORU^R01?
 Für die Übermittlung von Beobachtungsergebnissen ohne vorherige Abfrage, in der Praxis meist Laborbefunde. OBR beschreibt die Untersuchung, jedes OBX liefert einen Einzelwert.
 
 Weitere Werkzeuge
-Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
-LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
-GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
-DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
-CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
+Andere Formate aus dem Praxis- und Laboralltag, ebenfalls lokal im Browser:
+LDT- und BDT-Dateien aus Labor und Praxis lesen – Labordaten (LDT) und Praxisdaten (BDT)
+GDT-Dateien zwischen Praxissoftware und Geräten ansehen – Gerätedaten im GDT-Format
+DICOM-Bilder und Radiologie-CDs im Browser öffnen – Bilddaten aus MRT, CT und Röntgen
+FHIR-Daten ansehen – FHIR-Ressourcen als JSON lesbar anzeigen
+CDA-Arztbriefe lesen – Arztbriefe als CDA-XML lesbar anzeigen
 
 ---
 
@@ -546,13 +543,6 @@ Häufige Fehler
 ADT^A08: Änderung von Patientendaten
 Das PV1-Segment
 
-Weitere Werkzeuge
-Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
-LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
-GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
-DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
-CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
-
 ---
 
 URL: https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/adt-a08/
@@ -627,13 +617,6 @@ Aufbau einer HL7-v2-Nachricht
 Häufige Fehler
 ADT^A01: Aufnahme
 Das PID-Segment
-
-Weitere Werkzeuge
-Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
-LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
-GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
-DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
-CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
 
 ---
 
@@ -753,13 +736,6 @@ ORM^O01: Auftrag
 Das OBX-Segment
 Das OBR-Segment
 
-Weitere Werkzeuge
-Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
-LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
-GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
-DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
-CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
-
 ---
 
 URL: https://freimoser.github.io/hl7v2-viewer/hl7-nachrichtentypen/orm-o01/
@@ -849,13 +825,6 @@ Häufige Fehler
 ORU^R01: Befund
 Das OBR-Segment
 
-Weitere Werkzeuge
-Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
-LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
-GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
-DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
-CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
-
 ---
 
 URL: https://freimoser.github.io/hl7v2-viewer/hl7-segmente/
@@ -909,13 +878,6 @@ TXA | Dokumentinformation | Kopf eines Dokuments in MDM-Nachrichten: Typ, Zeitpu
 Segmente mit einem Z am Anfang (ZPI, ZBE …) sind lokale Erweiterungen. Ihre Felder kann nur die Schnittstellenbeschreibung des Absenders erklären.
 
 Aufbau einer Nachricht · Nachrichtentypen · Häufige Fehler
-
-Weitere Werkzeuge
-Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
-LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
-GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
-DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
-CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
 
 ---
 
@@ -977,13 +939,6 @@ Warum ist MSH-1 das Trennzeichen?
 Weil das Feldtrennzeichen direkt hinter „MSH“ steht und als erstes Feld zählt. Dadurch kann der Empfänger zuerst das Trennzeichen lesen und mit ihm den Rest zerlegen.
 
 Alle Segmente · Nachrichtentypen
-
-Weitere Werkzeuge
-Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
-LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
-GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
-DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
-CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
 
 ---
 
@@ -1050,13 +1005,6 @@ In PID-3. Die erste Komponente ist die Nummer, die vierte die vergebende Stelle,
 
 Alle Segmente · Nachrichtentypen
 
-Weitere Werkzeuge
-Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
-LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
-GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
-DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
-CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
-
 ---
 
 URL: https://freimoser.github.io/hl7v2-viewer/hl7-segmente/pv1/
@@ -1116,13 +1064,6 @@ In PV1-19 (Besuchsnummer). Manche Systeme legen sie zusätzlich in PID-3 mit der
 
 Alle Segmente · Nachrichtentypen
 
-Weitere Werkzeuge
-Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
-LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
-GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
-DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
-CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
-
 ---
 
 URL: https://freimoser.github.io/hl7v2-viewer/hl7-segmente/obr/
@@ -1180,13 +1121,6 @@ Was ist der Unterschied zwischen OBR-2 und OBR-3?
 OBR-2 trägt die Auftragsnummer des Anfordernden (Placer), OBR-3 die des Ausführenden (Filler), zum Beispiel des Labors.
 
 Alle Segmente · Nachrichtentypen
-
-Weitere Werkzeuge
-Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
-LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
-GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
-DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
-CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
 
 ---
 
@@ -1249,13 +1183,6 @@ Warum zeigt der Viewer eine Warnung bei OBX-5?
 Wenn OBX-2 den Typ NM nennt, der Wert aber keine reine Zahl ist. Meist ist ein Dezimalkomma statt eines Punkts die Ursache.
 
 Alle Segmente · Nachrichtentypen
-
-Weitere Werkzeuge
-Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
-LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
-GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
-DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
-CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
 
 ---
 
@@ -1416,13 +1343,6 @@ Laden Sie sie in den Viewer und lesen Sie zuerst die Hinweise. Danach prüfen Si
 
 Aufbau einer Nachricht · Segmente · Nachrichtentypen
 
-Weitere Werkzeuge
-Kostenlose Viewer für andere Formate aus dem Praxis- und Laboralltag. Alle laufen ebenfalls im Browser.
-LDT- und BDT-Viewer – Labordaten (LDT) und Praxisdaten (BDT) lesen
-GDT-Viewer – GDT-Dateien zwischen Praxissoftware und Geräten lesen
-DICOM-Viewer – DICOM-Bilder und Radiologie-CDs im Browser öffnen
-CDA-Viewer – CDA-Dokumente (Arztbriefe als XML) lesen
-
 ---
 
 URL: https://freimoser.github.io/hl7v2-viewer/quellen/
@@ -1452,7 +1372,7 @@ HL7 Deutschland e. V. | Beleg, dass HL7 v2.x, CDA, V3 und FHIR zur HL7-Standardf
 
 Eigene Arbeit
 
-Feldlisten, Segmentnamen, Beispielnachrichten, Prüfhinweise und Erklärtexte sind eigene Arbeit des Autors auf Grundlage seiner Erfahrung mit HL7-v2-Nachrichten. Sie sind kein Auszug aus einer HL7-Spezifikation.
+Feldlisten, Segmentnamen, Prüfhinweise und Erklärtexte sind eigene Formulierungen und kein Auszug aus einer HL7-Spezifikation. Soweit sie nicht auf den oben genannten Quellen beruhen, gilt: Aus der Praxis bekannt, nicht aus einer geöffneten Quelle belegt.
 Alle Beispielnachrichten sind frei erfunden. Namen, Nummern, Orte und Zeitpunkte sind Platzhalter.
 
 Lücken
@@ -1460,7 +1380,7 @@ Lücken
 Was nicht geprüft werden konnte, ist hier offen benannt statt geraten.
 
 Der Volltext der HL7-v2-Spezifikation (hl7.org) war beim Abruf nicht erreichbar und ist daher nicht belegt. Segmentaufbau, „üblich erwartete“ Segmente je Nachrichtentyp und Codetabellen sind deshalb als „üblich“ formuliert und nicht als Zitat der Spezifikation. Die Feldlisten gelten unabhängig von der Version nur als Orientierung.
-Die Steuerzeichen des MLLP-Rahmens (Hex 0B als Start, Hex 1C und 0D als Ende) sind in den geöffneten Quellen nicht ausdrücklich genannt. Sie beruhen auf Fachwissen des Autors.
+Die Steuerzeichen des MLLP-Rahmens (Hex 0B als Start, Hex 1C und 0D als Ende) sind in den geöffneten Quellen nicht ausdrücklich genannt. Aus der Praxis bekannt, nicht aus einer geöffneten Quelle belegt.
 Die deutsche Wikipedia hat keinen eigenen Artikel zu MLLP; die englische Seite wird als Beleg genutzt.
 Es gibt keine offizielle Prüfsuite für diese Werkzeuge. Der Viewer ist nicht gegen eine Referenzimplementierung getestet, nur gegen eigene Tests und eigene Beispiele.
 Es gibt keine belegten Aussagen zu Marktanteilen, zur Verbreitung bestimmter Versionen oder zu anderen Anbietern. Solche Aussagen stehen deshalb nirgends auf der Seite.
@@ -1470,6 +1390,14 @@ Marken
 HL7® und FHIR® sind eingetragene Marken von Health Level Seven International. Dieses Werkzeug ist ein unabhängiges Projekt und wird von HL7 International weder bereitgestellt noch empfohlen.
 
 Zum Viewer
+
+Weitere Werkzeuge
+Andere Formate aus dem Praxis- und Laboralltag, ebenfalls lokal im Browser:
+LDT- und BDT-Dateien aus Labor und Praxis lesen – Labordaten (LDT) und Praxisdaten (BDT)
+GDT-Dateien zwischen Praxissoftware und Geräten ansehen – Gerätedaten im GDT-Format
+DICOM-Bilder und Radiologie-CDs im Browser öffnen – Bilddaten aus MRT, CT und Röntgen
+FHIR-Daten ansehen – FHIR-Ressourcen als JSON lesbar anzeigen
+CDA-Arztbriefe lesen – Arztbriefe als CDA-XML lesbar anzeigen
 
 ---
 

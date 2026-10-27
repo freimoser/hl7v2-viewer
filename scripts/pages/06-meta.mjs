@@ -1,4 +1,4 @@
-import { url, esc, SITE, DISCLAIMER } from "../lib/layout.mjs";
+import { url, esc, SITE, DISCLAIMER, tools } from "../lib/layout.mjs";
 import { SOURCES, OWN, GAPS, RETRIEVED } from "../lib/sources.mjs";
 
 const quellen = {
@@ -21,7 +21,8 @@ ${SOURCES.map((s) => `<tr><td>${esc(s.topic)}</td><td><a href="${s.url}" rel="no
 <ul>${GAPS.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
 <h2 id="marken">Marken</h2>
 <p>${esc(DISCLAIMER)}</p>
-<p><a href="${url("")}">Zum Viewer</a></p>`,
+<p><a href="${url("")}">Zum Viewer</a></p>
+${tools()}`,
 };
 
 const datenschutz = {

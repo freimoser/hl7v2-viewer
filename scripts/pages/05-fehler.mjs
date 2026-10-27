@@ -1,4 +1,4 @@
-import { url, esc, openLink, tools, SITE } from "../lib/layout.mjs";
+import { url, esc, openLink, SITE } from "../lib/layout.mjs";
 import { faqHtml } from "../lib/ann.mjs";
 import { parseAll } from "../../src/assets/js/core/parser.js";
 import { checkMessage } from "../../src/assets/js/core/validate.js";
@@ -113,6 +113,5 @@ ${sections.map(sectionHtml).join("\n")}
 ${flexSentence}
 <h2 id="faq-fehler">Kurz beantwortet</h2>
 ${faqHtml(faq)}
-<p><a href="${url("hl7-nachricht-aufbau/")}">Aufbau einer Nachricht</a> · <a href="${url("hl7-segmente/")}">Segmente</a> · <a href="${url("hl7-nachrichtentypen/")}">Nachrichtentypen</a></p>
-${tools()}`,
+<p><a href="${url("hl7-nachricht-aufbau/")}">Aufbau einer Nachricht</a> · <a href="${url("hl7-segmente/")}">Segmente</a> · <a href="${url("hl7-nachrichtentypen/")}">Nachrichtentypen</a></p>`,
 };

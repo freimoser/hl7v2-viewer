@@ -1,4 +1,4 @@
-import { url, esc, openLink, tools } from "../lib/layout.mjs";
+import { url, esc, openLink } from "../lib/layout.mjs";
 import { lineHtml, legend, preLines, faqHtml } from "../lib/ann.mjs";
 import { getExample } from "../../src/assets/js/core/examples.js";
 
@@ -101,8 +101,7 @@ ${preLines(a08.text, ["ZPI"])}
 <p>HL7 v2 ist ein Format aus getrennten Zeilen und Feldern. FHIR beschreibt Ressourcen in JSON oder XML, CDA beschreibt klinische Dokumente in XML. Alle drei stammen aus dem Umfeld von HL7 International, sind aber unterschiedliche Formate. Dieser Viewer liest nur das Pipe-Format von v2.</p>
 
 <h2 id="faq-aufbau">Kurz beantwortet</h2>
-${faqHtml(faqAufbau())}
-${tools()}`,
+${faqHtml(faqAufbau())}`,
   faq: faqAufbau(),
 };
 

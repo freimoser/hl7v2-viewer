@@ -6,6 +6,7 @@ import { TYPE_GROUPS, TRIGGERS } from "../../src/assets/js/core/messages.js";
 const base = "hl7-nachrichtentypen/";
 const EX = { "ADT^A01": "adt-a01", "ADT^A04": "adt-a04", "ADT^A08": "adt-a08", "ORU^R01": "oru-r01", "ORM^O01": "orm-o01", "MDM^T02": "mdm-t02", "SIU^S12": "siu-s12" };
 const DETAIL = { "ADT^A01": "adt-a01/", "ADT^A08": "adt-a08/", "ORU^R01": "oru-r01/", "ORM^O01": "orm-o01/" };
+const ORM_NOTE = `<p>Zur Einordnung: Neuere Versionen nutzen für Aufträge üblicherweise die spezialisierten Nachrichten <code>OML</code> (Laborauftrag) und <code>OMG</code> (allgemeiner klinischer Auftrag). ORM^O01 ist in älteren Schnittstellen üblich und weit verbreitet. Welche Variante gilt, steht in der Schnittstellenbeschreibung.</p>`;
 const GROUP_ORDER = ["ADT", "ORM", "ORR", "OML", "OMG", "ORU", "MDM", "SIU", "DFT", "BAR", "VXU", "ACK"];
 
 const groupTable = (code) => {
@@ -36,7 +37,7 @@ const overview = {
 <p class="lead"><strong>Der Nachrichtentyp einer HL7-v2-Nachricht steht in MSH-9, zum Beispiel <code>ADT^A01^ADT_A01</code>.</strong> Er besteht aus dem Nachrichtencode (ADT), dem Auslöseereignis (A01) und der Nachrichtenstruktur (ADT_A01). Der Code sagt, um welche Art von Information es geht, das Ereignis, was passiert ist.</p>
 <p>Die Tabellen zeigen eine Auswahl häufiger Typen. Sie sind nicht vollständig, und welche davon ein System nutzt, legt die jeweilige Schnittstellenbeschreibung fest. Vier Typen haben eine eigene Seite mit Beispiel, Feldtabelle und Hinweisen: <a href="${url(base + "adt-a01/")}">ADT^A01</a>, <a href="${url(base + "adt-a08/")}">ADT^A08</a>, <a href="${url(base + "oru-r01/")}">ORU^R01</a> und <a href="${url(base + "orm-o01/")}">ORM^O01</a>.</p>
 <p>Der Viewer zeigt für jede Nachricht den erkannten Typ mit einer Kurzerklärung an und weist auf Segmente hin, die bei diesem Typ üblicherweise vorkommen. Das ist ein Hinweis und keine Prüfung gegen die Spezifikation.</p>
-${GROUP_ORDER.map((g) => `<h2 id="${g.toLowerCase()}">${g} – ${esc(TYPE_GROUPS[g].name)}</h2><p>${esc(TYPE_GROUPS[g].desc)}</p>${g === "ACK" ? ackText() : groupTable(g)}`).join("\n")}
+${GROUP_ORDER.map((g) => `<h2 id="${g.toLowerCase()}">${g} – ${esc(TYPE_GROUPS[g].name)}</h2><p>${esc(TYPE_GROUPS[g].desc)}</p>${g === "ACK" ? ackText() : groupTable(g)}${g === "ORM" ? ORM_NOTE : ""}`).join("\n")}
 <h2 id="struktur">Mehrere Ereignisse, eine Struktur</h2>
 <p>Die dritte Komponente von MSH-9 benennt die Segmentstruktur. Viele Ereignisse einer Gruppe teilen sie: A01 und A04 sind im Beispiel beide <code>ADT_A01</code>. Daher sehen sich Nachrichten verschiedener Ereignisse oft ähnlich, und die Bedeutung steckt im Ereigniscode, im Inhalt von PV1 und im Kontext. Verlassen Sie sich nicht auf die Struktur allein.</p>
 <h2 id="faq-typen">Kurz beantwortet</h2>
@@ -70,8 +71,7 @@ ${filledFieldsTable(ex)}
 <ul>${bullets.map((b) => `<li>${b}</li>`).join("")}</ul>
 ${extra}
 <h2 id="mehr">Weiterlesen</h2>
-<ul>${also.map(([p, t]) => `<li><a href="${url(p)}">${esc(t)}</a></li>`).join("")}</ul>
-${tools()}`,
+<ul>${also.map(([p, t]) => `<li><a href="${url(p)}">${esc(t)}</a></li>`).join("")}</ul>`,
   };
 }
 

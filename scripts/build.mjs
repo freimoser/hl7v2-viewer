@@ -39,7 +39,7 @@ async function resolveSiblings() {
       try { const r = await fetch(u, { method: "GET", redirect: "follow", signal: AbortSignal.timeout(15000) }); ok = r.status === 200; } catch { ok = false; }
     }
     console.log(`  Geschwister ${s.name}: ${ok ? "verlinkt" : "nicht verlinkt (nicht erreichbar)"}`);
-    if (ok) out.push({ name: s.name, url: u, desc: s.desc });
+    if (ok) out.push({ key: s.key, name: s.name, url: u, desc: s.desc });
   }
   return out;
 }

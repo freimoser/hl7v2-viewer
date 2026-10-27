@@ -28,4 +28,5 @@ HL7® und FHIR® sind eingetragene Marken von Health Level Seven International. 
 - [LDT- und BDT-Viewer](https://freimoser.github.io/ldt-bdt-viewer/): Labordaten (LDT) und Praxisdaten (BDT) lesen
 - [GDT-Viewer](https://freimoser.github.io/gdt-viewer/): GDT-Dateien zwischen Praxissoftware und Geräten lesen
 - [DICOM-Viewer](https://freimoser.github.io/dicom-viewer/): DICOM-Bilder und Radiologie-CDs im Browser öffnen
+- [FHIR-Viewer](https://freimoser.github.io/fhir-viewer/): FHIR-Ressourcen als JSON lesbar anzeigen
 - [CDA-Viewer](https://freimoser.github.io/cda-viewer/): CDA-Dokumente (Arztbriefe als XML) lesen

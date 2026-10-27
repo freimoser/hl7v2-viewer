@@ -1,4 +1,4 @@
-import { url, esc, openLink, tools } from "../lib/layout.mjs";
+import { url, esc, openLink } from "../lib/layout.mjs";
 import { preLines, segmentFieldTable, SEGMENTS, faqHtml } from "../lib/ann.mjs";
 import { getExample } from "../../src/assets/js/core/examples.js";
 
@@ -23,8 +23,7 @@ ${DETAIL.map((d) => { const id = d.toUpperCase(); return `<div class="card"><h3>
 ${Object.entries(SEGMENTS).map(([id, s]) => `<tr><td class="mono">${DETAIL.includes(id.toLowerCase()) ? `<a href="${url(base + id.toLowerCase() + "/")}">${id}</a>` : id}</td><td>${esc(s.name)}</td><td>${esc(s.desc)}</td></tr>`).join("")}
 </tbody></table></div>
 <p>Segmente mit einem <code>Z</code> am Anfang (ZPI, ZBE …) sind lokale Erweiterungen. Ihre Felder kann nur die Schnittstellenbeschreibung des Absenders erklären.</p>
-<p><a href="${url("hl7-nachricht-aufbau/")}">Aufbau einer Nachricht</a> · <a href="${url("hl7-nachrichtentypen/")}">Nachrichtentypen</a> · <a href="${url("hl7-fehler/")}">Häufige Fehler</a></p>
-${tools()}`,
+<p><a href="${url("hl7-nachricht-aufbau/")}">Aufbau einer Nachricht</a> · <a href="${url("hl7-nachrichtentypen/")}">Nachrichtentypen</a> · <a href="${url("hl7-fehler/")}">Häufige Fehler</a></p>`,
 };
 
 function segPage({ id, exId, title, h1, description, lead, bullets, faq, note = "" }) {
@@ -49,8 +48,7 @@ ${segmentFieldTable(id)}
 ${note}
 <h2 id="faq-seg">Kurz beantwortet</h2>
 ${faqHtml(faq)}
-<p><a href="${url(base)}">Alle Segmente</a> · <a href="${url("hl7-nachrichtentypen/")}">Nachrichtentypen</a></p>
-${tools()}`,
+<p><a href="${url(base)}">Alle Segmente</a> · <a href="${url("hl7-nachrichtentypen/")}">Nachrichtentypen</a></p>`,
   };
 }
 

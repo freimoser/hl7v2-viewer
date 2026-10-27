@@ -13,12 +13,12 @@ export const SOURCES = [
     used: "Beleg, dass HL7 v2.x, CDA, V3 und FHIR zur HL7-Standardfamilie gehören (Verweis auf die deutsche Nutzerorganisation)." },
 ];
 export const OWN = [
-  "Feldlisten, Segmentnamen, Beispielnachrichten, Prüfhinweise und Erklärtexte sind eigene Arbeit des Autors auf Grundlage seiner Erfahrung mit HL7-v2-Nachrichten. Sie sind kein Auszug aus einer HL7-Spezifikation.",
+  "Feldlisten, Segmentnamen, Prüfhinweise und Erklärtexte sind eigene Formulierungen und kein Auszug aus einer HL7-Spezifikation. Soweit sie nicht auf den oben genannten Quellen beruhen, gilt: Aus der Praxis bekannt, nicht aus einer geöffneten Quelle belegt.",
   "Alle Beispielnachrichten sind frei erfunden. Namen, Nummern, Orte und Zeitpunkte sind Platzhalter.",
 ];
 export const GAPS = [
   "Der Volltext der HL7-v2-Spezifikation (hl7.org) war beim Abruf nicht erreichbar und ist daher nicht belegt. Segmentaufbau, „üblich erwartete“ Segmente je Nachrichtentyp und Codetabellen sind deshalb als „üblich“ formuliert und nicht als Zitat der Spezifikation. Die Feldlisten gelten unabhängig von der Version nur als Orientierung.",
-  "Die Steuerzeichen des MLLP-Rahmens (Hex 0B als Start, Hex 1C und 0D als Ende) sind in den geöffneten Quellen nicht ausdrücklich genannt. Sie beruhen auf Fachwissen des Autors.",
+  "Die Steuerzeichen des MLLP-Rahmens (Hex 0B als Start, Hex 1C und 0D als Ende) sind in den geöffneten Quellen nicht ausdrücklich genannt. Aus der Praxis bekannt, nicht aus einer geöffneten Quelle belegt.",
   "Die deutsche Wikipedia hat keinen eigenen Artikel zu MLLP; die englische Seite wird als Beleg genutzt.",
   "Es gibt keine offizielle Prüfsuite für diese Werkzeuge. Der Viewer ist nicht gegen eine Referenzimplementierung getestet, nur gegen eigene Tests und eigene Beispiele.",
   "Es gibt keine belegten Aussagen zu Marktanteilen, zur Verbreitung bestimmter Versionen oder zu anderen Anbietern. Solche Aussagen stehen deshalb nirgends auf der Seite.",
